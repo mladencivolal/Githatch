@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/constraintLayoutBottomSheet"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/cardview"
+    android:paddingBottom="@dimen/sixteen"
+    app:behavior_hideable="true"
+    app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
+
+    <TextView
+        android:id="@+id/lbApply"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/sixteen"
+        android:text="@string/apply"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="#FFF"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/lbClear"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/lbClear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/sixteen"
+        android:text="@string/clear"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="#FFF"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/lbSort"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/sixteen"
+        android:text="@string/sort_by"
+        android:textColor="#FFF"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/llSort"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/forty"
+        android:layout_margin="@dimen/sixteen"
+        android:background="@drawable/drawable_edit_text_background"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lbSort">
+
+        <TextView
+            android:id="@+id/lbStars"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/button_selector"
+            android:gravity="center"
+            android:paddingStart="@dimen/sixteen"
+            android:paddingLeft="@dimen/sixteen"
+            android:paddingEnd="@dimen/sixteen"
+            android:paddingRight="@dimen/sixteen"
+            android:text="@string/stars"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColor="#FFF" />
+
+        <TextView
+            android:id="@+id/lbForks"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/button_selector"
+            android:gravity="center"
+            android:paddingStart="@dimen/sixteen"
+            android:paddingLeft="@dimen/sixteen"
+            android:paddingEnd="@dimen/sixteen"
+            android:paddingRight="@dimen/sixteen"
+            android:text="@string/forks"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColor="#FFF" />
+
+        <TextView
+            android:id="@+id/lbUpdated"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/button_selector"
+            android:gravity="center"
+            android:paddingStart="@dimen/sixteen"
+            android:paddingLeft="@dimen/sixteen"
+            android:paddingEnd="@dimen/sixteen"
+            android:paddingRight="@dimen/sixteen"
+            android:text="@string/updated"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColor="#FFF" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/lbOrder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FFF"
+        android:layout_margin="@dimen/sixteen"
+        android:text="@string/order_by"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/llSort" />
+
+    <LinearLayout
+        android:id="@+id/llOrder"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/forty"
+        android:layout_margin="@dimen/sixteen"
+        android:background="@drawable/button_selector"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lbOrder">
+
+        <TextView
+            android:id="@+id/tvAsc"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/button_selector"
+            android:gravity="center"
+            android:paddingStart="@dimen/sixteen"
+            android:paddingLeft="@dimen/sixteen"
+            android:paddingEnd="@dimen/sixteen"
+            android:paddingRight="@dimen/sixteen"
+            android:text="@string/ascending"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColor="#FFF" />
+
+        <TextView
+            android:id="@+id/tvDesc"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/button_selector"
+            android:gravity="center"
+            android:paddingStart="@dimen/sixteen"
+            android:paddingLeft="@dimen/sixteen"
+            android:paddingEnd="@dimen/sixteen"
+            android:paddingRight="@dimen/sixteen"
+            android:text="@string/descending"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColor="#FFF" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

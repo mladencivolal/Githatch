@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">@color/recyclerview_background</color>
+    <color name="colorPrimaryDark">@color/recyclerview_background</color>
+    <color name="colorAccent">#ff5722</color>
+
+    <color name="fab">#77000000</color>
+    <color name="icons">#ffffff</color>
+
+    <color name="cardview">#333333</color>
+    <color name="cardview_bottom">#353535</color>
+    <color name="recyclerview_background">#222222</color>
+    <color name="views_text">#595959</color>
+    <color name="creator_text">#808080</color>
+    <color name="rating_bar_unselected">#595959</color>
+    <color name="description_layout">#55000000</color>
+    <color name="description_text">#FAFAFA</color>
+    <color name="labels_text">#FAFAFA</color>
+    <color name="fab_background">#77000000</color>
+
+
+</resources>
