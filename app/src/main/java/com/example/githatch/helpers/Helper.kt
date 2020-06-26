@@ -46,7 +46,7 @@ class Helper {
         fun dateFormatter(date: String): String {
             val parsed: ZonedDateTime = ZonedDateTime.parse(date)
             val z = parsed.withZoneSameInstant(ZoneId.of("Europe/Vienna"))
-            val fmt: DateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy H:mm", Locale.ENGLISH)
+            val fmt: DateTimeFormatter = DateTimeFormatter.ofPattern("d.MM.yyyy H:mm", Locale.ENGLISH)
             return fmt.format(z)
         }
     }
