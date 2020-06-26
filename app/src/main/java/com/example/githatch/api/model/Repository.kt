@@ -39,13 +39,13 @@ data class Repository(
         writeString(fullName)
         writeParcelable(author, 0)
         writeString(htmlUrl)
-        writeString(if (description.length == 0) "No Description" else description )
+        writeString(if (description == null || description.length == 0) "No Description" else description )
         writeInt(watchersCount)
         writeInt(forksCount)
         writeInt(openIssues)
-        writeString(if(createdAt.length == 0) "N/A" else createdAt)
-        writeString(if(updatedAt.length == 0) "N/A" else updatedAt)
-        writeString(if(language.length == 0) "N/A" else language)
+        writeString(if(createdAt == null ||createdAt.length == 0) "N/A" else createdAt)
+        writeString(if(updatedAt == null || updatedAt.length == 0) "N/A" else updatedAt)
+        writeString(if(language == null || language.length == 0) "N/A" else language)
     }
 
     companion object {
