@@ -3,12 +3,19 @@ package com.example.githatch.home
 import GetRepositories
 import android.app.Activity
 import android.content.Context
+import android.util.Log
+import android.view.View
 import android.widget.Toast
 import com.example.githatch.App
+import com.example.githatch.api.model.Repository
+import com.example.githatch.api.model.RetrofitFactory
 import com.example.githatch.helpers.Helper
+import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.Callback
+import retrofit2.HttpException
 import retrofit2.Response
+import java.lang.Exception
 
 class HomePresenterImplementation(private var context: Context) : HomePresenter {
 
@@ -41,34 +48,42 @@ class HomePresenterImplementation(private var context: Context) : HomePresenter 
         homeView.resetFilters()
     }
 
-    private fun processResponse(response: Response<GetRepositories>) {
-        totalCount = response.body()!!.totalCount
-        itemsCount += response.body()!!.repos.size
+    private fun processResponse(response: GetRepositories) {
+        totalCount = response!!.totalCount
+        itemsCount += response!!.repos.size
 
         if (itemsCount != 0) {
-            homeView.updateList(response.body()!!.repos)
+            homeView.updateList(response!!.repos)
         }
     }
 
-    private fun getRepositoriesService() {
-            App.apiService.getRepos(searchPhrase, sortBy, orderBy, pageLength, pageNum)
-                .enqueue(object : Callback<GetRepositories> {
-                    override fun onFailure(call: Call<GetRepositories>, t: Throwable) {
+    private suspend fun getRepositoriesService() {
+        val parentJob = Job()
+        val coroutineScope = CoroutineScope(Dispatchers.Main + parentJob)
+        val service = RetrofitFactory.makeRetrofitService()
+
+        coroutineScope.launch(Dispatchers.IO) {
+            val response = service.getRepos(searchPhrase, sortBy, orderBy, pageLength, pageNum)
+            try {
+                withContext(Dispatchers.Main) {
+                    if (response.repos.isNotEmpty()) {
+                        response.let {
+                            processResponse(response)
+                            homeView.hideProgressBar()
+                        }
+                    } else {
                         homeView.showProgressBar()
                     }
-
-                    override fun onResponse(
-                        call: Call<GetRepositories>,
-                        response: Response<GetRepositories>
-                    ) {
-                        processResponse(response)
-                        homeView.hideProgressBar()
-                    }
-                })
+                }
+            } catch (e: HttpException) {
+                Log.e("REQUEST", "Exception ${e.message}")
+            } catch (e: Throwable) {
+                Log.e("REQUEST", "Ooops: Something else went wrong")
+            }
+        }
     }
 
-
-    override fun searchRepositories(searchPhrase: String, sortBy: String, orderBy: String) {
+    override suspend fun searchRepositories(searchPhrase: String, sortBy: String, orderBy: String) {
        Helper.hideKeyboard(context as Activity)
 
         if (this.searchPhrase != searchPhrase) {
@@ -82,7 +97,7 @@ class HomePresenterImplementation(private var context: Context) : HomePresenter 
         getRepositoriesService()
     }
 
-    override fun onSortDialogCancel() {
+    override suspend fun onSortDialogCancel() {
         if (isSortingApplied) {
             getRepositoriesService()
         }
@@ -93,13 +108,13 @@ class HomePresenterImplementation(private var context: Context) : HomePresenter 
             resetData()
     }
 
-    override fun onFilterClear() {
+    override suspend fun onFilterClear() {
         sortClear()
         resetData()
         getRepositoriesService()
     }
 
-    override fun onLoadMore() {
+    override suspend fun onLoadMore() {
         if (itemsCount != 0 && totalCount != itemsCount) {
             pageNum++
             getRepositoriesService()

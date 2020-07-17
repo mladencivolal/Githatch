@@ -3,8 +3,10 @@ package com.example.githatch
 import android.app.Application
 import com.example.githatch.api.ApiService
 import com.example.githatch.api.Constants
+import com.example.githatch.api.model.Repository
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.CallAdapter
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import timber.log.Timber

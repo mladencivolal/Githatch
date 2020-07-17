@@ -21,6 +21,9 @@ import kotlinx.android.synthetic.main.activity_home.recyclerview
 import kotlinx.android.synthetic.main.layout_item_repository.*
 import kotlinx.android.synthetic.main.layout_item_repository.ivRepoAuthor
 import kotlinx.android.synthetic.main.layout_sort_sheet.view.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class HomeActivity : AppCompatActivity(), View.OnClickListener, HomeView,
     RepositoriesAdapter.OnItemClickListener, RepositoriesAdapter.OnLoadMoreListener {
@@ -76,7 +79,9 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, HomeView,
         dialog = BottomSheetDialog(this)
         dialog.setContentView(bottomSortView)
         dialog.setOnCancelListener {
-            homePresenter.onSortDialogCancel()
+            CoroutineScope(Dispatchers.Default).launch {
+                homePresenter.onSortDialogCancel()
+            }
         }
     }
 
@@ -115,7 +120,9 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, HomeView,
         when (v?.id) {
             R.id.ivSearch -> {
                 showProgressBar()
-                homePresenter.searchRepositories(etSearch.text.toString(), sortBy, orderBy)
+                CoroutineScope(Dispatchers.Default).launch {
+                    homePresenter.searchRepositories(etSearch.text.toString(), sortBy, orderBy)
+                }
             }
             R.id.fabSort -> {
                 dialog.show()
@@ -133,7 +140,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, HomeView,
                 manageSortFilters()
             }
             R.id.tvAsc -> {
-               orderBy = Helper.OrderBy.asc.name
+                orderBy = Helper.OrderBy.asc.name
                 manageOrderFilters()
             }
             R.id.tvDesc -> {
@@ -147,7 +154,10 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, HomeView,
             }
             R.id.lbClear -> {
                 dialog.dismiss()
-                homePresenter.onFilterClear()
+                CoroutineScope(Dispatchers.Default).launch {
+
+                    homePresenter.onFilterClear()
+                }
             }
             R.id.fabUp -> {
                 recyclerview.smoothScrollToPosition(0)
@@ -198,7 +208,9 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, HomeView,
     }
 
     override fun onLoadMore() {
-        homePresenter.onLoadMore()
+        CoroutineScope(Dispatchers.Default).launch {
+            homePresenter.onLoadMore()
+        }
     }
 
     private fun launchAuthorActivity(author: Author) {
@@ -213,7 +225,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, HomeView,
         startActivity(intent)
     }
 
-    private fun launchBrowserActivity (repo: Repository) {
+    private fun launchBrowserActivity(repo: Repository) {
         val webpage: Uri = Uri.parse(repo.htmlUrl)
         val intent = Intent(Intent.ACTION_VIEW, webpage)
         if (intent.resolveActivity(packageManager) != null) {

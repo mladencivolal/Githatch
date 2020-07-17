@@ -2,13 +2,13 @@ package com.example.githatch.home
 
 interface HomePresenter {
 
-    fun searchRepositories (searchPhrase: String, sortBy: String, orderBy: String);
+    suspend fun searchRepositories (searchPhrase: String, sortBy: String, orderBy: String);
 
-    fun onSortDialogCancel()
+    suspend fun onSortDialogCancel()
 
     fun onFilterApply()
 
-    fun onFilterClear()
+    suspend fun onFilterClear()
 
-    fun onLoadMore()
+    suspend fun onLoadMore()
 }
