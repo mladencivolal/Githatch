@@ -1,5 +1,6 @@
-package com.example.githatch.data.repository.repo.datasourceImpl
+package com.example.githatch.data.repository.repo.dataSourceImpl
 
+import android.annotation.SuppressLint
 import android.util.Log
 import com.example.githatch.data.model.repo.Repo
 import com.example.githatch.data.repository.repo.dataSource.RepoRemoteDataSource
@@ -35,54 +36,50 @@ class RepoRepositoryImpl(
         return getReposFromAPI(searchPhrase, sortBy, orderBy)
     }
 
+    @SuppressLint("LogNotTimber")
     override suspend fun loadMoreRepos(): List<Repo>? {
         if (itemsCount != 0 && totalCount != itemsCount) {
             this.pageNum++
         }
-
         try {
             val response =
                 repoRemoteDataSource.getRepos(searchPhrase, sortBy, orderBy, pageLength, pageNum)
-
-            totalCount = response.body()!!.totalCount
-            itemsCount += response.body()!!.repos.size
-
             val body = response.body()
+
             if (body != null) {
                 repoList = body.repos
+                totalCount = body.totalCount
+                itemsCount += body.repos.size
             }
-
         } catch (exception: java.lang.Exception) {
             Log.i("MYTAG", exception.message.toString())
         }
-
         return repoList
     }
 
-    suspend fun getReposFromAPI(searchPhrase: String, sortBy: String, orderBy: String): List<Repo> {
+    @SuppressLint("LogNotTimber")
+    private suspend fun getReposFromAPI(
+        searchPhrase: String,
+        sortBy: String,
+        orderBy: String
+    ): List<Repo> {
         resetData()
-
         this.sortBy = sortBy
         this.orderBy = orderBy
-
         this.searchPhrase = searchPhrase
-
         try {
             val response =
                 repoRemoteDataSource.getRepos(searchPhrase, sortBy, orderBy, pageLength, pageNum)
+            var body = response.body()
 
-            totalCount = response.body()!!.totalCount
-            itemsCount += response.body()!!.repos.size
-
-            val body = response.body()
             if (body != null) {
                 repoList = body.repos
+                totalCount = body.totalCount
+                itemsCount += body.repos.size
             }
-
         } catch (exception: Exception) {
             Log.i("MYTAG", exception.message.toString())
         }
-
         return repoList
     }
 }

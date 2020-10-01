@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.githatch.domain.usecase.GetReposUseCase
 import com.example.githatch.domain.usecase.LoadMoreReposUseCase
 
+@Suppress("UNCHECKED_CAST")
 class RepoViewModelFactory(
     private val getReposUseCase: GetReposUseCase,
     private val loadMoreReposUseCase: LoadMoreReposUseCase

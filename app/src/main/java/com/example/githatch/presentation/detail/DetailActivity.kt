@@ -3,13 +3,11 @@ package com.example.githatch.presentation.detail
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
@@ -59,7 +57,7 @@ class DetailActivity : AppCompatActivity(),
     }
 
     private fun populateWithIntentData() {
-        repoData = intent.getParcelableExtra<Repo>("repo")!!
+        repoData = intent.getParcelableExtra("repo")!!
 
         binding.tvTitle.text = repoData.name
         binding.tvAuthor.text = Helper.textFormatter("Author ${repoData.owner.login}", 6, "#FAFAFA")
@@ -89,12 +87,10 @@ class DetailActivity : AppCompatActivity(),
     }
 
     private fun getContributors(ownerName: String, repoName: String) {
-        Log.i("MYTAG", "Activity: searchRepos ")
-
         binding.progressBar.visibility = View.VISIBLE
 
         val responseLiveData = detailViewModel.getContribs(ownerName, repoName)
-        responseLiveData.observe(this, Observer {
+        responseLiveData.observe(this, {
             if (it != null) {
                 adapter.updateList(it)
                 binding.progressBar.visibility = View.GONE

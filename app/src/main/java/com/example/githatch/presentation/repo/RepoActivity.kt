@@ -1,14 +1,13 @@
 package com.example.githatch.presentation.repo
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.githatch.R
@@ -29,11 +28,12 @@ class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
     private lateinit var binding: ActivityRepoBinding
     private lateinit var adapter: RepoAdapter
     private lateinit var bottomSortView: View
-    lateinit var dialog: BottomSheetDialog
+    private lateinit var dialog: BottomSheetDialog
     private var searchPhrase = ""
     private var orderBy: String = ""
     private var sortBy: String = ""
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_repo)
@@ -43,14 +43,14 @@ class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
         repoViewModel = ViewModelProvider(this, factory)
             .get(RepoViewModel::class.java)
 
-        initRecyclerView()
-        initSortSheet()
-
         binding.ivSearch.setOnClickListener(this)
         binding.fabUp.setOnClickListener(this)
         binding.fabSort.setOnClickListener(this)
-
         binding.etSearch.setText("Kotlin")
+
+        initRecyclerView()
+        initSortSheet()
+
         binding.ivSearch.performClick()
     }
 
@@ -111,18 +111,16 @@ class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
     }
 
     private fun searchRepos(searchPhrase: String, sortBy: String, orderBy: String) {
-        Log.i("MYTAG", "Activity: searchRepos ")
-
         this.searchPhrase = searchPhrase
         this.sortBy = sortBy
         this.orderBy = orderBy
-        binding.progressBar.visibility = View.VISIBLE
 
         val responseLiveData = repoViewModel.getRepos(searchPhrase, sortBy, orderBy)
-        responseLiveData.observe(this, Observer {
+        responseLiveData.observe(this, {
             if (it != null) {
                 adapter.setList(it)
                 binding.progressBar.visibility = View.GONE
+                binding.promptLayout.visibility = View.GONE
             } else {
                 binding.progressBar.visibility = View.GONE
                 Toast.makeText(applicationContext, "No data available", Toast.LENGTH_LONG).show()
@@ -131,13 +129,12 @@ class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
     }
 
     override fun onLoadMore() {
+        binding.progressBar.visibility = View.VISIBLE
         val responseLiveData = repoViewModel.loadMoreRepos()
-        responseLiveData.observe(this, Observer {
+        responseLiveData.observe(this, {
             if (it != null) {
                 adapter.setIsLoading(false)
-                if (it.size > 5) {
                     adapter.updateList(it)
-                }
                 binding.progressBar.visibility = View.GONE
             }
         })
@@ -150,9 +147,6 @@ class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
             }
             R.id.ivSearch -> {
                 searchRepos(binding.etSearch.text.toString(), sortBy, orderBy)
-            }
-            R.id.fabSort -> {
-                dialog.show()
             }
             R.id.fabSort -> {
                 dialog.show()
@@ -178,10 +172,6 @@ class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
                 manageOrderFilters()
             }
             R.id.lbApply -> {
-                Log.i(
-                    "MYTAG",
-                    "Activity: Sort Apply clicked: sortby: ${sortBy}, orderby: ${orderBy} "
-                )
                 dialog.dismiss()
                 searchRepos(searchPhrase, sortBy, orderBy)
             }
@@ -199,18 +189,15 @@ class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
     override fun onItemClick(repo: Repo, v: View) {
         when (v.id) {
             R.id.ivRepoLink -> {
-                Log.i("testing", "onItemClick: repo link clicked ")
                 launchBrowserActivity(repo)
             }
             else -> {
-                Log.i("testing", "onItemClick: ")
                 launchDetailActivity(repo)
             }
         }
     }
 
     private fun launchDetailActivity(repo: Repo) {
-        Log.i("testing", "launchDetailActivity: ")
         val intent = Intent(this, DetailActivity::class.java)
         intent.putExtra("repo", repo)
         startActivity(intent)
@@ -219,9 +206,7 @@ class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
     private fun launchBrowserActivity(repo: Repo) {
         val webpage: Uri = Uri.parse(repo.htmlUrl)
         val intent = Intent(Intent.ACTION_VIEW, webpage)
-        if (intent.resolveActivity(packageManager) != null) {
-            startActivity(intent)
-        }
+        if (intent.resolveActivity(packageManager) != null) startActivity(intent)
     }
 }
 

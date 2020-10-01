@@ -1,6 +1,5 @@
 package com.example.githatch.presentation.di.core
 
-import android.util.Log
 import com.example.githatch.domain.repository.DetailRepository
 import com.example.githatch.domain.repository.OwnerRepository
 import com.example.githatch.domain.repository.RepoRepository
@@ -14,7 +13,6 @@ class UseCaseModule {
     @Singleton
     @Provides
     fun provideGetReposUseCase(repoRepository: RepoRepository): GetReposUseCase {
-        Log.i("MYTAG", "UseCaseModule provideGetReposUseCase()")
         return GetReposUseCase(repoRepository)
     }
 

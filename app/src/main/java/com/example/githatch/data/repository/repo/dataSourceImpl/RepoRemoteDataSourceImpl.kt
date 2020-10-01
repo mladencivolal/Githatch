@@ -1,6 +1,6 @@
 package com.example.githatch.data.repository.repo.dataSourceImpl
 
-import android.util.Log
+import android.annotation.SuppressLint
 import com.example.githatch.data.api.GitHubService
 import com.example.githatch.data.model.repo.RepoList
 import com.example.githatch.data.repository.repo.dataSource.RepoRemoteDataSource
@@ -11,6 +11,7 @@ class RepoRemoteDataSourceImpl(
 ) :
     RepoRemoteDataSource {
 
+    @SuppressLint("LogNotTimber")
     override suspend fun getRepos(
         searchPhrase: String,
         sort: String,
@@ -18,7 +19,6 @@ class RepoRemoteDataSourceImpl(
         pageLength: Int,
         pageNum: Int
     ): Response<RepoList> {
-        Log.i("MYTAG", "RepoRemoteDataSource pageNum: ${pageNum}")
         return gitHubService.getRepos(searchPhrase, sort, order, pageLength, pageNum)
     }
 }

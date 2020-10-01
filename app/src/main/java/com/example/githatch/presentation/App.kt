@@ -13,6 +13,7 @@ class App : Application(), Injector {
 
     override fun onCreate() {
         super.onCreate()
+        @Suppress("DEPRECATION")
         appComponent = DaggerAppComponent.builder()
             .appModule(AppModule(applicationContext))
             .netModule(NetModule(BuildConfig.BASE_URL))

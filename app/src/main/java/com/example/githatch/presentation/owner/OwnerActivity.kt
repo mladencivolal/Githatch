@@ -7,7 +7,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -73,7 +72,7 @@ class OwnerActivity : AppCompatActivity(), View.OnClickListener,
         binding.progressBar.visibility = View.VISIBLE
 
         val responseLiveData = ownerViewModel.getReposFromAuthor(ownerName)
-        responseLiveData.observe(this, Observer {
+        responseLiveData.observe(this, {
             if (it != null) {
                 adapter.updateList(it)
                 binding.progressBar.visibility = View.GONE
@@ -85,7 +84,6 @@ class OwnerActivity : AppCompatActivity(), View.OnClickListener,
     }
 
     override fun onClick(p0: View?) {
-        TODO("Not yet implemented")
     }
 
     override fun onItemClick(repo: Repo, v: View) {
@@ -94,7 +92,7 @@ class OwnerActivity : AppCompatActivity(), View.OnClickListener,
 
     override fun onLoadMore() {
         val responseLiveData = ownerViewModel.loadMoreReposFromAuthor()
-        responseLiveData.observe(this, Observer {
+        responseLiveData.observe(this, {
             if (it != null) {
                 adapter.setIsLoading(false)
                // if (it.size > 5) {

@@ -5,7 +5,7 @@ import com.example.githatch.data.repository.detail.dataSourceImpl.DetailReposito
 import com.example.githatch.data.repository.owner.dataSource.OwnerRemoteDataSource
 import com.example.githatch.data.repository.owner.dataSourceImpl.OwnerRepositoryImpl
 import com.example.githatch.data.repository.repo.dataSource.RepoRemoteDataSource
-import com.example.githatch.data.repository.repo.datasourceImpl.RepoRepositoryImpl
+import com.example.githatch.data.repository.repo.dataSourceImpl.RepoRepositoryImpl
 import com.example.githatch.domain.repository.DetailRepository
 import com.example.githatch.domain.repository.OwnerRepository
 import com.example.githatch.domain.repository.RepoRepository

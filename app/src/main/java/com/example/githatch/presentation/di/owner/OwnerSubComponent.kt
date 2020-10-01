@@ -4,7 +4,7 @@ import com.example.githatch.presentation.di.detail.DetailScope
 import com.example.githatch.presentation.owner.OwnerActivity
 import dagger.Subcomponent
 
-@DetailScope
+@OwnerScope
 @Subcomponent(modules = [OwnerModule::class])
 interface OwnerSubComponent {
     fun inject(ownerActivity: OwnerActivity)

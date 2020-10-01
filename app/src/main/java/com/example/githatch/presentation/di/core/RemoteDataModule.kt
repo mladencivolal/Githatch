@@ -12,7 +12,7 @@ import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-class RemoteDataModule() {
+class RemoteDataModule {
     @Singleton
     @Provides
     fun provideRepoRemoteDataSource(gitHubService: GitHubService): RepoRemoteDataSource {

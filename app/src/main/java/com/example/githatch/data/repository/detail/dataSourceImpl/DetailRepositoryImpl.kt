@@ -1,5 +1,6 @@
 package com.example.githatch.data.repository.detail.dataSourceImpl
 
+import android.annotation.SuppressLint
 import android.util.Log
 import com.example.githatch.data.model.owner.Owner
 import com.example.githatch.data.repository.detail.dataSource.DetailRemoteDataSource
@@ -13,6 +14,7 @@ class DetailRepositoryImpl(private val detailRemoteDataSource: DetailRemoteDataS
         return getContribsFromAPI(ownerName, repoName)
     }
 
+    @SuppressLint("LogNotTimber")
     suspend fun getContribsFromAPI(ownerName: String, repoName: String): List<Owner> {
         try {
             val response =

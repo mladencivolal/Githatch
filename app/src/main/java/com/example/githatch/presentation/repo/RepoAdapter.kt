@@ -12,12 +12,10 @@ import com.example.githatch.data.model.repo.Repo
 import com.example.githatch.databinding.LayoutItemRepositoryBinding
 import com.example.githatch.helpers.Helper
 
-class RepoAdapter(recyclerView: RecyclerView, isRepoActivity: Boolean) :
+class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolean) :
     RecyclerView.Adapter<RepoAdapter.MyViewHolder>() {
     private val repoList: MutableList<Repo> = mutableListOf()
     private var loading: Boolean = false
-    private var isRepoActivity = isRepoActivity
-
     lateinit var onItemClickListener: OnItemClickListener
     lateinit var onLoadMoreListener: OnLoadMoreListener
 
@@ -92,7 +90,7 @@ class RepoAdapter(recyclerView: RecyclerView, isRepoActivity: Boolean) :
 
     inner class MyViewHolder(
         val binding: LayoutItemRepositoryBinding,
-        val isRepoActivity: Boolean
+        private val isRepoActivity: Boolean
     ) :
         RecyclerView.ViewHolder(binding.root), View.OnClickListener {
 

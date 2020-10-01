@@ -9,7 +9,7 @@ import dagger.Provides
 
 @Module
 class OwnerModule {
-    @DetailScope
+    @OwnerScope
     @Provides
     fun provideOwnerViewModelFactory(
         getReposFromAuthorUseCase: GetReposFromAuthorUseCase,

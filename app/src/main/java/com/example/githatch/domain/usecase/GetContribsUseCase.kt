@@ -5,7 +5,6 @@ import com.example.githatch.domain.repository.DetailRepository
 
 class GetContribsUseCase(private val detailRepository: DetailRepository) {
     suspend fun execute(ownerName:String, repoName:String): List<Owner>? {
-
         return detailRepository.getContribs(ownerName, repoName)
     }
 }

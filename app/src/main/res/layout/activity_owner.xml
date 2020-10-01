@@ -105,11 +105,14 @@
                     android:fadingEdgeLength="30dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
-                <ProgressBar
+                <me.zhanghai.android.materialprogressbar.MaterialProgressBar
                     android:id="@+id/progressBar"
-                    android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="4dp"
+                    android:indeterminate="true"
+                    app:mpb_progressStyle="horizontal"
+                    app:mpb_useIntrinsicPadding="false"
+                    style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal" />
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
