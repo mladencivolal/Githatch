@@ -10,7 +10,6 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 import kotlinx.android.parcel.RawValue
 
-@Entity(tableName = "table_repos")
 data class Repo(
     @PrimaryKey
     @SerializedName("name") val name: String,
@@ -62,5 +61,4 @@ data class Repo(
             override fun newArray(size: Int): Array<Repo?> = arrayOfNulls(size)
         }
     }
-
 }
