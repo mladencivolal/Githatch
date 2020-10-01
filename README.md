@@ -1,5 +1,6 @@
 # Githatch
-Kotlin app for browsing Github repositories. Retrofit 2, Coroutines, MVP. 
+Kotlin app for browsing Github repositories.
+Clean MVVM + Databinding + ViewModel + Dagger 2 + Retrofit 2 + Coroutines
 
 **Features:**
   -   
