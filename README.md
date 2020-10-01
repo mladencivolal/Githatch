@@ -1,4 +1,4 @@
-# Githatch - Clean MVVM + Databinding + ViewModel + Dagger 2 + Retrofit 2 + Coroutines
+# Githatch: Clean MVVM + Databinding + ViewModel + Dagger 2 + Retrofit 2 + Coroutines
 Kotlin app for browsing Github repositories.
 
 
