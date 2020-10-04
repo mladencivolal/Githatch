@@ -102,5 +102,8 @@ dependencies {
     implementation "androidx.cardview:cardview:1.0.0"
     //Material Progress Bar
     implementation 'me.zhanghai.android.materialprogressbar:library:1.6.1'
+    //Recyclerview fastscroller
+    implementation 'com.quiph.ui:recyclerviewfastscroller:0.2.3'
+
 
 }

@@ -4,8 +4,9 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
+import android.view.KeyEvent
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -44,15 +45,35 @@ class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
         repoViewModel = ViewModelProvider(this, factory)
             .get(RepoViewModel::class.java)
 
-        binding.ivSearch.setOnClickListener(this)
         binding.fabUp.setOnClickListener(this)
         binding.fabSort.setOnClickListener(this)
         binding.etSearch.setText("Kotlin")
 
+        binding.etSearch.setOnEditorActionListener { view, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_GO) {
+                searchPhrase = binding.etSearch.text.toString()
+                searchRepos(searchPhrase, sortBy, orderBy)
+                return@setOnEditorActionListener true
+            } else {
+                return@setOnEditorActionListener false
+            }
+        }
+
+        binding.etSearch.setOnKeyListener { view, keyCode, event ->
+            if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+                searchPhrase = binding.etSearch.text.toString()
+                searchRepos(searchPhrase, sortBy, orderBy)
+                Helper.hideKeyboard(this)
+                return@setOnKeyListener true
+            } else {
+                return@setOnKeyListener false
+            }
+        }
+
         initRecyclerView()
         initSortSheet()
 
-        binding.ivSearch.performClick()
+        searchRepos(binding.etSearch.text.toString(), sortBy, orderBy)
     }
 
     private fun initRecyclerView() {
@@ -113,8 +134,6 @@ class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
 
     private fun searchRepos(searchPhrase: String, sortBy: String, orderBy: String) {
         binding.progressBar.visibility = View.VISIBLE
-        Log.i("Mytag", "searchRepos: ")
-
         this.searchPhrase = searchPhrase
         this.sortBy = sortBy
         this.orderBy = orderBy
@@ -137,8 +156,9 @@ class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
         val responseLiveData = repoViewModel.loadMoreRepos()
         responseLiveData.observe(this, {
             if (it != null) {
+                adapter.updateList(it)
                 adapter.setIsLoading(false)
-                    adapter.updateList(it)
+
                 binding.progressBar.visibility = View.GONE
             }
         })
@@ -148,9 +168,6 @@ class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
         when (p0!!.id) {
             R.id.fabUp -> {
                 binding.repoRecyclerview.scrollToPosition(0)
-            }
-            R.id.ivSearch -> {
-                searchRepos(binding.etSearch.text.toString(), sortBy, orderBy)
             }
             R.id.fabSort -> {
                 dialog.show()

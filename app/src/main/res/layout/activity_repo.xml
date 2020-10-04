@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -11,42 +12,32 @@
             android:id="@+id/etSearch"
             android:layout_width="@dimen/zero"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/eight"
+            android:layout_marginStart="@dimen/five"
+            android:layout_marginEnd="@dimen/five"
             android:backgroundTint="@color/labels_text"
             android:ems="10"
             android:fontFamily="@font/roboto_regular"
             android:hint="@string/search"
+            android:imeOptions="actionSearch"
             android:inputType="textPersonName"
-            android:paddingLeft="@dimen/sixteen"
+            android:paddingStart="@dimen/two"
             android:paddingTop="@dimen/ten"
-            android:paddingRight="@dimen/sixteen"
-            android:paddingBottom="@dimen/ten"
+            android:paddingEnd="@dimen/two"
+            android:textAlignment="center"
             android:textColor="@color/labels_text"
             android:textColorHint="@color/creator_text"
             android:textSize="@dimen/sixteenSp"
-            app:layout_constraintEnd_toStartOf="@+id/ivSearch"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/ivSearch"
-            android:layout_width="@dimen/forty"
-            android:layout_height="@dimen/forty"
-            android:layout_gravity="center_vertical"
-            android:layout_marginTop="@dimen/eight"
-            android:layout_marginEnd="@dimen/two"
-            android:layout_marginRight="@dimen/two"
-            android:padding="@dimen/eight"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_search" />
 
         <me.zhanghai.android.materialprogressbar.MaterialProgressBar
             android:id="@+id/progressBar"
             style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal"
             android:layout_width="match_parent"
             android:layout_height="4dp"
-            android:layout_alignParentBottom="true"
+            android:layout_marginStart="9dp"
+            android:layout_marginEnd="9dp"
             android:indeterminate="true"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -54,20 +45,28 @@
             app:mpb_progressStyle="horizontal"
             app:mpb_useIntrinsicPadding="false" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/repo_recyclerview"
+        <com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
             android:layout_width="@dimen/zero"
             android:layout_height="@dimen/zero"
-            android:layout_marginTop="@dimen/eight"
-            android:background="@color/recyclerview_background"
-            android:fadingEdge="horizontal"
-            android:fadingEdgeLength="30dp"
-            android:requiresFadingEdge="vertical"
-            android:visibility="visible"
+            android:layout_marginTop="@dimen/ten"
+            app:handleDrawable="@drawable/thumb"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/progressBar" />
+            app:layout_constraintTop_toBottomOf="@+id/progressBar">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/repo_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/three"
+                android:layout_marginEnd="@dimen/three"
+                android:background="@color/recyclerview_background"
+                android:fadingEdge="horizontal"
+                android:fadingEdgeLength="60dp"
+                android:requiresFadingEdge="vertical"
+                android:visibility="visible" />
+        </com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/promptLayout"
@@ -80,43 +79,36 @@
 
             <TextView
                 android:id="@+id/textView"
+                style="@style/TextAppearance.AppCompat.Large"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorAccent"
-                style="@style/TextAppearance.AppCompat.Large"
                 android:text="Loading repositories..."
+                android:textColor="@color/colorAccent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
+        <ImageView
             android:id="@+id/fabUp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|start"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginBottom="10dp"
-            android:backgroundTint="@color/fab"
-            android:tint="@color/labels_text"
+            android:layout_marginBottom="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/fabSort"
             app:layout_constraintStart_toStartOf="parent"
             app:srcCompat="@drawable/ic_arrow_up" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
+        <ImageView
             android:id="@+id/fabSort"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"
-            android:backgroundTint="@color/fab"
-            android:tint="@color/labels_text"
+            android:layout_marginBottom="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/fabUp"
             app:srcCompat="@drawable/ic_sort" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

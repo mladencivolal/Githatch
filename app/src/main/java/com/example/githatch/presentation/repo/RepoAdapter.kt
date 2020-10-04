@@ -24,7 +24,7 @@ class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolea
         var pageLength = 5
 
         if (isRepoActivity) {
-            buffer = 20
+            buffer = 0
             pageLength = 5
         }
 
