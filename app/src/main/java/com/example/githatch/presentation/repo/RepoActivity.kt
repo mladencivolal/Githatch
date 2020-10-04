@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -112,6 +113,7 @@ class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
 
     private fun searchRepos(searchPhrase: String, sortBy: String, orderBy: String) {
         binding.progressBar.visibility = View.VISIBLE
+        Log.i("Mytag", "searchRepos: ")
 
         this.searchPhrase = searchPhrase
         this.sortBy = sortBy
