@@ -156,9 +156,8 @@ class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
         val responseLiveData = repoViewModel.loadMoreRepos()
         responseLiveData.observe(this, {
             if (it != null) {
-                adapter.updateList(it)
+                if(it.size > 5) {adapter.updateList(it)}
                 adapter.setIsLoading(false)
-
                 binding.progressBar.visibility = View.GONE
             }
         })
