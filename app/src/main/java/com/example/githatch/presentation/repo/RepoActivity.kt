@@ -111,6 +111,8 @@ class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
     }
 
     private fun searchRepos(searchPhrase: String, sortBy: String, orderBy: String) {
+        binding.progressBar.visibility = View.VISIBLE
+
         this.searchPhrase = searchPhrase
         this.sortBy = sortBy
         this.orderBy = orderBy
