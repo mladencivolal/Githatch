@@ -2,7 +2,6 @@ package com.example.githatch.presentation.repo
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
@@ -13,14 +12,17 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.githatch.R
+import com.example.githatch.data.model.owner.Owner
 import com.example.githatch.data.model.repo.Repo
 import com.example.githatch.databinding.ActivityRepoBinding
 import com.example.githatch.helpers.Helper
 import com.example.githatch.presentation.detail.DetailActivity
 import com.example.githatch.presentation.di.Injector
+import com.example.githatch.presentation.owner.OwnerActivity
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.layout_sort_sheet.view.*
 import javax.inject.Inject
+
 
 class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
     RepoAdapter.OnItemClickListener, View.OnClickListener {
@@ -156,7 +158,9 @@ class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
         val responseLiveData = repoViewModel.loadMoreRepos()
         responseLiveData.observe(this, {
             if (it != null) {
-                if(it.size > 5) {adapter.updateList(it)}
+                if (it.size > 5) {
+                    adapter.updateList(it)
+                }
                 adapter.setIsLoading(false)
                 binding.progressBar.visibility = View.GONE
             }
@@ -206,12 +210,12 @@ class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
         }
     }
 
-    override fun onItemClick(repo: Repo, v: View) {
-        when (v.id) {
-            R.id.ivRepoLink -> {
-                launchBrowserActivity(repo)
+    override fun onItemClick(repo: Repo, view: View) {
+        when (view.id) {
+            R.id.ivRepoAuthor -> {
+                launchOwnerActivity(repo.owner)
             }
-            else -> {
+            R.id.tvRepoName -> {
                 launchDetailActivity(repo)
             }
         }
@@ -223,10 +227,10 @@ class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
         startActivity(intent)
     }
 
-    private fun launchBrowserActivity(repo: Repo) {
-        val webpage: Uri = Uri.parse(repo.htmlUrl)
-        val intent = Intent(Intent.ACTION_VIEW, webpage)
-        if (intent.resolveActivity(packageManager) != null) startActivity(intent)
+    private fun launchOwnerActivity(owner: Owner) {
+        val intent = Intent(this, OwnerActivity::class.java)
+        intent.putExtra("owner", owner)
+        startActivity(intent)
     }
 }
 

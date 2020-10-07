@@ -26,4 +26,6 @@
     <string name="watch_label">Watch</string>
     <string name="issues_label">Issues</string>
     <string name="fork_label">Fork</string>
+    <string name="star_label">Star</string>
+
 </resources>

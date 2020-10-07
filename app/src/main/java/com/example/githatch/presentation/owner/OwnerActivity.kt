@@ -86,7 +86,7 @@ class OwnerActivity : AppCompatActivity(), View.OnClickListener,
     override fun onClick(p0: View?) {
     }
 
-    override fun onItemClick(repo: Repo, v: View) {
+    override fun onItemClick(repo: Repo, view:View) {
         launchDetailActivity(repo)
     }
 

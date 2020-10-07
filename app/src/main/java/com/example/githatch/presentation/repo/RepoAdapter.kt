@@ -1,8 +1,12 @@
 package com.example.githatch.presentation.repo
 
+import android.animation.AnimatorInflater
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -11,6 +15,11 @@ import com.example.githatch.R
 import com.example.githatch.data.model.repo.Repo
 import com.example.githatch.databinding.LayoutItemRepositoryBinding
 import com.example.githatch.helpers.Helper
+import kotlinx.android.synthetic.main.layout_item_repository.view.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolean) :
     RecyclerView.Adapter<RepoAdapter.MyViewHolder>() {
@@ -25,7 +34,7 @@ class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolea
 
         if (isRepoActivity) {
             buffer = 0
-            pageLength = 5
+            pageLength = 10
         }
 
         if (recyclerView.layoutManager is LinearLayoutManager) {
@@ -85,7 +94,7 @@ class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolea
     }
 
     interface OnItemClickListener {
-        fun onItemClick(repo: Repo, v: View)
+        fun onItemClick(repo: Repo, view:View)
     }
 
     inner class MyViewHolder(
@@ -96,10 +105,10 @@ class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolea
 
         init {
             itemView.setOnClickListener(this)
-            binding.ivRepoLink.setOnClickListener(this)
         }
 
         fun bind(repo: Repo) {
+            binding.myFlipView.setFlipped(false)
             binding.tvRepoName.text = repo.name
             binding.tvRepoName.isSelected = true
             binding.tvAuthorName.text = Helper.textFormatter(
@@ -110,6 +119,7 @@ class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolea
             binding.tvWatch.text = Helper.numberFormatter(repo.watchersCount)
             binding.tvIssue.text = Helper.numberFormatter(repo.openIssues)
             binding.tvFork.text = Helper.numberFormatter(repo.forksCount)
+            binding.tvLanguage.text = repo.language
 
             if (isRepoActivity) {
                 val imageURL = repo.owner.avatarUrl
@@ -119,10 +129,35 @@ class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolea
             } else {
                 binding.ivRepoAuthor.visibility = View.GONE
             }
+
+            binding.root.findViewById<ImageView>(R.id.ivRepoAuthor).setOnClickListener(View.OnClickListener {
+                onItemClickListener.onItemClick(repoList[bindingAdapterPosition], binding.root.findViewById<ImageView>(R.id.ivRepoAuthor))
+            })
+            binding.root.findViewById<TextView>(R.id.tvRepoName).setOnClickListener(View.OnClickListener {
+                onItemClickListener.onItemClick(repoList[bindingAdapterPosition], binding.root.findViewById<ImageView>(R.id.tvRepoName))
+            })
         }
 
         override fun onClick(v: View?) {
-            onItemClickListener.onItemClick(repoList[adapterPosition], v!!)
+            when (v) {
+                binding.myFlipView -> {
+                    binding.myFlipView.flip()
+                    CoroutineScope(Dispatchers.Main).launch {
+                        if (binding.myFlipView.isFlipped()) {
+                            delay(300)
+                            binding.tvDescription.text =
+                                repoList[bindingAdapterPosition].description.toString()
+                            binding.ivRepoAuthor.isClickable = false
+                            binding.tvRepoName.isClickable = false
+                        } else {
+                            delay(300)
+                            binding.ivRepoAuthor.isClickable = true
+                            binding.tvRepoName.isClickable = true
+                            binding.tvDescription.text = ""
+                        }
+                    }
+                }
+            }
         }
     }
 }
