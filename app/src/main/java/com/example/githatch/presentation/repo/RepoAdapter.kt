@@ -94,7 +94,7 @@ class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolea
     }
 
     interface OnItemClickListener {
-        fun onItemClick(repo: Repo, view:View)
+        fun onItemClick(repo: Repo, view: View)
     }
 
     inner class MyViewHolder(
@@ -130,30 +130,40 @@ class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolea
                 binding.ivRepoAuthor.visibility = View.GONE
             }
 
-            binding.root.findViewById<ImageView>(R.id.ivRepoAuthor).setOnClickListener(View.OnClickListener {
-                onItemClickListener.onItemClick(repoList[bindingAdapterPosition], binding.root.findViewById<ImageView>(R.id.ivRepoAuthor))
-            })
-            binding.root.findViewById<TextView>(R.id.tvRepoName).setOnClickListener(View.OnClickListener {
-                onItemClickListener.onItemClick(repoList[bindingAdapterPosition], binding.root.findViewById<ImageView>(R.id.tvRepoName))
-            })
+            binding.root.findViewById<ImageView>(R.id.ivRepoAuthor)
+                .setOnClickListener(View.OnClickListener {
+                    onItemClickListener.onItemClick(
+                        repoList[bindingAdapterPosition],
+                        binding.root.findViewById<ImageView>(R.id.ivRepoAuthor)
+                    )
+                })
+            binding.root.findViewById<TextView>(R.id.tvRepoName)
+                .setOnClickListener(View.OnClickListener {
+                    onItemClickListener.onItemClick(
+                        repoList[bindingAdapterPosition],
+                        binding.root.findViewById<ImageView>(R.id.tvRepoName)
+                    )
+                })
         }
 
         override fun onClick(v: View?) {
-            when (v) {
-                binding.myFlipView -> {
-                    binding.myFlipView.flip()
-                    CoroutineScope(Dispatchers.Main).launch {
-                        if (binding.myFlipView.isFlipped()) {
-                            delay(300)
-                            binding.tvDescription.text =
-                                repoList[bindingAdapterPosition].description.toString()
-                            binding.ivRepoAuthor.isClickable = false
-                            binding.tvRepoName.isClickable = false
-                        } else {
-                            delay(300)
-                            binding.ivRepoAuthor.isClickable = true
-                            binding.tvRepoName.isClickable = true
-                            binding.tvDescription.text = ""
+            if (isRepoActivity) {
+                when (v) {
+                    binding.myFlipView -> {
+                        binding.myFlipView.flip()
+                        CoroutineScope(Dispatchers.Main).launch {
+                            if (binding.myFlipView.isFlipped()) {
+                                delay(300)
+                                binding.tvDescription.text =
+                                    repoList[bindingAdapterPosition].description.toString()
+                                binding.ivRepoAuthor.isClickable = false
+                                binding.tvRepoName.isClickable = false
+                            } else {
+                                delay(300)
+                                binding.ivRepoAuthor.isClickable = true
+                                binding.tvRepoName.isClickable = true
+                                binding.tvDescription.text = ""
+                            }
                         }
                     }
                 }
