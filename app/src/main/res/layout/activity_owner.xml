@@ -1,40 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/recyclerview_background"
-    android:fillViewport="true">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cvTitle"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/three"
-            android:backgroundTint="@color/cardview"
-            app:cardCornerRadius="@dimen/five"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:id="@+id/ivLink"
-                android:layout_margin="@dimen/two"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_browser"
-                android:layout_gravity="end"
-                />
+            android:layout_height="match_parent"
+            android:background="@color/recyclerview_background">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clAuthor"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:layout_marginStart="9dp"
+                android:layout_marginEnd="9dp"
+                android:background="@color/cardview"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/ivLink"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_margin="@dimen/two"
+                    android:src="@drawable/ic_browser"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/ivRepoAuthor"
@@ -61,63 +55,64 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textColor="@color/creator_text"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/ivRepoAuthor" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cvRepos"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="@dimen/five"
-            app:layout_constraintTop_toBottomOf="@+id/cvTitle">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/recyclerview_background"
-                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/tvRepositories"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/two"
                     android:gravity="center_horizontal"
                     android:text="@string/repositories"
                     android:textAlignment="center"
                     android:textColor="#FFF"
-                    android:textStyle="bold" />
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/one"
-                    android:background="@color/cardview_shadow_start_color" />
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerview"
-                    android:fadingEdge="horizontal"
-                    android:requiresFadingEdge="vertical"
-                    android:fadingEdgeLength="30dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginBottom="@dimen/five"
+                    app:layout_constraintTop_toBottomOf="@id/tvAuthor" />
+
                 <me.zhanghai.android.materialprogressbar.MaterialProgressBar
                     android:id="@+id/progressBar"
+                    style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="4dp"
                     android:indeterminate="true"
+                    app:layout_constraintTop_toBottomOf="@id/tvRepositories"
                     app:mpb_progressStyle="horizontal"
-                    app:mpb_useIntrinsicPadding="false"
-                    style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal" />
-            </LinearLayout>
+                    app:mpb_useIntrinsicPadding="false" />
 
-        </androidx.cardview.widget.CardView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
+                android:layout_width="@dimen/zero"
+                android:layout_height="@dimen/zero"
+                android:layout_marginTop="@dimen/ten"
+                app:handleDrawable="@drawable/thumb"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/clAuthor">
 
-</androidx.core.widget.NestedScrollView>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/three"
+                    android:layout_marginEnd="@dimen/three"
+                    android:background="@color/recyclerview_background"
+                    android:fadingEdge="horizontal"
+                    android:fadingEdgeLength="60dp"
+                    android:requiresFadingEdge="vertical"
+                    android:visibility="visible" />
+
+            </com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
 </layout>

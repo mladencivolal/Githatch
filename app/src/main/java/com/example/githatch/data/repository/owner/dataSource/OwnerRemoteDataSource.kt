@@ -4,5 +4,5 @@ import com.example.githatch.data.model.repo.Repo
 import retrofit2.Response
 
 interface OwnerRemoteDataSource {
-    suspend fun getReposFromAuthor(ownerName: String, pageLength:Int, pageNum:Int): Response<List<Repo>>
+    suspend fun getReposFromAuthor(ownerName: String, pageNum:Int): Response<List<Repo>>
 }

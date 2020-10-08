@@ -10,16 +10,16 @@ class OwnerRepositoryImpl(private val ownerRemoteDataSource: OwnerRemoteDataSour
     OwnerRepository {
     private var reposFromAuthor: List<Repo> = emptyList()
     private var pageNum: Int = 1
-    private var pageLength: Int = 50
     private lateinit var ownerName: String
 
     @SuppressLint("LogNotTimber")
     override suspend fun getReposFromAuthor(ownerName: String): List<Repo>? {
         resetData()
         this.ownerName = ownerName
+
         try {
             val response =
-                ownerRemoteDataSource.getReposFromAuthor(ownerName, pageLength, pageNum)
+                ownerRemoteDataSource.getReposFromAuthor(ownerName, pageNum)
             val body = response.body()
 
             if (body != null) {
@@ -32,11 +32,11 @@ class OwnerRepositoryImpl(private val ownerRemoteDataSource: OwnerRemoteDataSour
     }
 
     @SuppressLint("LogNotTimber")
-    override suspend fun loadMoreRepos(): List<Repo>? {
+    override suspend fun loadMoreReposFromAuthor(): List<Repo>? {
         try {
             this.pageNum++
             val response =
-                ownerRemoteDataSource.getReposFromAuthor(ownerName, pageLength, pageNum)
+                ownerRemoteDataSource.getReposFromAuthor(ownerName, pageNum)
             val body = response.body()
 
             if (body != null) {
@@ -49,7 +49,6 @@ class OwnerRepositoryImpl(private val ownerRemoteDataSource: OwnerRemoteDataSour
     }
 
     private fun resetData() {
-        pageLength = 50
         pageNum = 1
     }
 }

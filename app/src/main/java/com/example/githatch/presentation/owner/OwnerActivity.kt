@@ -21,12 +21,12 @@ import com.example.githatch.presentation.repo.RepoAdapter
 import javax.inject.Inject
 
 class OwnerActivity : AppCompatActivity(), View.OnClickListener,
-    RepoAdapter.OnItemClickListener, RepoAdapter.OnLoadMoreListener {
+    OwnerRepoAdapter.OnItemClickListener, OwnerRepoAdapter.OnLoadMoreListener {
     @Inject
     lateinit var factory: OwnerViewModelFactory
     private lateinit var ownerViewModel: OwnerViewModel
     private lateinit var binding: ActivityOwnerBinding
-    private lateinit var adapter: RepoAdapter
+    private lateinit var adapter: OwnerRepoAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +45,7 @@ class OwnerActivity : AppCompatActivity(), View.OnClickListener,
 
     private fun initRecyclerView() {
         binding.recyclerview.layoutManager = LinearLayoutManager(this)
-        adapter = RepoAdapter(binding.recyclerview, false)
+        adapter = OwnerRepoAdapter(binding.recyclerview)
         adapter.onItemClickListener = this
         adapter.onLoadMoreListener = this
         binding.recyclerview.adapter = adapter
@@ -91,13 +91,15 @@ class OwnerActivity : AppCompatActivity(), View.OnClickListener,
     }
 
     override fun onLoadMore() {
+        binding.progressBar.visibility = View.VISIBLE
         val responseLiveData = ownerViewModel.loadMoreReposFromAuthor()
         responseLiveData.observe(this, {
             if (it != null) {
                 adapter.setIsLoading(false)
-               // if (it.size > 5) {
+                if (it.size > 5) {
                     adapter.updateList(it)
-                //}
+                }
+                adapter.setIsLoading(false)
                 binding.progressBar.visibility = View.GONE
             }
         })

@@ -23,10 +23,9 @@ interface GitHubService {
         @Path("ownerName") ownerName: String, @Path("repoName") repoName: String
     ): Response<List<Owner>>
 
-    @GET("/users/{ownerName}/repos")
+    @GET("/users/{ownerName}/repos?sort=updated&order=desc")
     suspend fun getReposFromAuthor(
         @Path("ownerName") ownerName: String,
-        @Query("per_page") per_page: Int,
         @Query("page") page: Int
     ): Response<List<Repo>>
 }

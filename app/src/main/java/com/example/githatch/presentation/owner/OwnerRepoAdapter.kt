@@ -1,4 +1,4 @@
-package com.example.githatch.presentation.repo
+package com.example.githatch.presentation.owner
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,18 +9,13 @@ import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.githatch.R
 import com.example.githatch.data.model.repo.Repo
 import com.example.githatch.databinding.LayoutItemRepositoryBinding
 import com.example.githatch.helpers.Helper
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
-class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolean) :
-    RecyclerView.Adapter<RepoAdapter.MyViewHolder>() {
+class OwnerRepoAdapter (recyclerView: RecyclerView) :
+    RecyclerView.Adapter<OwnerRepoAdapter.MyViewHolder>() {
     private val repoList: MutableList<Repo> = mutableListOf()
     private var loading: Boolean = false
     lateinit var onItemClickListener: OnItemClickListener
@@ -29,11 +24,6 @@ class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolea
     init {
         var buffer = 0
         var pageLength = 5
-
-        if (isRepoActivity) {
-            buffer = 0
-            pageLength = 5
-        }
 
         if (recyclerView.layoutManager is LinearLayoutManager) {
             val linearLayoutManager = recyclerView.layoutManager as LinearLayoutManager
@@ -46,13 +36,13 @@ class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolea
                     val lastVisibleItem =
                         linearLayoutManager.findLastCompletelyVisibleItemPosition()
 
-                    Log.i("MYTAG", "repoadapter")
+                    Log.i("MYTAG", "ownerrepoadapter")
                     Log.i("MYTAG", "loading: $loading ")
                     Log.i("MYTAG", "total num of adapter items: ${totalItemCount-1} ")
                     Log.i("MYTAG", "lastvisibleitem position: $lastVisibleItem ")
                     Log.i("MYTAG", "repoList size: ${repoList.size} ")
 
-                    if (!loading && totalItemCount - 1 <= lastVisibleItem && lastVisibleItem > repoList.size - pageLength) {
+                     if (!loading && totalItemCount - 1 <= lastVisibleItem && lastVisibleItem > repoList.size - pageLength) {
                         onLoadMoreListener.onLoadMore()
                         loading = true
                     }
@@ -61,9 +51,10 @@ class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolea
         }
     }
 
-    fun setList(movies: List<Repo>) {
+
+    fun setList(repos: List<Repo>) {
         repoList.clear()
-        repoList.addAll(movies)
+        repoList.addAll(repos)
         notifyDataSetChanged()
     }
 
@@ -80,7 +71,7 @@ class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolea
             parent,
             false
         )
-        return MyViewHolder(binding, isRepoActivity)
+        return MyViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
@@ -102,8 +93,7 @@ class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolea
     }
 
     inner class MyViewHolder(
-        val binding: LayoutItemRepositoryBinding,
-        private val isRepoActivity: Boolean
+        val binding: LayoutItemRepositoryBinding
     ) :
         RecyclerView.ViewHolder(binding.root), View.OnClickListener {
 
@@ -125,15 +115,6 @@ class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolea
             binding.tvFork.text = Helper.numberFormatter(repo.forksCount)
             binding.tvLanguage.text = repo.language
 
-            if (isRepoActivity) {
-                val imageURL = repo.owner.avatarUrl
-                Glide.with(binding.ivRepoAuthor.context)
-                    .load(imageURL)
-                    .into(binding.ivRepoAuthor)
-            } else {
-                binding.ivRepoAuthor.visibility = View.GONE
-            }
-
             binding.root.findViewById<ImageView>(R.id.ivRepoAuthor)
                 .setOnClickListener(View.OnClickListener {
                     onItemClickListener.onItemClick(
@@ -148,30 +129,12 @@ class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolea
                         binding.root.findViewById<ImageView>(R.id.tvRepoName)
                     )
                 })
+            binding.ivRepoAuthor.visibility = View.GONE
         }
 
         override fun onClick(v: View?) {
-            if (isRepoActivity) {
-                when (v) {
-                    binding.myFlipView -> {
-                        binding.myFlipView.flip()
-                        CoroutineScope(Dispatchers.Main).launch {
-                            if (binding.myFlipView.isFlipped()) {
-                                delay(300)
-                                binding.tvDescription.text =
-                                    repoList[bindingAdapterPosition].description.toString()
-                                binding.ivRepoAuthor.isClickable = false
-                                binding.tvRepoName.isClickable = false
-                            } else {
-                                delay(300)
-                                binding.ivRepoAuthor.isClickable = true
-                                binding.tvRepoName.isClickable = true
-                                binding.tvDescription.text = ""
-                            }
-                        }
-                    }
-                }
-            }
+
         }
     }
 }
+

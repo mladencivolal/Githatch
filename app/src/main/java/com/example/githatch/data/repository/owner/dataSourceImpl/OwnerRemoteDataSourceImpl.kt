@@ -6,7 +6,7 @@ import com.example.githatch.data.repository.owner.dataSource.OwnerRemoteDataSour
 import retrofit2.Response
 
 class OwnerRemoteDataSourceImpl(private val gitHubService: GitHubService):OwnerRemoteDataSource {
-    override suspend fun getReposFromAuthor(ownerName: String, pageLength:Int, pageNum:Int): Response<List<Repo>> {
-        return gitHubService.getReposFromAuthor(ownerName, pageLength, pageNum)
+    override suspend fun getReposFromAuthor(ownerName: String, pageNum:Int): Response<List<Repo>> {
+        return gitHubService.getReposFromAuthor(ownerName, pageNum)
     }
 }
