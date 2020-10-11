@@ -125,6 +125,7 @@ class OwnerRepoAdapter (recyclerView: RecyclerView) :
                     )
                 })
             binding.ivRepoAuthor.visibility = View.GONE
+            binding.tvAuthorName.visibility = View.GONE
         }
 
         override fun onClick(v: View?) {
