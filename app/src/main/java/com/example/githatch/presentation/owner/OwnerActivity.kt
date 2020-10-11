@@ -18,6 +18,7 @@ import com.example.githatch.helpers.Helper
 import com.example.githatch.presentation.detail.DetailActivity
 import com.example.githatch.presentation.di.Injector
 import com.example.githatch.presentation.repo.RepoAdapter
+import kotlinx.android.synthetic.main.activity_owner.*
 import javax.inject.Inject
 
 class OwnerActivity : AppCompatActivity(), View.OnClickListener,
@@ -38,6 +39,8 @@ class OwnerActivity : AppCompatActivity(), View.OnClickListener,
         ownerViewModel = ViewModelProvider(this, factory)
             .get(OwnerViewModel::class.java)
 
+        binding.fabUp.setOnClickListener(this)
+
         initRecyclerView()
 
         populateWithIntentData()
@@ -54,8 +57,9 @@ class OwnerActivity : AppCompatActivity(), View.OnClickListener,
     private fun populateWithIntentData() {
         val author = intent.getParcelableExtra<Owner>("owner")
 
-        binding.tvAuthor.text = Helper.textFormatter("User ${author!!.login}", 4, "#FAFAFA")
-        binding.tvRepositories.text = "${author.login}'s repositories"
+        binding.tvAuthor.text = author!!.login
+        binding.tvRepositories.text = "${author.contributions} contributions"
+        binding.tvResults.text = "${author.login}'s top rated repositories"
 
         val imageURL = author.avatarUrl
         Glide.with(binding.ivRepoAuthor.context)
@@ -84,6 +88,9 @@ class OwnerActivity : AppCompatActivity(), View.OnClickListener,
     }
 
     override fun onClick(p0: View?) {
+        when(p0!!.id) {
+            R.id.fabUp -> recyclerview.scrollToPosition(0)
+        }
     }
 
     override fun onItemClick(repo: Repo, view:View) {

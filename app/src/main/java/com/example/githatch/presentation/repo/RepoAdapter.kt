@@ -52,7 +52,7 @@ class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolea
                     Log.i("MYTAG", "lastvisibleitem position: $lastVisibleItem ")
                     Log.i("MYTAG", "repoList size: ${repoList.size} ")
 
-                    if (!loading && totalItemCount - 1 <= lastVisibleItem && lastVisibleItem > repoList.size - pageLength) {
+                    if (!loading && totalItemCount - 1 <= lastVisibleItem + 30 && lastVisibleItem > repoList.size - 5) {
                         onLoadMoreListener.onLoadMore()
                         loading = true
                     }
@@ -115,13 +115,8 @@ class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolea
             binding.myFlipView.setFlipped(false)
             binding.tvRepoName.text = repo.name
             binding.tvRepoName.isSelected = true
-            binding.tvAuthorName.text = Helper.textFormatter(
-                "Author: ${repo.owner.login}",
-                8,
-                "#FAFAFA"
-            )
             binding.tvWatch.text = Helper.numberFormatter(repo.watchersCount)
-            binding.tvIssue.text = Helper.numberFormatter(repo.openIssues)
+            binding.tvDateUpdated.text = Helper.dateFormatterAlt(repo.updatedAt)
             binding.tvFork.text = Helper.numberFormatter(repo.forksCount)
             binding.tvLanguage.text = repo.language
 
@@ -130,8 +125,14 @@ class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolea
                 Glide.with(binding.ivRepoAuthor.context)
                     .load(imageURL)
                     .into(binding.ivRepoAuthor)
+                binding.tvAuthorName.text = Helper.textFormatter(
+                    "Author: ${repo.owner.login}",
+                    8,
+                    "#FAFAFA"
+                )
             } else {
                 binding.ivRepoAuthor.visibility = View.GONE
+                binding.tvAuthorName.visibility = View.GONE
             }
 
             binding.root.findViewById<ImageView>(R.id.ivRepoAuthor)

@@ -19,31 +19,32 @@
             app:cardCornerRadius="@dimen/two">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:padding="6dp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:padding="6dp">
+
                 <TextView
                     android:id="@+id/lbDescription"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="6dp"
                     android:fontFamily="@font/roboto_light"
+                    android:text="@string/Description"
+                    android:textAlignment="center"
                     android:textColor="@color/creator_text"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="6dp"
-                    android:text="@string/Description"
-                    android:textAlignment="center" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/tvDescription"
-                    app:layout_constraintTop_toBottomOf="@id/lbDescription"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="6dp"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/lbDescription" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
@@ -57,50 +58,57 @@
             app:cardBackgroundColor="@color/cardview"
             app:cardCornerRadius="@dimen/two">
 
-            <TextView
-                android:id="@+id/tvLanguage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_margin="@dimen/eight"
-                android:textColor="#33BBFF" />
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/eight"
+                android:layout_margin="@dimen/five"
                 android:padding="@dimen/zero">
+
+                <TextView
+                    android:id="@+id/tvLanguage"
+                    android:text="Language"
+                    android:layout_margin="@dimen/five"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:textColor="#33BBFF" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/ivRepoAuthor"
-                    android:layout_width="@dimen/eighty"
-                    android:layout_height="@dimen/eighty"
+                    android:layout_width="@dimen/forty"
+                    android:layout_height="@dimen/forty"
                     app:civ_border_color="@color/colorAccent"
+                    android:layout_margin="@dimen/five"
                     app:civ_border_width="@dimen/one"
-                    app:layout_constraintBottom_toTopOf="@id/clBottomSheet"
+                    app:layout_constraintBottom_toTopOf="@id/tvRepoName"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvAuthorName"
                     tools:src="@tools:sample/avatars" />
 
                 <TextView
                     android:id="@+id/tvRepoName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/eight"
+                    android:layout_margin="@dimen/five"
+                    android:text="Repository Name"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     app:layout_constraintBottom_toTopOf="@id/clBottomSheet"
-                    app:layout_constraintStart_toEndOf="@+id/ivRepoAuthor"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/ivRepoAuthor" />
 
                 <TextView
                     android:id="@+id/tvAuthorName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/eight"
-                    android:fontFamily="@font/roboto_light"
+                    android:layout_margin="@dimen/five"
                     android:textColor="@color/creator_text"
-                    app:layout_constraintStart_toEndOf="@+id/ivRepoAuthor"
-                    app:layout_constraintTop_toBottomOf="@+id/tvRepoName" />
+                    android:fontFamily="@font/roboto_light"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/ivRepoAuthor"
+                    app:layout_constraintStart_toStartOf="parent"
+
+                    />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/clBottomSheet"
@@ -116,11 +124,13 @@
                         android:id="@+id/ivWatch"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/lbWatch"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_star" />
+                        app:srcCompat="@drawable/ic_star"
+                        tools:layout_editor_absoluteY="5dp" />
 
                     <TextView
                         android:id="@+id/lbWatch"
@@ -131,7 +141,8 @@
                         app:layout_constraintEnd_toStartOf="@+id/tvWatch"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toEndOf="@+id/ivWatch"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:layout_editor_absoluteY="7dp" />
 
                     <TextView
                         android:id="@+id/tvWatch"
@@ -139,54 +150,24 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/colorAccent"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/ivIssue"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@+id/lbWatch"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-
-                    <ImageView
-                        android:id="@+id/ivIssue"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintEnd_toStartOf="@+id/lbIssue"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@+id/tvWatch"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_issue" />
-
-                    <TextView
-                        android:id="@+id/lbIssue"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/issues_label"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/tvIssue"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@+id/ivIssue"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/tvIssue"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/colorAccent"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/ivFork"
                         app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@+id/lbIssue"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintStart_toEndOf="@+id/lbWatch"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:layout_editor_absoluteY="7dp" />
+
 
                     <ImageView
                         android:id="@+id/ivFork"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/lbFork"
                         app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@+id/tvIssue"
+                        app:layout_constraintStart_toEndOf="@+id/tvWatch"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_fork" />
+                        app:srcCompat="@drawable/ic_fork"
+                        tools:layout_editor_absoluteY="5dp" />
 
                     <TextView
                         android:id="@+id/lbFork"
@@ -197,7 +178,8 @@
                         app:layout_constraintEnd_toStartOf="@+id/tvFork"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toEndOf="@+id/ivFork"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:layout_editor_absoluteY="7dp" />
 
                     <TextView
                         android:id="@+id/tvFork"
@@ -205,10 +187,47 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/colorAccent"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/ivUpdated"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toEndOf="@+id/lbFork"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:layout_editor_absoluteY="7dp" />
+
+                    <ImageView
+                        android:id="@+id/ivUpdated"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/lbUpdated"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/tvFork"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_update"
+                        tools:layout_editor_absoluteY="5dp" />
+
+                    <TextView
+                        android:id="@+id/lbUpdated"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/update_label"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/tvDateUpdated"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/ivUpdated"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:layout_editor_absoluteY="7dp" />
+
+                    <TextView
+                        android:id="@+id/tvDateUpdated"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorAccent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/lbUpdated"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:layout_editor_absoluteY="7dp" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -19,6 +19,7 @@ import com.example.githatch.databinding.ActivityDetailBinding
 import com.example.githatch.helpers.Helper
 import com.example.githatch.presentation.di.Injector
 import com.example.githatch.presentation.owner.OwnerActivity
+import kotlinx.android.synthetic.main.activity_detail.*
 import javax.inject.Inject
 
 class DetailActivity : AppCompatActivity(),
@@ -40,6 +41,8 @@ class DetailActivity : AppCompatActivity(),
         detailViewModel = ViewModelProvider(this, factory)
             .get(DetailViewModel::class.java)
 
+        binding.fabUp.setOnClickListener{recyclerview.scrollToPosition(0)}
+
         initRecyclerView()
 
         populateWithIntentData()
@@ -60,18 +63,10 @@ class DetailActivity : AppCompatActivity(),
         repoData = intent.getParcelableExtra("repo")!!
 
         binding.tvTitle.text = repoData.name
-        binding.tvAuthor.text = Helper.textFormatter("Author ${repoData.owner.login}", 6, "#FAFAFA")
-        binding.tvLang.text = Helper.textFormatter("Language ${repoData.language}", 8, "#33BBFF")
-        binding.tvDateCreated.text = Helper.textFormatter(
-            "Initial Commit ${Helper.dateFormatter(repoData.createdAt)}",
-            14,
-            "#FAFAFA"
-        )
-        binding.tvDateUpdated.text = Helper.textFormatter(
-            "Last Update ${Helper.dateFormatter(repoData.updatedAt)}",
-            11,
-            "#FAFAFA"
-        )
+        binding.tvAuthor.text = repoData.owner.login
+        binding.tvLang.text = repoData.language
+        binding.tvDateCreated.text = Helper.dateFormatter(repoData.createdAt)
+        binding.tvDateUpdated.text = Helper.dateFormatter(repoData.updatedAt)
         binding.tvWatch.text = Helper.numberFormatter(repoData.watchersCount)
         binding.tvFork.text = Helper.numberFormatter(repoData.forksCount)
         binding.tvIssue.text = Helper.numberFormatter(repoData.openIssues)
@@ -82,7 +77,7 @@ class DetailActivity : AppCompatActivity(),
             .load(imageURL)
             .into(binding.ivProfile)
 
-        binding.ivLink.setOnClickListener { launchBrowserActivity(repoData) }
+        //binding.ivLink.setOnClickListener { launchBrowserActivity(repoData) }
         binding.ivProfile.setOnClickListener { launchOwnerActivity(repoData.owner) }
     }
 

@@ -17,6 +17,7 @@
     <color name="description_text">#FAFAFA</color>
     <color name="labels_text">#FAFAFA</color>
     <color name="fab_background">#77000000</color>
+    <color name="lang_text">#33BBFF</color>
 
 
 </resources>

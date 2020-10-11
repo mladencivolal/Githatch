@@ -105,13 +105,8 @@ class OwnerRepoAdapter (recyclerView: RecyclerView) :
             binding.myFlipView.setFlipped(false)
             binding.tvRepoName.text = repo.name
             binding.tvRepoName.isSelected = true
-            binding.tvAuthorName.text = Helper.textFormatter(
-                "Author: ${repo.owner.login}",
-                8,
-                "#FAFAFA"
-            )
             binding.tvWatch.text = Helper.numberFormatter(repo.watchersCount)
-            binding.tvIssue.text = Helper.numberFormatter(repo.openIssues)
+            binding.tvDateUpdated.text = Helper.dateFormatterAlt(repo.updatedAt)
             binding.tvFork.text = Helper.numberFormatter(repo.forksCount)
             binding.tvLanguage.text = repo.language
 

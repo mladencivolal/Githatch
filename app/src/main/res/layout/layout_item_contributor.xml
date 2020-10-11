@@ -5,7 +5,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="@dimen/two">
+    android:paddingStart="@dimen/ten"
+    android:paddingEnd="@dimen/ten"
+    android:paddingTop="@dimen/two"
+    android:paddingBottom="@dimen/two">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/ivAuthorProfile"

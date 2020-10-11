@@ -49,6 +49,20 @@ class Helper {
             val fmt: DateTimeFormatter = DateTimeFormatter.ofPattern("d.MM.yyyy H:mm", Locale.ENGLISH)
             return fmt.format(z)
         }
+
+        fun dateFormatterAlt(date: String): String {
+            val parsed: ZonedDateTime = ZonedDateTime.parse(date)
+            val z = parsed.withZoneSameInstant(ZoneId.of("Europe/Vienna"))
+            val year = z.year
+            when (year) {
+                ZonedDateTime.now().year -> {
+                    val fmt: DateTimeFormatter =
+                        DateTimeFormatter.ofPattern("d.MM", Locale.ENGLISH)
+                    return fmt.format(z)
+                }
+                else -> return "~${ZonedDateTime.now().year - year}y ago"
+            }
+        }
     }
 
     internal enum class SortBy {
