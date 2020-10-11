@@ -13,6 +13,10 @@ import com.example.githatch.R
 import com.example.githatch.data.model.repo.Repo
 import com.example.githatch.databinding.LayoutItemRepositoryBinding
 import com.example.githatch.helpers.Helper
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class OwnerRepoAdapter (recyclerView: RecyclerView) :
     RecyclerView.Adapter<OwnerRepoAdapter.MyViewHolder>() {
@@ -124,6 +128,23 @@ class OwnerRepoAdapter (recyclerView: RecyclerView) :
                         binding.root.findViewById<ImageView>(R.id.tvRepoName)
                     )
                 })
+            binding.myFlipView.setOnClickListener {
+                binding.myFlipView.flip()
+                CoroutineScope(Dispatchers.Main).launch {
+                    if (binding.myFlipView.isFlipped()) {
+                        delay(300)
+                        binding.tvDescription.text =
+                            repoList[bindingAdapterPosition].description.toString()
+                        binding.ivRepoAuthor.isClickable = false
+                        binding.tvRepoName.isClickable = false
+                    } else {
+                        delay(300)
+                        binding.ivRepoAuthor.isClickable = true
+                        binding.tvRepoName.isClickable = true
+                        binding.tvDescription.text = ""
+                    }
+                }
+            }
             binding.ivRepoAuthor.visibility = View.GONE
             binding.tvAuthorName.visibility = View.GONE
         }
