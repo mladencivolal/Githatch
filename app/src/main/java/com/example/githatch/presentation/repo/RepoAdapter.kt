@@ -52,7 +52,7 @@ class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolea
                     Log.i("MYTAG", "lastvisibleitem position: $lastVisibleItem ")
                     Log.i("MYTAG", "repoList size: ${repoList.size} ")
 
-                    if (!loading && totalItemCount - 1 <= lastVisibleItem + 25  && lastVisibleItem > repoList.size - 5) {
+                    if (!loading && totalItemCount - 1 <= lastVisibleItem + 20  && lastVisibleItem > repoList.size - 20) {
                         onLoadMoreListener.onLoadMore()
                         loading = true
                     }
