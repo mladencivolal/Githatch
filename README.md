@@ -10,4 +10,4 @@ Home screen              |  Repository Screen      | Owner Screen               
 
 | Demo
 |:-------------------------:
-![](https://i.imgur.com/HLN9X1E.gif)
+![](https://imgur.com/vGfd2oZ.gif)
