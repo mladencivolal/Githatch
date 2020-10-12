@@ -8,6 +8,3 @@ Home screen              |  Repository Screen      | Owner Screen               
 :-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
 ![](https://imgur.com/O7GBPQJ.jpg)  |  ![](https://imgur.com/Xvh1RJd.jpg) | ![](https://imgur.com/t0ncEK2.jpg)| ![](https://imgur.com/XbDj2VH.jpg) |
 
-| Demo
-|:-------------------------:
-![](https://imgur.com/vGfd2oZ.gif)
