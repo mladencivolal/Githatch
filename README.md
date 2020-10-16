@@ -4,6 +4,7 @@ Kotlin app for browsing Github repositories.
 
 **Features:**
   -   
-Home screen              |  Repository Screen      | Author Screen                | Sorting
+Home screen              |  Repository Screen      | Owner Screen                | Sorting                   
 :-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
-![](https://imgur.com/XQ1eM2k.jpg)  |  ![](https://imgur.com/8aqG9jS.jpg) | ![](https://imgur.com/Gc4Sxhs.jpg)| ![](https://imgur.com/hFXpOCG.jpg)
+![](https://imgur.com/O7GBPQJ.jpg)  |  ![](https://imgur.com/Xvh1RJd.jpg) | ![](https://imgur.com/t0ncEK2.jpg)| ![](https://imgur.com/XbDj2VH.jpg) |
+
