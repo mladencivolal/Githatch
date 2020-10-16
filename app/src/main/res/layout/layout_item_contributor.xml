@@ -12,11 +12,9 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/ivAuthorProfile"
-        android:layout_width="@dimen/fifty"
-        android:layout_height="@dimen/fifty"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:layout_margin="@dimen/eight"
-        app:civ_border_color="@color/colorAccent"
-        app:civ_border_width="@dimen/one"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

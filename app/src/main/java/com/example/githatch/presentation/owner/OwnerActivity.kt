@@ -1,10 +1,14 @@
 package com.example.githatch.presentation.owner
 
+import android.animation.Animator
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
+import android.view.ViewAnimationUtils
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -14,12 +18,14 @@ import com.example.githatch.R
 import com.example.githatch.data.model.owner.Owner
 import com.example.githatch.data.model.repo.Repo
 import com.example.githatch.databinding.ActivityOwnerBinding
-import com.example.githatch.helpers.Helper
 import com.example.githatch.presentation.detail.DetailActivity
 import com.example.githatch.presentation.di.Injector
-import com.example.githatch.presentation.repo.RepoAdapter
 import kotlinx.android.synthetic.main.activity_owner.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.math.hypot
 
 class OwnerActivity : AppCompatActivity(), View.OnClickListener,
     OwnerRepoAdapter.OnItemClickListener, OwnerRepoAdapter.OnLoadMoreListener {
@@ -28,6 +34,12 @@ class OwnerActivity : AppCompatActivity(), View.OnClickListener,
     private lateinit var ownerViewModel: OwnerViewModel
     private lateinit var binding: ActivityOwnerBinding
     private lateinit var adapter: OwnerRepoAdapter
+    private lateinit var author: Owner
+
+    //REVEAL CARD
+    lateinit var alphaAnimation: Animation
+    var pixelDensity = 0f
+    var flag = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +56,65 @@ class OwnerActivity : AppCompatActivity(), View.OnClickListener,
         initRecyclerView()
 
         populateWithIntentData()
+
+        pixelDensity = resources.displayMetrics.density
+
+        alphaAnimation = AnimationUtils.loadAnimation(this, R.anim.alpha_anim)
     }
+
+    fun launchTwitter(view: View?) {
+        val imageButton = binding.launchTwitterAnimation
+        val revealView = binding.linearView
+        val layoutContent = binding.layoutContent
+
+        var x: Int = clAuthor.right
+        val y: Int = clAuthor.bottom
+        x -= (28 * pixelDensity + 16 * pixelDensity).toInt()
+        val hypotenuse =
+            hypot(clAuthor.width.toDouble(), clAuthor.height.toDouble()).toInt()
+        if (flag) {
+            //imageButton.setBackgroundResource(R.drawable.rounded_cancel_button)
+            imageButton.setImageResource(R.drawable.ic_cancel)
+            val parameters = revealView.layoutParams as FrameLayout.LayoutParams
+            parameters.height = clAuthor.height
+            revealView.layoutParams = parameters
+            val anim =
+                ViewAnimationUtils.createCircularReveal(revealView, x, y, 0f, hypotenuse.toFloat())
+            anim.duration = 700
+            anim.addListener(object : Animator.AnimatorListener {
+                override fun onAnimationStart(animator: Animator) {}
+                override fun onAnimationEnd(animator: Animator) {
+                    layoutContent.visibility = View.VISIBLE
+                    layoutContent.startAnimation(alphaAnimation)
+                }
+
+                override fun onAnimationCancel(animator: Animator) {}
+                override fun onAnimationRepeat(animator: Animator) {}
+            })
+            revealView.setVisibility(View.VISIBLE)
+            anim.start()
+            flag = false
+        } else {
+           // imageButton.setBackgroundResource(R.drawable.rounded_button)
+            imageButton.setImageResource(R.drawable.ic_info)
+            val anim =
+                ViewAnimationUtils.createCircularReveal(revealView, x, y, hypotenuse.toFloat(), 0f)
+            anim.duration = 400
+            anim.addListener(object : Animator.AnimatorListener {
+                override fun onAnimationStart(animator: Animator) {}
+                override fun onAnimationEnd(animator: Animator) {
+                    revealView.visibility = View.GONE
+                    layoutContent.visibility = View.GONE
+                }
+
+                override fun onAnimationCancel(animator: Animator) {}
+                override fun onAnimationRepeat(animator: Animator) {}
+            })
+            anim.start()
+            flag = true
+        }
+    }
+
 
     private fun initRecyclerView() {
         binding.recyclerview.layoutManager = LinearLayoutManager(this)
@@ -55,20 +125,32 @@ class OwnerActivity : AppCompatActivity(), View.OnClickListener,
     }
 
     private fun populateWithIntentData() {
-        val author = intent.getParcelableExtra<Owner>("owner")
+        val authorName =  intent.getParcelableExtra<Owner>("owner")!!.login
 
-        binding.tvAuthor.text = author!!.login
-        binding.tvRepositories.text = "${author.contributions} contributions"
-        binding.tvResults.text = "${author.login}'s top rated repositories"
+        CoroutineScope(Dispatchers.Main).launch {
+            author = ownerViewModel.getAuthor(authorName)
 
-        val imageURL = author.avatarUrl
-        Glide.with(binding.ivRepoAuthor.context)
-            .load(imageURL)
-            .into(binding.ivRepoAuthor)
+            binding.tvAuthor.text = author.login
+            binding.tvBio.text = author.bio
+            binding.tvResults.text = "${author.login}'s top rated repositories"
+            binding.tvLocation.text = author.location.toString()
 
-        binding.ivLink.setOnClickListener { launchBrowserActivity(author) }
+            val imageURL = author.avatarUrl
+            Glide.with(binding.ivRepoAuthor.context)
+                .load(imageURL)
+                .into(binding.ivRepoAuthor)
 
-        getReposFromAuthor(author.login)
+            binding.tvName.text = author.name
+            binding.tvEmail.text = if (author.email.isNullOrBlank()) "n/a" else author.email
+            binding.tvFollowers.text = author.followers.toString()
+            binding.tvFollowing.text = author.following.toString()
+            binding.tvRepos.text = author.publicRepos.toString()
+            binding.tvGists.text = author.publicGists.toString()
+            binding.tvBio.text = author.bio
+
+
+            getReposFromAuthor(author.login)
+        }
     }
 
     private fun getReposFromAuthor(ownerName: String) {
@@ -79,21 +161,21 @@ class OwnerActivity : AppCompatActivity(), View.OnClickListener,
         responseLiveData.observe(this, {
             if (it != null) {
                 adapter.updateList(it)
-                binding.progressBar.visibility = View.GONE
+                binding.progressBar.visibility = View.INVISIBLE
             } else {
-                binding.progressBar.visibility = View.GONE
+                binding.progressBar.visibility = View.INVISIBLE
                 Toast.makeText(applicationContext, "No data available", Toast.LENGTH_LONG).show()
             }
         })
     }
 
     override fun onClick(p0: View?) {
-        when(p0!!.id) {
+        when (p0!!.id) {
             R.id.fabUp -> recyclerview.scrollToPosition(0)
         }
     }
 
-    override fun onItemClick(repo: Repo, view:View) {
+    override fun onItemClick(repo: Repo, view: View) {
         launchDetailActivity(repo)
     }
 
@@ -107,7 +189,7 @@ class OwnerActivity : AppCompatActivity(), View.OnClickListener,
                     adapter.updateList(it)
                 }
                 adapter.setIsLoading(false)
-                binding.progressBar.visibility = View.GONE
+                binding.progressBar.visibility = View.INVISIBLE
             }
         })
     }
@@ -124,5 +206,9 @@ class OwnerActivity : AppCompatActivity(), View.OnClickListener,
         if (intent.resolveActivity(packageManager) != null) {
             startActivity(intent)
         }
+    }
+
+    private fun launchTwitterActivity(author: Owner) {
+
     }
 }

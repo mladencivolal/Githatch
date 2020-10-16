@@ -12,22 +12,19 @@
             android:id="@+id/item_back"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="6dp"
-            android:layout_marginEnd="6dp"
             android:layout_marginBottom="@dimen/three"
-            app:cardBackgroundColor="@color/cardview"
-            app:cardCornerRadius="@dimen/two">
+            app:cardBackgroundColor="@color/cardview_dark_background"
+            app:cardCornerRadius="@dimen/five">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="6dp">
+                android:padding="@dimen/three">
 
                 <TextView
                     android:id="@+id/lbDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="6dp"
                     android:fontFamily="@font/roboto_light"
                     android:text="@string/Description"
                     android:textAlignment="center"
@@ -38,10 +35,11 @@
 
                 <TextView
                     android:id="@+id/tvDescription"
+                    android:layout_marginTop="@dimen/three"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="6dp"
                     android:textAlignment="center"
+                    android:padding="@dimen/two"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/lbDescription" />
@@ -52,35 +50,34 @@
             android:id="@+id/card_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="6dp"
-            android:layout_marginEnd="6dp"
             android:layout_marginBottom="@dimen/three"
             app:cardBackgroundColor="@color/cardview"
-            app:cardCornerRadius="@dimen/two">
+            app:cardCornerRadius="@dimen/five">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/five"
-                android:padding="@dimen/zero">
+                android:padding="@dimen/three">
 
                 <TextView
                     android:id="@+id/tvLanguage"
-                    android:text="Language"
-                    android:layout_margin="@dimen/five"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/five"
+                    android:text="Language"
+                    android:textColor="#33BBFF"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:textColor="#33BBFF" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/ivRepoAuthor"
                     android:layout_width="@dimen/forty"
                     android:layout_height="@dimen/forty"
+                    android:layout_marginTop="@dimen/five"
+                    android:layout_marginBottom="@dimen/five"
                     app:civ_border_color="@color/colorAccent"
-                    android:layout_margin="@dimen/five"
-                    app:civ_border_width="@dimen/one"
+                    app:civ_border_width="0.5dp"
                     app:layout_constraintBottom_toTopOf="@id/tvRepoName"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvAuthorName"
@@ -90,10 +87,12 @@
                     android:id="@+id/tvRepoName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/five"
+                    android:layout_marginTop="@dimen/three"
+                    android:layout_marginEnd="@dimen/five"
+                    android:layout_marginBottom="@dimen/five"
                     android:text="Repository Name"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    app:layout_constraintBottom_toTopOf="@id/clBottomSheet"
+                    android:textSize="17sp"
+                    app:layout_constraintBottom_toTopOf="@id/bottomDivider"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/ivRepoAuthor" />
 
@@ -101,135 +100,122 @@
                     android:id="@+id/tvAuthorName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/five"
-                    android:textColor="@color/creator_text"
+                    android:layout_marginEnd="@dimen/five"
+                    android:layout_marginBottom="@dimen/five"
                     android:fontFamily="@font/roboto_light"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:textColor="@color/creator_text"
                     app:layout_constraintBottom_toTopOf="@id/ivRepoAuthor"
                     app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                    />
+                <TextView
+                    android:id="@+id/bottomDivider"
+                    android:layout_width="@dimen/zero"
+                    android:layout_height="@dimen/zero"
+                    app:layout_constraintBottom_toTopOf="@id/lbWatch"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/clBottomSheet"
-                    android:layout_width="match_parent"
+                <!-- bottom sheet -->
+
+                <ImageView
+                    android:id="@+id/ivWatch"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    app:layout_constraintEnd_toStartOf="@+id/lbWatch"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:srcCompat="@drawable/ic_star" />
+
+                <TextView
+                    android:id="@+id/lbWatch"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@color/cardview_bottom"
-                    android:padding="@dimen/five"
+                    android:text="@string/star_label"
+                    android:textColor="@color/creator_text"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/tvWatch"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/ivWatch"
+                    tools:layout_editor_absoluteY="7dp" />
+
+                <TextView
+                    android:id="@+id/tvWatch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorAccent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/ivFork"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/lbWatch"
+                    tools:layout_editor_absoluteY="7dp" />
+
+                <ImageView
+                    android:id="@+id/ivFork"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/lbFork"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/tvWatch"
+                    app:srcCompat="@drawable/ic_fork" />
+
+                <TextView
+                    android:id="@+id/lbFork"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fork_label"
+                    android:textColor="@color/creator_text"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/tvFork"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/ivFork"
+                    tools:layout_editor_absoluteY="7dp" />
+
+                <TextView
+                    android:id="@+id/tvFork"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorAccent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/ivUpdated"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/lbFork"
+                    tools:layout_editor_absoluteY="7dp" />
+
+                <ImageView
+                    android:id="@+id/ivUpdated"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/lbUpdated"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/tvFork"
+                    app:srcCompat="@drawable/ic_update" />
+
+                <TextView
+                    android:id="@+id/lbUpdated"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/update_label"
+                    android:textColor="@color/creator_text"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/tvDateUpdated"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/ivUpdated"
+                    tools:layout_editor_absoluteY="7dp" />
+
+                <TextView
+                    android:id="@+id/tvDateUpdated"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorAccent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent">
-
-                    <ImageView
-                        android:id="@+id/ivWatch"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/lbWatch"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_star"
-                        tools:layout_editor_absoluteY="5dp" />
-
-                    <TextView
-                        android:id="@+id/lbWatch"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/star_label"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/tvWatch"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@+id/ivWatch"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:layout_editor_absoluteY="7dp" />
-
-                    <TextView
-                        android:id="@+id/tvWatch"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/colorAccent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/ivFork"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@+id/lbWatch"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:layout_editor_absoluteY="7dp" />
-
-
-                    <ImageView
-                        android:id="@+id/ivFork"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/lbFork"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@+id/tvWatch"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_fork"
-                        tools:layout_editor_absoluteY="5dp" />
-
-                    <TextView
-                        android:id="@+id/lbFork"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/fork_label"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/tvFork"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@+id/ivFork"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:layout_editor_absoluteY="7dp" />
-
-                    <TextView
-                        android:id="@+id/tvFork"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/colorAccent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/ivUpdated"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@+id/lbFork"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:layout_editor_absoluteY="7dp" />
-
-                    <ImageView
-                        android:id="@+id/ivUpdated"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/lbUpdated"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@+id/tvFork"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_update"
-                        tools:layout_editor_absoluteY="5dp" />
-
-                    <TextView
-                        android:id="@+id/lbUpdated"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/update_label"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/tvDateUpdated"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@+id/ivUpdated"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:layout_editor_absoluteY="7dp" />
-
-                    <TextView
-                        android:id="@+id/tvDateUpdated"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/colorAccent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@+id/lbUpdated"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:layout_editor_absoluteY="7dp" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/lbUpdated"
+                    tools:layout_editor_absoluteY="7dp" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

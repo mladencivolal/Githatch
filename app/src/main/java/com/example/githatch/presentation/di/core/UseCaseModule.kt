@@ -39,4 +39,10 @@ class UseCaseModule {
     fun provideLoadMoreReposFromAuthorUseCase(ownerRepository: OwnerRepository): LoadMoreReposFromAuthor {
         return LoadMoreReposFromAuthor(ownerRepository)
     }
+
+    @Singleton
+    @Provides
+    fun provideGetAuthorUseCase(ownerRepository: OwnerRepository): GetAuthorUseCase {
+        return GetAuthorUseCase(ownerRepository)
+    }
 }

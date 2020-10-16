@@ -28,4 +28,9 @@ interface GitHubService {
         @Path("ownerName") ownerName: String,
         @Query("page") page: Int
     ): Response<List<Repo>>
+
+    @GET("/users/{ownerName}")
+    suspend fun getAuthor(
+        @Path("ownerName") ownerName: String
+    ): Response<Owner>
 }

@@ -19,5 +19,10 @@
     <color name="fab_background">#77000000</color>
     <color name="lang_text">#33BBFF</color>
 
+    <color name="grey">#BEBEBE</color>
+    <color name="twitter">#23C4FF</color>
+
+    <color name="white">#FFFFFF</color>
+
 
 </resources>

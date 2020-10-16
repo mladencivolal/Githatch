@@ -10,6 +10,7 @@
 
         <EditText
             android:id="@+id/etSearch"
+            style="@style/Base.Widget.MaterialComponents.TextInputEditText"
             android:layout_width="@dimen/zero"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/five"
@@ -35,7 +36,7 @@
             android:id="@+id/progressBar"
             style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal"
             android:layout_width="match_parent"
-            android:layout_height="4dp"
+            android:layout_height="@dimen/two"
             android:layout_marginStart="9dp"
             android:layout_marginEnd="9dp"
             android:indeterminate="true"
@@ -46,9 +47,10 @@
             app:mpb_useIntrinsicPadding="false" />
 
         <com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
-            android:layout_width="@dimen/zero"
-            android:layout_height="@dimen/zero"
-            android:layout_marginTop="@dimen/ten"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/five"
+            android:layout_marginEnd="@dimen/five"
             app:handleDrawable="@drawable/thumb"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -58,8 +60,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/repo_recyclerview"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="@dimen/three"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/three"
                 android:background="@color/recyclerview_background"
                 android:fadingEdge="horizontal"

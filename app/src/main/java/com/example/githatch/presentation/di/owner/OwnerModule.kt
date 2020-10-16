@@ -1,5 +1,6 @@
 package com.example.githatch.presentation.di.owner
 
+import com.example.githatch.domain.usecase.GetAuthorUseCase
 import com.example.githatch.domain.usecase.GetReposFromAuthorUseCase
 import com.example.githatch.domain.usecase.LoadMoreReposFromAuthor
 import com.example.githatch.presentation.di.detail.DetailScope
@@ -13,8 +14,9 @@ class OwnerModule {
     @Provides
     fun provideOwnerViewModelFactory(
         getReposFromAuthorUseCase: GetReposFromAuthorUseCase,
-        loadMoreReposFromAuthorUseCase: LoadMoreReposFromAuthor
+        loadMoreReposFromAuthorUseCase: LoadMoreReposFromAuthor,
+        getAuthorUseCase: GetAuthorUseCase
     ): OwnerViewModelFactory {
-        return OwnerViewModelFactory(getReposFromAuthorUseCase, loadMoreReposFromAuthorUseCase)
+        return OwnerViewModelFactory(getReposFromAuthorUseCase, loadMoreReposFromAuthorUseCase, getAuthorUseCase)
     }
 }

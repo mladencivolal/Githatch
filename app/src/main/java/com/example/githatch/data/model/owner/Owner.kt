@@ -25,5 +25,14 @@ data class Owner(
     @SerializedName("received_events_url") val receivedEventsUrl: String,
     @SerializedName("type") val type: String,
     @SerializedName("site_admin") val siteAdmin: Boolean,
-    @SerializedName("contributions") val contributions: Int
+    @SerializedName("contributions") val contributions: Int,
+    @SerializedName("location") val location: String?,
+    @SerializedName("bio") val bio: String?,
+    @SerializedName("twitter_username") val twitter: String?,
+    @SerializedName("name") val name: String?,
+    @SerializedName("email") val email: String?,
+    @SerializedName("followers") val followers: Int,
+    @SerializedName("following") val following: Int,
+    @SerializedName("public_repos") val publicRepos: Int,
+    @SerializedName("public_gists") val publicGists: Int
 ):Parcelable

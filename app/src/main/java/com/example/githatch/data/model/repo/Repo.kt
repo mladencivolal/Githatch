@@ -40,7 +40,7 @@ data class Repo(
     override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
         writeString(name)
         writeString(fullName)
-        writeParcelable(owner, 0)
+        writeParcelable(owner, 1)
         writeString(htmlUrl)
         writeString(if (description == null || description.isEmpty()) "No Description" else description )
         writeInt(watchersCount)
