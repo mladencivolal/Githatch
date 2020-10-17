@@ -11,6 +11,7 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/item_back"
             android:layout_width="match_parent"
+            android:visibility="gone"
             android:layout_height="match_parent"
             android:layout_marginBottom="@dimen/three"
             app:cardBackgroundColor="@color/cardview_dark_background"
