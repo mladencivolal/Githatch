@@ -57,6 +57,10 @@ class OwnerActivity : AppCompatActivity(), View.OnClickListener,
 
         populateWithIntentData()
 
+        binding.ivLink.setOnClickListener { launchBrowserActivity(author.htmlUrl) }
+        binding.ivTwit.setOnClickListener { launchTwitterActivity(author) }
+
+
         pixelDensity = resources.displayMetrics.density
 
         alphaAnimation = AnimationUtils.loadAnimation(this, R.anim.alpha_anim)
@@ -147,7 +151,9 @@ class OwnerActivity : AppCompatActivity(), View.OnClickListener,
             binding.tvRepos.text = author.publicRepos.toString()
             binding.tvGists.text = author.publicGists.toString()
             binding.tvBio.text = author.bio
-
+            binding.tvBioBack.text = author.bio
+            binding.tvLink.text = author.htmlUrl.substring(8)
+            binding.tvTwitter.text =if (author.twitter.isNullOrBlank()) "n/a" else author.twitter
 
             getReposFromAuthor(author.login)
         }
@@ -200,7 +206,7 @@ class OwnerActivity : AppCompatActivity(), View.OnClickListener,
         startActivity(intent)
     }
 
-    private fun launchBrowserActivity(author: Owner) {
+    private fun launchBrowserActivity(htmlUrl: String) {
         val webpage: Uri = Uri.parse(author.htmlUrl)
         val intent = Intent(Intent.ACTION_VIEW, webpage)
         if (intent.resolveActivity(packageManager) != null) {
@@ -209,6 +215,14 @@ class OwnerActivity : AppCompatActivity(), View.OnClickListener,
     }
 
     private fun launchTwitterActivity(author: Owner) {
-
+        var link = "https://twitter.com/${author.twitter}"
+       val parsedLink: Uri = Uri.parse(link)
+        val intent = Intent(Intent.ACTION_VIEW, parsedLink)
+        intent.setPackage("com.twitter.android")
+        if(intent.resolveActivity(packageManager) != null) {
+            startActivity(intent)
+        } else {
+            launchBrowserActivity(link)
+        }
     }
 }
