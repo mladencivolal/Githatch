@@ -47,11 +47,9 @@ class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
         repoViewModel = ViewModelProvider(this, factory)
             .get(RepoViewModel::class.java)
 
-        binding.fabUp.setOnClickListener(this)
-        binding.fabSort.setOnClickListener(this)
         binding.etSearch.setText("Kotlin")
 
-        binding.etSearch.setOnEditorActionListener { view, actionId, event ->
+        binding.etSearch.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_GO) {
                 searchPhrase = binding.etSearch.text.toString()
                 searchRepos(searchPhrase, sortBy, orderBy)
@@ -60,22 +58,45 @@ class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
                 return@setOnEditorActionListener false
             }
         }
-
-        binding.etSearch.setOnKeyListener { view, keyCode, event ->
-            if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
-                searchPhrase = binding.etSearch.text.toString()
-                searchRepos(searchPhrase, sortBy, orderBy)
-                Helper.hideKeyboard(this)
-                return@setOnKeyListener true
-            } else {
-                return@setOnKeyListener false
-            }
-        }
-
+        initOnClickListeners()
+        initOnActionListeners()
         initRecyclerView()
         initSortSheet()
 
         searchRepos(binding.etSearch.text.toString(), sortBy, orderBy)
+    }
+
+    private fun initOnActionListeners() {
+        binding.apply {
+
+
+            etSearch.setOnEditorActionListener { _, actionId, _ ->
+                if (actionId == EditorInfo.IME_ACTION_GO) {
+                    searchPhrase = binding.etSearch.text.toString()
+                    searchRepos(searchPhrase, sortBy, orderBy)
+                    return@setOnEditorActionListener true
+                } else {
+                    return@setOnEditorActionListener false
+                }
+            }
+            etSearch.setOnKeyListener { _, keyCode, event ->
+                if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+                    searchPhrase = binding.etSearch.text.toString()
+                    searchRepos(searchPhrase, sortBy, orderBy)
+                    Helper.hideKeyboard(this@RepoActivity)
+                    return@setOnKeyListener true
+                } else {
+                    return@setOnKeyListener false
+                }
+            }
+        }
+    }
+
+    private fun initOnClickListeners() {
+        binding.apply {
+            fabUp.setOnClickListener { binding.repoRecyclerview.scrollToPosition(0) }
+            fabSort.setOnClickListener { dialog.show() }
+        }
     }
 
     private fun initRecyclerView() {
@@ -88,31 +109,35 @@ class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
 
     private fun initSortSheet() {
         bottomSortView = layoutInflater.inflate(R.layout.layout_sort_sheet, null)
-
-        bottomSortView.lbStars.setOnClickListener(this)
-        bottomSortView.lbForks.setOnClickListener(this)
-        bottomSortView.lbUpdated.setOnClickListener(this)
-        bottomSortView.tvAsc.setOnClickListener(this)
-        bottomSortView.tvDesc.setOnClickListener(this)
-        bottomSortView.lbApply.setOnClickListener(this)
-        bottomSortView.lbClear.setOnClickListener(this)
-
+        bottomSortView.apply {
+            lbStars.setOnClickListener(this@RepoActivity)
+            lbForks.setOnClickListener(this@RepoActivity)
+            lbUpdated.setOnClickListener(this@RepoActivity)
+            tvAsc.setOnClickListener(this@RepoActivity)
+            tvDesc.setOnClickListener(this@RepoActivity)
+            lbApply.setOnClickListener(this@RepoActivity)
+            lbClear.setOnClickListener(this@RepoActivity)
+        }
         dialog = BottomSheetDialog(this)
-        dialog.setContentView(bottomSortView)
-        dialog.setOnCancelListener {
-
+        dialog.apply {
+            setContentView(bottomSortView)
+            setOnCancelListener {}
         }
     }
 
     private fun resetSortFilters() {
-        bottomSortView.lbStars.isSelected = false
-        bottomSortView.lbForks.isSelected = false
-        bottomSortView.lbUpdated.isSelected = false
+        bottomSortView.apply {
+            lbStars.isSelected = false
+            lbForks.isSelected = false
+            lbUpdated.isSelected = false
+        }
     }
 
     private fun resetOrderFilters() {
-        bottomSortView.tvAsc.isSelected = false
-        bottomSortView.tvDesc.isSelected = false
+        bottomSortView.apply {
+            tvAsc.isSelected = false
+            tvDesc.isSelected = false
+        }
     }
 
     private fun manageSortFilters() {
