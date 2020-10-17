@@ -57,10 +57,10 @@ class Helper {
             when (year) {
                 ZonedDateTime.now().year -> {
                     val fmt: DateTimeFormatter =
-                        DateTimeFormatter.ofPattern("d.MM", Locale.ENGLISH)
+                        DateTimeFormatter.ofPattern("d MMM", Locale.ENGLISH)
                     return fmt.format(z)
                 }
-                else -> return "~${ZonedDateTime.now().year - year}y ago"
+                else -> return "${ZonedDateTime.now().year - year}y ago"
             }
         }
     }

@@ -1,6 +1,7 @@
 package com.example.githatch.presentation.owner
 
 import android.animation.Animator
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -27,8 +28,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.math.hypot
 
-class OwnerActivity : AppCompatActivity(), View.OnClickListener,
-    OwnerRepoAdapter.OnItemClickListener, OwnerRepoAdapter.OnLoadMoreListener {
+class OwnerActivity : AppCompatActivity(), OwnerRepoAdapter.OnItemClickListener,
+    OwnerRepoAdapter.OnLoadMoreListener {
     @Inject
     lateinit var factory: OwnerViewModelFactory
     private lateinit var ownerViewModel: OwnerViewModel
@@ -36,10 +37,9 @@ class OwnerActivity : AppCompatActivity(), View.OnClickListener,
     private lateinit var adapter: OwnerRepoAdapter
     private lateinit var author: Owner
 
-    //REVEAL CARD
     lateinit var alphaAnimation: Animation
-    var pixelDensity = 0f
-    var flag = true
+    private var pixelDensity = 0f
+    private var flag = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,24 +51,17 @@ class OwnerActivity : AppCompatActivity(), View.OnClickListener,
         ownerViewModel = ViewModelProvider(this, factory)
             .get(OwnerViewModel::class.java)
 
-        binding.fabUp.setOnClickListener(this)
-
-        initRecyclerView()
-
-        populateWithIntentData()
-
-        binding.ivLink.setOnClickListener { launchBrowserActivity(author.htmlUrl) }
-        binding.ivTwit.setOnClickListener { launchTwitterActivity(author) }
-
-
         pixelDensity = resources.displayMetrics.density
-
         alphaAnimation = AnimationUtils.loadAnimation(this, R.anim.alpha_anim)
+
+        initClickListeners()
+        initRecyclerView()
+        populateWithIntentData()
     }
 
-    fun launchTwitter(view: View?) {
-        val imageButton = binding.launchTwitterAnimation
-        val revealView = binding.linearView
+    fun revealAnim() {
+        val imageButton = binding.launchRevealAnimation
+        val revealView = binding.outerView
         val layoutContent = binding.layoutContent
 
         var x: Int = clAuthor.right
@@ -77,7 +70,6 @@ class OwnerActivity : AppCompatActivity(), View.OnClickListener,
         val hypotenuse =
             hypot(clAuthor.width.toDouble(), clAuthor.height.toDouble()).toInt()
         if (flag) {
-            //imageButton.setBackgroundResource(R.drawable.rounded_cancel_button)
             imageButton.setImageResource(R.drawable.ic_cancel)
             val parameters = revealView.layoutParams as FrameLayout.LayoutParams
             parameters.height = clAuthor.height
@@ -95,11 +87,10 @@ class OwnerActivity : AppCompatActivity(), View.OnClickListener,
                 override fun onAnimationCancel(animator: Animator) {}
                 override fun onAnimationRepeat(animator: Animator) {}
             })
-            revealView.setVisibility(View.VISIBLE)
+            revealView.visibility = View.VISIBLE
             anim.start()
             flag = false
         } else {
-           // imageButton.setBackgroundResource(R.drawable.rounded_button)
             imageButton.setImageResource(R.drawable.ic_info)
             val anim =
                 ViewAnimationUtils.createCircularReveal(revealView, x, y, hypotenuse.toFloat(), 0f)
@@ -119,6 +110,13 @@ class OwnerActivity : AppCompatActivity(), View.OnClickListener,
         }
     }
 
+    private fun initClickListeners() {
+        binding.apply {
+            ivLink.setOnClickListener { launchBrowserActivity(author.htmlUrl) }
+            ivTwit.setOnClickListener { launchTwitterActivity(author) }
+            fabUp.setOnClickListener { recyclerview.scrollToPosition(0) }
+        }
+    }
 
     private fun initRecyclerView() {
         binding.recyclerview.layoutManager = LinearLayoutManager(this)
@@ -128,32 +126,34 @@ class OwnerActivity : AppCompatActivity(), View.OnClickListener,
         binding.recyclerview.adapter = adapter
     }
 
+    @SuppressLint("SetTextI18n")
     private fun populateWithIntentData() {
-        val authorName =  intent.getParcelableExtra<Owner>("owner")!!.login
+        val authorName = intent.getParcelableExtra<Owner>("owner")!!.login
 
         CoroutineScope(Dispatchers.Main).launch {
             author = ownerViewModel.getAuthor(authorName)
-
-            binding.tvAuthor.text = author.login
-            binding.tvBio.text = author.bio
-            binding.tvResults.text = "${author.login}'s top rated repositories"
-            binding.tvLocation.text = author.location.toString()
 
             val imageURL = author.avatarUrl
             Glide.with(binding.ivRepoAuthor.context)
                 .load(imageURL)
                 .into(binding.ivRepoAuthor)
 
-            binding.tvName.text = author.name
-            binding.tvEmail.text = if (author.email.isNullOrBlank()) "n/a" else author.email
-            binding.tvFollowers.text = author.followers.toString()
-            binding.tvFollowing.text = author.following.toString()
-            binding.tvRepos.text = author.publicRepos.toString()
-            binding.tvGists.text = author.publicGists.toString()
-            binding.tvBio.text = author.bio
-            binding.tvBioBack.text = author.bio
-            binding.tvLink.text = author.htmlUrl.substring(8)
-            binding.tvTwitter.text =if (author.twitter.isNullOrBlank()) "n/a" else author.twitter
+            binding.apply {
+                tvAuthor.text = author.login
+                tvBio.text = author.bio
+                tvResults.text = author.login + "'s top rated repositories"
+                tvLocation.text = author.location.toString()
+                tvName.text = author.name
+                tvEmail.text = if (author.email.isNullOrBlank()) "n/a" else author.email
+                tvFollowers.text = author.followers.toString()
+                tvFollowing.text = author.following.toString()
+                tvRepos.text = author.publicRepos.toString()
+                tvGists.text = author.publicGists.toString()
+                tvBio.text = author.bio
+                tvBioBack.text = author.bio
+                tvLink.text = author.htmlUrl.substring(8)
+                tvTwitter.text = if (author.twitter.isNullOrBlank()) "n/a" else author.twitter
+            }
 
             getReposFromAuthor(author.login)
         }
@@ -173,12 +173,6 @@ class OwnerActivity : AppCompatActivity(), View.OnClickListener,
                 Toast.makeText(applicationContext, "No data available", Toast.LENGTH_LONG).show()
             }
         })
-    }
-
-    override fun onClick(p0: View?) {
-        when (p0!!.id) {
-            R.id.fabUp -> recyclerview.scrollToPosition(0)
-        }
     }
 
     override fun onItemClick(repo: Repo, view: View) {
@@ -207,7 +201,7 @@ class OwnerActivity : AppCompatActivity(), View.OnClickListener,
     }
 
     private fun launchBrowserActivity(htmlUrl: String) {
-        val webpage: Uri = Uri.parse(author.htmlUrl)
+        val webpage: Uri = Uri.parse(htmlUrl)
         val intent = Intent(Intent.ACTION_VIEW, webpage)
         if (intent.resolveActivity(packageManager) != null) {
             startActivity(intent)
@@ -215,11 +209,11 @@ class OwnerActivity : AppCompatActivity(), View.OnClickListener,
     }
 
     private fun launchTwitterActivity(author: Owner) {
-        var link = "https://twitter.com/${author.twitter}"
-       val parsedLink: Uri = Uri.parse(link)
+        val link = "https://twitter.com/${author.twitter}"
+        val parsedLink: Uri = Uri.parse(link)
         val intent = Intent(Intent.ACTION_VIEW, parsedLink)
         intent.setPackage("com.twitter.android")
-        if(intent.resolveActivity(packageManager) != null) {
+        if (intent.resolveActivity(packageManager) != null) {
             startActivity(intent)
         } else {
             launchBrowserActivity(link)

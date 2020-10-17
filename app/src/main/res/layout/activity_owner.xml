@@ -103,7 +103,7 @@
                             </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <androidx.constraintlayout.widget.ConstraintLayout
-                            android:id="@+id/linearView"
+                            android:id="@+id/outerView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@color/cardview_dark_background"
@@ -435,7 +435,7 @@
                         android:background="@color/recyclerview_background" />
 
                     <ImageButton
-                        android:id="@+id/launchTwitterAnimation"
+                        android:id="@+id/launchRevealAnimation"
                         android:layout_width="30dp"
                         android:background="@android:color/transparent"
                         android:layout_height="30dp"
@@ -446,7 +446,7 @@
                         android:adjustViewBounds="true"
                         android:contentDescription="@string/image"
                         android:elevation="@dimen/dimen_4dp"
-                        android:onClick="launchTwitter"
+                        android:onClick="revealAnim"
                         android:src="@drawable/ic_info" />
 
                 </RelativeLayout>
