@@ -22,7 +22,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.layout_sort_sheet.view.*
 import javax.inject.Inject
 
-
 class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
     RepoAdapter.OnItemClickListener, View.OnClickListener {
     @Inject

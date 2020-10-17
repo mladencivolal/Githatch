@@ -46,9 +46,9 @@ class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolea
         }
     }
 
-    fun setList(movies: List<Repo>) {
+    fun setList(repos: List<Repo>) {
         repoList.clear()
-        repoList.addAll(movies)
+        repoList.addAll(repos)
         notifyDataSetChanged()
     }
 
@@ -105,20 +105,14 @@ class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolea
                 tvDateUpdated.text = Helper.dateFormatterAlt(repo.updatedAt)
                 tvFork.text = Helper.numberFormatter(repo.forksCount)
                 tvLanguage.text = repo.language
-                root.findViewById<ImageView>(R.id.ivRepoAuthor)
-                    .setOnClickListener {
+                val clickers = listOf(ivRepoAuthor, tvRepoName)
+                clickers.toTypedArray().forEach {
+                    it.setOnClickListener {
                         onItemClickListener.onItemClick(
-                            repoList[bindingAdapterPosition],
-                            binding.root.findViewById<ImageView>(R.id.ivRepoAuthor)
+                            repoList[bindingAdapterPosition], it
                         )
                     }
-                root.findViewById<TextView>(R.id.tvRepoName)
-                    .setOnClickListener {
-                        onItemClickListener.onItemClick(
-                            repoList[bindingAdapterPosition],
-                            binding.root.findViewById<ImageView>(R.id.tvRepoName)
-                        )
-                    }
+                }
             }
 
             if (isRepoActivity) {
@@ -147,24 +141,25 @@ class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolea
                         CoroutineScope(Dispatchers.Main).launch {
                             if (binding.myFlipView.isFlipped()) {
                                 delay(300)
-                                binding.apply {
-                                    tvDescription.text =
-                                        repoList[bindingAdapterPosition].description.toString()
-                                    ivRepoAuthor.isClickable = false
-                                    tvRepoName.isClickable = false
-                                }
+                                binding.tvDescription.text =
+                                    repoList[bindingAdapterPosition].description.toString()
+                                flippedSideClickable(false)
                             } else {
                                 delay(300)
-                                binding.apply {
-                                    ivRepoAuthor.isClickable = true
-                                    tvRepoName.isClickable = true
-                                    tvDescription.text = ""
-                                }
-
+                                flippedSideClickable(true)
                             }
                         }
                     }
                 }
+            }
+        }
+
+        private fun flippedSideClickable(clickable: Boolean) {
+            binding.apply {
+                tvDescription.text =
+                    repoList[bindingAdapterPosition].description.toString()
+                ivRepoAuthor.isClickable = clickable
+                tvRepoName.isClickable = clickable
             }
         }
     }
