@@ -16,7 +16,7 @@ class RepoViewModel(
         emit(reposList)
     }
 
-    fun loadMoreRepos(/*sortBy: String, orderBy: String*/) = liveData {
+    fun loadMoreRepos() = liveData {
         val reposList = loadMoreReposUseCase.execute()
         emit(reposList)
     }

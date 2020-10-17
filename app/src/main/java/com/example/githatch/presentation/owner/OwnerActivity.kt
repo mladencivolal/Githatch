@@ -59,7 +59,7 @@ class OwnerActivity : AppCompatActivity(), OwnerRepoAdapter.OnItemClickListener,
         populateWithIntentData()
     }
 
-    fun revealAnim() {
+    fun revealAnim(view: View) {
         val imageButton = binding.launchRevealAnimation
         val revealView = binding.outerView
         val layoutContent = binding.layoutContent
@@ -160,17 +160,15 @@ class OwnerActivity : AppCompatActivity(), OwnerRepoAdapter.OnItemClickListener,
     }
 
     private fun getReposFromAuthor(ownerName: String) {
-
-        binding.progressBar.visibility = View.VISIBLE
+        binding.progressBar.visible(true)
 
         val responseLiveData = ownerViewModel.getReposFromAuthor(ownerName)
         responseLiveData.observe(this, {
             if (it != null) {
                 adapter.updateList(it)
-                binding.progressBar.visibility = View.INVISIBLE
+                binding.progressBar.visible(false)
             } else {
-                binding.progressBar.visibility = View.INVISIBLE
-                Toast.makeText(applicationContext, "No data available", Toast.LENGTH_LONG).show()
+                binding.progressBar.visible(false)
             }
         })
     }
@@ -180,43 +178,38 @@ class OwnerActivity : AppCompatActivity(), OwnerRepoAdapter.OnItemClickListener,
     }
 
     override fun onLoadMore() {
-        binding.progressBar.visibility = View.VISIBLE
+        binding.progressBar.visible(true)
         val responseLiveData = ownerViewModel.loadMoreReposFromAuthor()
         responseLiveData.observe(this, {
             if (it != null) {
                 adapter.setIsLoading(false)
-                if (it.size > 5) {
-                    adapter.updateList(it)
-                }
+                if (it.size > 5) adapter.updateList(it)
                 adapter.setIsLoading(false)
-                binding.progressBar.visibility = View.INVISIBLE
+                binding.progressBar.visible(false)
             }
         })
     }
 
     private fun launchDetailActivity(repo: Repo) {
-        val intent = Intent(this, DetailActivity::class.java)
-        intent.putExtra("repo", repo)
+        val intent = Intent(this, DetailActivity::class.java).putExtra("repo", repo)
         startActivity(intent)
+    }
+
+    private fun View.visible(show: Boolean) {
+        visibility = if (show) View.VISIBLE else View.GONE
     }
 
     private fun launchBrowserActivity(htmlUrl: String) {
         val webpage: Uri = Uri.parse(htmlUrl)
         val intent = Intent(Intent.ACTION_VIEW, webpage)
-        if (intent.resolveActivity(packageManager) != null) {
-            startActivity(intent)
-        }
+        if (intent.resolveActivity(packageManager) != null) startActivity(intent)
     }
 
     private fun launchTwitterActivity(author: Owner) {
         val link = "https://twitter.com/${author.twitter}"
         val parsedLink: Uri = Uri.parse(link)
-        val intent = Intent(Intent.ACTION_VIEW, parsedLink)
-        intent.setPackage("com.twitter.android")
-        if (intent.resolveActivity(packageManager) != null) {
-            startActivity(intent)
-        } else {
-            launchBrowserActivity(link)
-        }
+        val intent = Intent(Intent.ACTION_VIEW, parsedLink).setPackage("com.twitter.android")
+        if (intent.resolveActivity(packageManager) != null) startActivity(intent)
+        else launchBrowserActivity(link)
     }
 }
