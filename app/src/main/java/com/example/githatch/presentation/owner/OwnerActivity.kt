@@ -80,14 +80,14 @@ class OwnerActivity : AppCompatActivity(), OwnerRepoAdapter.OnItemClickListener,
             anim.addListener(object : Animator.AnimatorListener {
                 override fun onAnimationStart(animator: Animator) {}
                 override fun onAnimationEnd(animator: Animator) {
-                    layoutContent.visibility = View.VISIBLE
+                    layoutContent.visible(true)
                     layoutContent.startAnimation(alphaAnimation)
                 }
 
                 override fun onAnimationCancel(animator: Animator) {}
                 override fun onAnimationRepeat(animator: Animator) {}
             })
-            revealView.visibility = View.VISIBLE
+            revealView.visible(true)
             anim.start()
             flag = false
         } else {
@@ -98,8 +98,8 @@ class OwnerActivity : AppCompatActivity(), OwnerRepoAdapter.OnItemClickListener,
             anim.addListener(object : Animator.AnimatorListener {
                 override fun onAnimationStart(animator: Animator) {}
                 override fun onAnimationEnd(animator: Animator) {
-                    revealView.visibility = View.GONE
-                    layoutContent.visibility = View.GONE
+                    revealView.visible(false)
+                    layoutContent.visible(false)
                 }
 
                 override fun onAnimationCancel(animator: Animator) {}
@@ -154,7 +154,6 @@ class OwnerActivity : AppCompatActivity(), OwnerRepoAdapter.OnItemClickListener,
                 tvLink.text = author.htmlUrl.substring(8)
                 tvTwitter.text = if (author.twitter.isNullOrBlank()) "n/a" else author.twitter
             }
-
             getReposFromAuthor(author.login)
         }
     }
@@ -190,26 +189,30 @@ class OwnerActivity : AppCompatActivity(), OwnerRepoAdapter.OnItemClickListener,
         })
     }
 
+    private fun View.visible(show: Boolean) {
+        visibility = if (show) View.VISIBLE else View.GONE
+    }
+
     private fun launchDetailActivity(repo: Repo) {
         val intent = Intent(this, DetailActivity::class.java).putExtra("repo", repo)
         startActivity(intent)
     }
 
-    private fun View.visible(show: Boolean) {
-        visibility = if (show) View.VISIBLE else View.GONE
-    }
-
     private fun launchBrowserActivity(htmlUrl: String) {
-        val webpage: Uri = Uri.parse(htmlUrl)
-        val intent = Intent(Intent.ACTION_VIEW, webpage)
-        if (intent.resolveActivity(packageManager) != null) startActivity(intent)
+        if (!htmlUrl.isNullOrEmpty()) {
+            val webpage: Uri = Uri.parse(htmlUrl)
+            val intent = Intent(Intent.ACTION_VIEW, webpage)
+            if (intent.resolveActivity(packageManager) != null) startActivity(intent)
+        }
     }
 
     private fun launchTwitterActivity(author: Owner) {
-        val link = "https://twitter.com/${author.twitter}"
-        val parsedLink: Uri = Uri.parse(link)
-        val intent = Intent(Intent.ACTION_VIEW, parsedLink).setPackage("com.twitter.android")
-        if (intent.resolveActivity(packageManager) != null) startActivity(intent)
-        else launchBrowserActivity(link)
+        if (!author.twitter.isNullOrEmpty()) {
+            val link = "https://twitter.com/${author.twitter}"
+            val parsedLink: Uri = Uri.parse("https://twitter.com/${author.twitter}")
+            val intent = Intent(Intent.ACTION_VIEW, parsedLink).setPackage("com.twitter.android")
+            if (intent.resolveActivity(packageManager) != null) startActivity(intent)
+            else launchBrowserActivity(link)
+        }
     }
 }
