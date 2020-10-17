@@ -100,46 +100,53 @@ class OwnerRepoAdapter(recyclerView: RecyclerView) :
                 tvDateUpdated.text = Helper.dateFormatterAlt(repo.updatedAt)
                 tvFork.text = Helper.numberFormatter(repo.forksCount)
                 tvLanguage.text = repo.language
-                root.findViewById<ImageView>(R.id.ivRepoAuthor)
-                    .setOnClickListener {
+                binding.tvDescription.text =
+                    repoList[bindingAdapterPosition].description.toString()
+                val clickers = listOf(ivRepoAuthor, tvRepoName)
+                clickers.toTypedArray().forEach {
+                    it.setOnClickListener {
                         onItemClickListener.onItemClick(
-                            repoList[bindingAdapterPosition],
-                            binding.root.findViewById<ImageView>(R.id.ivRepoAuthor)
+                            repoList[bindingAdapterPosition], it
                         )
                     }
-                root.findViewById<TextView>(R.id.tvRepoName)
-                    .setOnClickListener {
-                        onItemClickListener.onItemClick(
-                            repoList[bindingAdapterPosition],
-                            binding.root.findViewById<ImageView>(R.id.tvRepoName)
-                        )
-                    }
-                myFlipView.setOnClickListener {
+                }
+                ivRepoAuthor.visible(false)
+                tvAuthorName.visible(false)
+                itemBack.visible(false)
+            }
+        }
+
+        override fun onClick(v: View?) {
+            when (v) {
+                binding.myFlipView -> {
                     binding.myFlipView.flip()
                     CoroutineScope(Dispatchers.Main).launch {
                         if (binding.myFlipView.isFlipped()) {
                             delay(300)
-                            binding.apply {
-                                tvDescription.text =
-                                    repoList[bindingAdapterPosition].description.toString()
-                                ivRepoAuthor.isClickable = false
-                                tvRepoName.isClickable = false
-                            }
+                            binding.itemBack.visible(true)
+                            flippedSideClickable(false)
                         } else {
                             delay(300)
-                            binding.apply {
-                                ivRepoAuthor.isClickable = true
-                                tvRepoName.isClickable = true
-                                tvDescription.text = ""
-                            }
+                            binding.itemBack.visible(false)
+                            flippedSideClickable(true)
                         }
                     }
                 }
-                ivRepoAuthor.visibility = View.GONE
-                tvAuthorName.visibility = View.GONE
             }
         }
-        override fun onClick(v: View?) {}
+
+        private fun View.visible(show: Boolean) {
+            visibility = if (show) View.VISIBLE else View.GONE
+        }
+
+        private fun flippedSideClickable(clickable: Boolean) {
+            binding.apply {
+                tvDescription.text =
+                    repoList[bindingAdapterPosition].description.toString()
+                ivRepoAuthor.isClickable = clickable
+                tvRepoName.isClickable = clickable
+            }
+        }
     }
 }
 

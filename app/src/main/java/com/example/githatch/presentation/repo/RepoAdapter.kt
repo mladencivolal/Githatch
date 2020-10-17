@@ -105,6 +105,8 @@ class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolea
                 tvDateUpdated.text = Helper.dateFormatterAlt(repo.updatedAt)
                 tvFork.text = Helper.numberFormatter(repo.forksCount)
                 tvLanguage.text = repo.language
+                tvDescription.text =
+                    repoList[bindingAdapterPosition].description.toString()
                 val clickers = listOf(ivRepoAuthor, tvRepoName)
                 clickers.toTypedArray().forEach {
                     it.setOnClickListener {
@@ -113,6 +115,7 @@ class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolea
                         )
                     }
                 }
+                binding.itemBack.visible(false)
             }
 
             if (isRepoActivity) {
@@ -127,8 +130,8 @@ class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolea
                 )
             } else {
                 binding.apply {
-                    ivRepoAuthor.visibility = View.GONE
-                    tvAuthorName.visibility = View.GONE
+                   ivRepoAuthor.visible(false)
+                   tvAuthorName.visible(false)
                 }
             }
         }
@@ -141,17 +144,21 @@ class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolea
                         CoroutineScope(Dispatchers.Main).launch {
                             if (binding.myFlipView.isFlipped()) {
                                 delay(300)
-                                binding.tvDescription.text =
-                                    repoList[bindingAdapterPosition].description.toString()
+                                binding.itemBack.visible(true)
                                 flippedSideClickable(false)
                             } else {
                                 delay(300)
+                                binding.itemBack.visible(false)
                                 flippedSideClickable(true)
                             }
                         }
                     }
                 }
             }
+        }
+
+        private fun View.visible(show: Boolean) {
+            visibility = if (show) View.VISIBLE else View.GONE
         }
 
         private fun flippedSideClickable(clickable: Boolean) {
