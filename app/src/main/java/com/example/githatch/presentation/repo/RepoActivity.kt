@@ -49,15 +49,6 @@ class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
 
         binding.etSearch.setText("Kotlin")
 
-        binding.etSearch.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_GO) {
-                searchPhrase = binding.etSearch.text.toString()
-                searchRepos(searchPhrase, sortBy, orderBy)
-                return@setOnEditorActionListener true
-            } else {
-                return@setOnEditorActionListener false
-            }
-        }
         initOnClickListeners()
         initOnActionListeners()
         initRecyclerView()
@@ -68,6 +59,15 @@ class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
 
     private fun initOnActionListeners() {
         binding.apply {
+            etSearch.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_GO) {
+                searchPhrase = binding.etSearch.text.toString()
+                searchRepos(searchPhrase, sortBy, orderBy)
+                return@setOnEditorActionListener true
+            } else {
+                return@setOnEditorActionListener false
+            }
+        }
 
 
             etSearch.setOnEditorActionListener { _, actionId, _ ->
