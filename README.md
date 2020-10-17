@@ -6,5 +6,5 @@ Kotlin app for browsing Github repositories.
   -   
 Home screen              |  Repository Screen      | Owner Screen                | Sorting                   
 :-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
-![](https://imgur.com/O7GBPQJ.jpg)  |  ![](https://imgur.com/Xvh1RJd.jpg) | ![](https://imgur.com/t0ncEK2.jpg)| ![](https://imgur.com/XbDj2VH.jpg) |
+![](https://imgur.com/2lpJQtC.jpg)  |  ![](https://imgur.com/Xof46Hf.jpg) | ![](https://imgur.com/V2RMKHp.jpg)| ![](https://imgur.com/yyDoqx0.jpg) |
 
