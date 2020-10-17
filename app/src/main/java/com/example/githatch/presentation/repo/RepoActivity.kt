@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -28,12 +27,12 @@ class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
     RepoAdapter.OnItemClickListener, View.OnClickListener {
     @Inject
     lateinit var factory: RepoViewModelFactory
-    private lateinit var repoViewModel: RepoViewModel
+    private lateinit var viewmodel: RepoViewModel
     private lateinit var binding: ActivityRepoBinding
     private lateinit var adapter: RepoAdapter
     private lateinit var bottomSortView: View
     private lateinit var dialog: BottomSheetDialog
-    private var searchPhrase = ""
+    private var searchTerm = ""
     private var orderBy: String = ""
     private var sortBy: String = ""
 
@@ -44,7 +43,7 @@ class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
         (application as Injector).createRepoSubComponent()
             .inject(this)
 
-        repoViewModel = ViewModelProvider(this, factory)
+        viewmodel = ViewModelProvider(this, factory)
             .get(RepoViewModel::class.java)
 
         binding.etSearch.setText("Kotlin")
@@ -60,20 +59,18 @@ class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
     private fun initOnActionListeners() {
         binding.apply {
             etSearch.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_GO) {
-                searchPhrase = binding.etSearch.text.toString()
-                searchRepos(searchPhrase, sortBy, orderBy)
-                return@setOnEditorActionListener true
-            } else {
-                return@setOnEditorActionListener false
+                if (actionId == EditorInfo.IME_ACTION_GO) {
+                    searchTerm = binding.etSearch.text.toString()
+                    searchRepos(searchTerm, sortBy, orderBy)
+                    return@setOnEditorActionListener true
+                } else {
+                    return@setOnEditorActionListener false
+                }
             }
-        }
-
-
             etSearch.setOnEditorActionListener { _, actionId, _ ->
                 if (actionId == EditorInfo.IME_ACTION_GO) {
-                    searchPhrase = binding.etSearch.text.toString()
-                    searchRepos(searchPhrase, sortBy, orderBy)
+                    searchTerm = binding.etSearch.text.toString()
+                    searchRepos(searchTerm, sortBy, orderBy)
                     return@setOnEditorActionListener true
                 } else {
                     return@setOnEditorActionListener false
@@ -81,8 +78,8 @@ class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
             }
             etSearch.setOnKeyListener { _, keyCode, event ->
                 if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
-                    searchPhrase = binding.etSearch.text.toString()
-                    searchRepos(searchPhrase, sortBy, orderBy)
+                    searchTerm = binding.etSearch.text.toString()
+                    searchRepos(searchTerm, sortBy, orderBy)
                     Helper.hideKeyboard(this@RepoActivity)
                     return@setOnKeyListener true
                 } else {
@@ -110,13 +107,8 @@ class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
     private fun initSortSheet() {
         bottomSortView = layoutInflater.inflate(R.layout.layout_sort_sheet, null)
         bottomSortView.apply {
-            lbStars.setOnClickListener(this@RepoActivity)
-            lbForks.setOnClickListener(this@RepoActivity)
-            lbUpdated.setOnClickListener(this@RepoActivity)
-            tvAsc.setOnClickListener(this@RepoActivity)
-            tvDesc.setOnClickListener(this@RepoActivity)
-            lbApply.setOnClickListener(this@RepoActivity)
-            lbClear.setOnClickListener(this@RepoActivity)
+            val clickables = listOf(lbStars, lbForks, lbUpdated, tvAsc, tvDesc, lbApply, lbClear)
+            clickables.toTypedArray().forEach { it.setOnClickListener(this@RepoActivity) }
         }
         dialog = BottomSheetDialog(this)
         dialog.apply {
@@ -160,34 +152,31 @@ class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
     }
 
     private fun searchRepos(searchPhrase: String, sortBy: String, orderBy: String) {
-        binding.progressBar.visibility = View.VISIBLE
-        this.searchPhrase = searchPhrase
+        binding.progressBar.visible(true)
+        this.searchTerm = searchPhrase
         this.sortBy = sortBy
         this.orderBy = orderBy
 
-        val responseLiveData = repoViewModel.getRepos(searchPhrase, sortBy, orderBy)
+        val responseLiveData = viewmodel.getRepos(searchPhrase, sortBy, orderBy)
         responseLiveData.observe(this, {
             if (it != null) {
                 adapter.setList(it)
-                binding.progressBar.visibility = View.GONE
-                binding.promptLayout.visibility = View.GONE
+                binding.progressBar.visible(false)
+                binding.promptLayout.visible(false)
             } else {
-                binding.progressBar.visibility = View.GONE
-                Toast.makeText(applicationContext, "No data available", Toast.LENGTH_LONG).show()
+                binding.progressBar.visible(false)
             }
         })
     }
 
     override fun onLoadMore() {
-        binding.progressBar.visibility = View.VISIBLE
-        val responseLiveData = repoViewModel.loadMoreRepos()
+        binding.progressBar.visible(true)
+        val responseLiveData = viewmodel.loadMoreRepos()
         responseLiveData.observe(this, {
-            if (it != null) {
-                if (it.size > 5) {
-                    adapter.updateList(it)
-                }
+            if (it!!.size > 5) {
+                adapter.updateList(it)
                 adapter.setIsLoading(false)
-                binding.progressBar.visibility = View.GONE
+                binding.progressBar.visible(false)
             }
         })
     }
@@ -222,7 +211,7 @@ class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
             }
             R.id.lbApply -> {
                 dialog.dismiss()
-                searchRepos(searchPhrase, sortBy, orderBy)
+                searchRepos(searchTerm, sortBy, orderBy)
             }
             R.id.lbClear -> {
                 dialog.dismiss()
@@ -230,31 +219,29 @@ class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
                 resetSortFilters()
                 sortBy = ""
                 orderBy = ""
-                searchRepos(searchPhrase, "", "")
+                searchRepos(searchTerm, "", "")
             }
         }
     }
 
     override fun onItemClick(repo: Repo, view: View) {
         when (view.id) {
-            R.id.ivRepoAuthor -> {
-                launchOwnerActivity(repo.owner)
-            }
-            R.id.tvRepoName -> {
-                launchDetailActivity(repo)
-            }
+            R.id.ivRepoAuthor -> launchOwnerActivity(repo.owner)
+            R.id.tvRepoName -> launchDetailActivity(repo)
         }
     }
 
+    private fun View.visible(show:Boolean) {
+        visibility = if(show) View.VISIBLE else View.GONE
+    }
+
     private fun launchDetailActivity(repo: Repo) {
-        val intent = Intent(this, DetailActivity::class.java)
-        intent.putExtra("repo", repo)
+        val intent = Intent(this, DetailActivity::class.java).putExtra("repo", repo)
         startActivity(intent)
     }
 
     private fun launchOwnerActivity(owner: Owner) {
-        val intent = Intent(this, OwnerActivity::class.java)
-        intent.putExtra("owner", owner)
+        val intent = Intent(this, OwnerActivity::class.java).putExtra("owner", owner)
         startActivity(intent)
     }
 }
