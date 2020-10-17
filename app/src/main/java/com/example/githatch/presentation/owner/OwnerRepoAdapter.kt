@@ -93,7 +93,6 @@ class OwnerRepoAdapter(recyclerView: RecyclerView) :
             binding.apply {
                 myFlipView.setFlipped(false)
                 tvRepoName.text = repo.name
-                tvRepoName.isSelected = true
                 tvWatch.text = Helper.numberFormatter(repo.watchersCount)
                 tvDateUpdated.text = Helper.dateFormatterAlt(repo.updatedAt)
                 tvFork.text = Helper.numberFormatter(repo.forksCount)
@@ -110,6 +109,7 @@ class OwnerRepoAdapter(recyclerView: RecyclerView) :
                 }
                 ivRepoAuthor.visible(false)
                 tvAuthorName.visible(false)
+                lbAuthor.visible(false)
                 itemBack.visible(false)
             }
         }

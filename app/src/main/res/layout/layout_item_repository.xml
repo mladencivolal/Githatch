@@ -97,15 +97,27 @@
                     app:layout_constraintTop_toBottomOf="@id/ivRepoAuthor" />
 
                 <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/lbAuthor"
+                    android:textColor="@color/creator_text"
+                    android:text="Author"
+                    android:layout_marginEnd="@dimen/five"
+                    android:layout_marginBottom="@dimen/five"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+
+                <TextView
                     android:id="@+id/tvAuthorName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/five"
                     android:layout_marginEnd="@dimen/five"
                     android:layout_marginBottom="@dimen/five"
                     android:fontFamily="@font/roboto_light"
-                    android:textColor="@color/creator_text"
                     app:layout_constraintBottom_toTopOf="@id/ivRepoAuthor"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/lbAuthor"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView

@@ -99,7 +99,6 @@ class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolea
             binding.apply {
                 myFlipView.setFlipped(false)
                 tvRepoName.text = repo.name
-                tvRepoName.isSelected = true
                 tvWatch.text = Helper.numberFormatter(repo.watchersCount)
                 tvDateUpdated.text = Helper.dateFormatterAlt(repo.updatedAt)
                 tvFork.text = Helper.numberFormatter(repo.forksCount)
@@ -121,11 +120,7 @@ class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolea
                 Glide.with(binding.ivRepoAuthor.context)
                     .load(imageURL)
                     .into(binding.ivRepoAuthor)
-                binding.tvAuthorName.text = Helper.textFormatter(
-                    "Author: ${repo.owner.login}",
-                    8,
-                    "#FAFAFA"
-                )
+                binding.tvAuthorName.text = repo.owner.login
             } else {
                 binding.apply {
                     ivRepoAuthor.visible(false)
