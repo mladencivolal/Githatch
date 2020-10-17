@@ -1,7 +1,6 @@
 package com.example.githatch.presentation.detail
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -19,7 +18,6 @@ import com.example.githatch.databinding.ActivityDetailBinding
 import com.example.githatch.helpers.Helper
 import com.example.githatch.presentation.di.Injector
 import com.example.githatch.presentation.owner.OwnerActivity
-import kotlinx.android.synthetic.main.activity_detail.*
 import javax.inject.Inject
 
 class DetailActivity : AppCompatActivity(),
@@ -41,13 +39,18 @@ class DetailActivity : AppCompatActivity(),
         detailViewModel = ViewModelProvider(this, factory)
             .get(DetailViewModel::class.java)
 
-        binding.fabUp.setOnClickListener{recyclerview.scrollToPosition(0)}
-
+        initClickListeners()
         initRecyclerView()
-
         populateWithIntentData()
 
         getContributors(repoData.owner.login, repoData.name)
+    }
+
+    private fun initClickListeners() {
+        binding.apply {
+            fabUp.setOnClickListener { recyclerview.scrollToPosition(0) }
+            ivProfile.setOnClickListener { launchOwnerActivity(repoData.owner) }
+        }
     }
 
     private fun initRecyclerView() {
@@ -62,23 +65,22 @@ class DetailActivity : AppCompatActivity(),
     private fun populateWithIntentData() {
         repoData = intent.getParcelableExtra("repo")!!
 
-        binding.tvTitle.text = repoData.name
-        binding.tvAuthor.text = repoData.owner.login
-        binding.tvLang.text = repoData.language
-        binding.tvDateCreated.text = Helper.dateFormatter(repoData.createdAt)
-        binding.tvDateUpdated.text = Helper.dateFormatter(repoData.updatedAt)
-        binding.tvWatch.text = Helper.numberFormatter(repoData.watchersCount)
-        binding.tvFork.text = Helper.numberFormatter(repoData.forksCount)
-        binding.tvIssue.text = Helper.numberFormatter(repoData.openIssues)
-        binding.tvDescription.text = repoData.description
+        binding.apply {
+            tvTitle.text = repoData.name
+            tvAuthor.text = repoData.owner.login
+            tvLang.text = repoData.language
+            tvDateCreated.text = Helper.dateFormatter(repoData.createdAt)
+            tvDateUpdated.text = Helper.dateFormatter(repoData.updatedAt)
+            tvWatch.text = Helper.numberFormatter(repoData.watchersCount)
+            tvFork.text = Helper.numberFormatter(repoData.forksCount)
+            tvIssue.text = Helper.numberFormatter(repoData.openIssues)
+            tvDescription.text = repoData.description
+        }
 
         val imageURL = repoData.owner.avatarUrl
         Glide.with(binding.ivProfile.context)
             .load(imageURL)
             .into(binding.ivProfile)
-
-        //binding.ivLink.setOnClickListener { launchBrowserActivity(repoData) }
-        binding.ivProfile.setOnClickListener { launchOwnerActivity(repoData.owner) }
     }
 
     private fun getContributors(ownerName: String, repoName: String) {
@@ -104,14 +106,6 @@ class DetailActivity : AppCompatActivity(),
         val intent = Intent(this, OwnerActivity::class.java)
         intent.putExtra("owner", owner)
         startActivity(intent)
-    }
-
-    private fun launchBrowserActivity(repo: Repo) {
-        val webpage: Uri = Uri.parse(repo.htmlUrl)
-        val intent = Intent(Intent.ACTION_VIEW, webpage)
-        if (intent.resolveActivity(packageManager) != null) {
-            startActivity(intent)
-        }
     }
 }
 

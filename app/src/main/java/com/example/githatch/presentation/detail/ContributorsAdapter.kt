@@ -58,7 +58,7 @@ class ContributorsAdapter : RecyclerView.Adapter<ContributorsAdapter.MyViewHolde
         }
 
         override fun onClick(view: View?) {
-            onItemClickListener.onItemClick(items[adapterPosition])
+            onItemClickListener.onItemClick(items[bindingAdapterPosition])
         }
     }
 
