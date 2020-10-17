@@ -1,6 +1,5 @@
 package com.example.githatch.presentation.owner
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +17,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class OwnerRepoAdapter (recyclerView: RecyclerView) :
+class OwnerRepoAdapter(recyclerView: RecyclerView) :
     RecyclerView.Adapter<OwnerRepoAdapter.MyViewHolder>() {
     private val repoList: MutableList<Repo> = mutableListOf()
     private var loading: Boolean = false
@@ -26,11 +25,11 @@ class OwnerRepoAdapter (recyclerView: RecyclerView) :
     lateinit var onLoadMoreListener: OnLoadMoreListener
 
     init {
-        var buffer = 0
-        var pageLength = 5
+        val pageLength = 5
 
         if (recyclerView.layoutManager is LinearLayoutManager) {
-            val linearLayoutManager = recyclerView.layoutManager as LinearLayoutManager
+            val linearLayoutManager: LinearLayoutManager =
+                recyclerView.layoutManager as LinearLayoutManager
 
             recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -40,26 +39,13 @@ class OwnerRepoAdapter (recyclerView: RecyclerView) :
                     val lastVisibleItem =
                         linearLayoutManager.findLastCompletelyVisibleItemPosition()
 
-                    Log.i("MYTAG", "ownerrepoadapter")
-                    Log.i("MYTAG", "loading: $loading ")
-                    Log.i("MYTAG", "total num of adapter items: ${totalItemCount-1} ")
-                    Log.i("MYTAG", "lastvisibleitem position: $lastVisibleItem ")
-                    Log.i("MYTAG", "repoList size: ${repoList.size} ")
-
-                     if (!loading && totalItemCount - 1 <= lastVisibleItem && lastVisibleItem > repoList.size - pageLength) {
+                    if (!loading && totalItemCount - 1 <= lastVisibleItem && lastVisibleItem > repoList.size - pageLength) {
                         onLoadMoreListener.onLoadMore()
                         loading = true
                     }
                 }
             })
         }
-    }
-
-
-    fun setList(repos: List<Repo>) {
-        repoList.clear()
-        repoList.addAll(repos)
-        notifyDataSetChanged()
     }
 
     fun updateList(repos: List<Repo>) {
@@ -106,52 +92,54 @@ class OwnerRepoAdapter (recyclerView: RecyclerView) :
         }
 
         fun bind(repo: Repo) {
-            binding.myFlipView.setFlipped(false)
-            binding.tvRepoName.text = repo.name
-            binding.tvRepoName.isSelected = true
-            binding.tvWatch.text = Helper.numberFormatter(repo.watchersCount)
-            binding.tvDateUpdated.text = Helper.dateFormatterAlt(repo.updatedAt)
-            binding.tvFork.text = Helper.numberFormatter(repo.forksCount)
-            binding.tvLanguage.text = repo.language
-
-            binding.root.findViewById<ImageView>(R.id.ivRepoAuthor)
-                .setOnClickListener(View.OnClickListener {
-                    onItemClickListener.onItemClick(
-                        repoList[bindingAdapterPosition],
-                        binding.root.findViewById<ImageView>(R.id.ivRepoAuthor)
-                    )
-                })
-            binding.root.findViewById<TextView>(R.id.tvRepoName)
-                .setOnClickListener(View.OnClickListener {
-                    onItemClickListener.onItemClick(
-                        repoList[bindingAdapterPosition],
-                        binding.root.findViewById<ImageView>(R.id.tvRepoName)
-                    )
-                })
-            binding.myFlipView.setOnClickListener {
-                binding.myFlipView.flip()
-                CoroutineScope(Dispatchers.Main).launch {
-                    if (binding.myFlipView.isFlipped()) {
-                        delay(300)
-                        binding.tvDescription.text =
-                            repoList[bindingAdapterPosition].description.toString()
-                        binding.ivRepoAuthor.isClickable = false
-                        binding.tvRepoName.isClickable = false
-                    } else {
-                        delay(300)
-                        binding.ivRepoAuthor.isClickable = true
-                        binding.tvRepoName.isClickable = true
-                        binding.tvDescription.text = ""
+            binding.apply {
+                myFlipView.setFlipped(false)
+                tvRepoName.text = repo.name
+                tvRepoName.isSelected = true
+                tvWatch.text = Helper.numberFormatter(repo.watchersCount)
+                tvDateUpdated.text = Helper.dateFormatterAlt(repo.updatedAt)
+                tvFork.text = Helper.numberFormatter(repo.forksCount)
+                tvLanguage.text = repo.language
+                root.findViewById<ImageView>(R.id.ivRepoAuthor)
+                    .setOnClickListener {
+                        onItemClickListener.onItemClick(
+                            repoList[bindingAdapterPosition],
+                            binding.root.findViewById<ImageView>(R.id.ivRepoAuthor)
+                        )
+                    }
+                root.findViewById<TextView>(R.id.tvRepoName)
+                    .setOnClickListener {
+                        onItemClickListener.onItemClick(
+                            repoList[bindingAdapterPosition],
+                            binding.root.findViewById<ImageView>(R.id.tvRepoName)
+                        )
+                    }
+                myFlipView.setOnClickListener {
+                    binding.myFlipView.flip()
+                    CoroutineScope(Dispatchers.Main).launch {
+                        if (binding.myFlipView.isFlipped()) {
+                            delay(300)
+                            binding.apply {
+                                tvDescription.text =
+                                    repoList[bindingAdapterPosition].description.toString()
+                                ivRepoAuthor.isClickable = false
+                                tvRepoName.isClickable = false
+                            }
+                        } else {
+                            delay(300)
+                            binding.apply {
+                                ivRepoAuthor.isClickable = true
+                                tvRepoName.isClickable = true
+                                tvDescription.text = ""
+                            }
+                        }
                     }
                 }
+                ivRepoAuthor.visibility = View.GONE
+                tvAuthorName.visibility = View.GONE
             }
-            binding.ivRepoAuthor.visibility = View.GONE
-            binding.tvAuthorName.visibility = View.GONE
         }
-
-        override fun onClick(v: View?) {
-
-        }
+        override fun onClick(v: View?) {}
     }
 }
 

@@ -23,7 +23,6 @@ class OwnerViewModel(
     }
 
     suspend fun getAuthor(ownerName: String): Owner {
-        val author = getAuthorUseCase.execute(ownerName)
-        return author
+        return getAuthorUseCase.execute(ownerName)
     }
 }
