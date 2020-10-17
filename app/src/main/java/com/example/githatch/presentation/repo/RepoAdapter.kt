@@ -22,6 +22,7 @@ class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolea
     private var loading: Boolean = false
     lateinit var onItemClickListener: OnItemClickListener
     lateinit var onLoadMoreListener: OnLoadMoreListener
+    private lateinit var description: String
 
     init {
         if (recyclerView.layoutManager is LinearLayoutManager) {
@@ -103,8 +104,7 @@ class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolea
                 tvDateUpdated.text = Helper.dateFormatterAlt(repo.updatedAt)
                 tvFork.text = Helper.numberFormatter(repo.forksCount)
                 tvLanguage.text = repo.language
-                tvDescription.text =
-                    repoList[bindingAdapterPosition].description.toString()
+                tvDescription.text =  repoList[bindingAdapterPosition].description.toString()
                 val clickers = listOf(ivRepoAuthor, tvRepoName)
                 clickers.toTypedArray().forEach { view ->
                     view.setOnClickListener {
@@ -128,8 +128,8 @@ class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolea
                 )
             } else {
                 binding.apply {
-                   ivRepoAuthor.visible(false)
-                   tvAuthorName.visible(false)
+                    ivRepoAuthor.visible(false)
+                    tvAuthorName.visible(false)
                 }
             }
         }
@@ -144,10 +144,14 @@ class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolea
                                 delay(300)
                                 binding.itemBack.visible(true)
                                 flippedSideClickable(false)
+                               // binding.itemBack.visible(true)
+
                             } else {
                                 delay(300)
                                 binding.itemBack.visible(false)
                                 flippedSideClickable(true)
+                                //binding.itemBack.visible(true)
+
                             }
                         }
                     }
@@ -161,8 +165,6 @@ class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolea
 
         private fun flippedSideClickable(clickable: Boolean) {
             binding.apply {
-                tvDescription.text =
-                    repoList[bindingAdapterPosition].description.toString()
                 ivRepoAuthor.isClickable = clickable
                 tvRepoName.isClickable = clickable
             }

@@ -4,39 +4,23 @@ import android.animation.Animator
 import android.animation.AnimatorInflater
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import android.view.View
 import android.widget.FrameLayout
 import com.example.githatch.R
-import kotlinx.android.synthetic.main.layout_item_repository.view.*
 
-class FlipView : FrameLayout {
-    constructor(context: Context?) : super(context!!) {
-        init(null)
-    }
+class FlipView(context: Context?, attrs: AttributeSet?) : FrameLayout(
+    context!!, attrs
+) {
 
-    constructor(context: Context?, attrs: AttributeSet?) : super(
-        context!!, attrs
-    ) {
-        init(attrs)
-    }
-
-    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(
-        context!!, attrs, defStyleAttr
-    ) {
-        init(attrs)
+    init {
+        loadAnimation()
     }
 
     private var isFlipped = false
-    var frontView: View? = null
-        private set
-    var backView: View? = null
-        private set
+    private var frontView: View? = null
+    private var backView: View? = null
     private var enterFlipAnim: Animator? = null
     private var exitFlipAnim: Animator? = null
-    private fun init(attrs: AttributeSet?) {
-        loadAnimation()
-    }
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         super.onLayout(changed, left, top, right, bottom)
@@ -79,17 +63,12 @@ class FlipView : FrameLayout {
         }
     }
 
-    override fun onAttachedToWindow() {
-        super.onAttachedToWindow()
-    }
-
     fun isFlipped(): Boolean {
         return isFlipped
     }
 
     fun setFlipped(flipped: Boolean) {
         isFlipped = flipped
-
         setActiveView()
     }
 
@@ -98,7 +77,8 @@ class FlipView : FrameLayout {
         frontView!!.rotationY = 0f
         backView!!.rotationY = 0f
 
-        frontView!!.setAlpha(if (isFlipped) 0f else 1f)
-        backView!!.setAlpha(if (isFlipped) 1f else 0f)
+        frontView!!.alpha = if (isFlipped) 0f else 1f
+        backView!!.alpha = if (isFlipped) 1f else 0f
     }
+
 }
