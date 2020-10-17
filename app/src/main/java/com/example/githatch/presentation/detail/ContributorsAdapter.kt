@@ -40,7 +40,6 @@ class ContributorsAdapter : RecyclerView.Adapter<ContributorsAdapter.MyViewHolde
         notifyDataSetChanged()
     }
 
-
     inner class MyViewHolder(val binding: LayoutItemContributorBinding) : RecyclerView.ViewHolder(binding.root),
         View.OnClickListener {
 

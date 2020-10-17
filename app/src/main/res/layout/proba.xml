@@ -1,0 +1,312 @@
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/linearView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/cardview_dark_background"
+    android:visibility="visible"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/ivFollowers"
+            android:layout_width="@dimen/sixteen"
+            android:layout_height="@dimen/sixteen"
+            android:layout_marginTop="@dimen/three"
+            android:src="@drawable/ic_people"
+            app:layout_constraintEnd_toStartOf="@+id/lbFollowers"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/lbFollowers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/three"
+            android:text="Followers"
+            android:textColor="@color/creator_text"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@+id/tvFollowers"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/ivFollowers"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvFollowers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/three"
+            android:textColor="@color/colorAccent"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@+id/ivFollowing"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/lbFollowers"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ivFollowing"
+            android:layout_width="@dimen/sixteen"
+            android:layout_height="@dimen/sixteen"
+            android:layout_marginTop="@dimen/three"
+            android:src="@drawable/ic_people"
+            app:layout_constraintEnd_toStartOf="@+id/lbFollowing"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/tvFollowers"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/lbFollowing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/three"
+            android:text="Following"
+            android:textColor="@color/creator_text"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@+id/tvFollowing"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/ivFollowing"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvFollowing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/three"
+            android:textColor="@color/colorAccent"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@+id/ivRepos"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/lbFollowing"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ivRepos"
+            android:layout_width="@dimen/sixteen"
+            android:layout_height="@dimen/sixteen"
+            android:layout_marginTop="@dimen/three"
+            android:src="@drawable/ic_repo"
+            app:layout_constraintEnd_toStartOf="@+id/lbRepos"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/tvFollowing"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/lbRepos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/three"
+            android:text="Repos"
+            android:textColor="@color/creator_text"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@+id/tvRepos"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/ivRepos"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvRepos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/three"
+            android:textColor="@color/colorAccent"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@+id/ivGists"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/lbRepos"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ivGists"
+            android:layout_width="@dimen/sixteen"
+            android:layout_height="@dimen/sixteen"
+            android:layout_marginTop="@dimen/three"
+            android:src="@drawable/ic_language"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/lbGists"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/tvRepos"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/lbGists"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/three"
+            android:text="Gists"
+            android:textColor="@color/creator_text"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@+id/tvGists"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/ivGists"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvGists"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/five"
+            android:layout_marginTop="@dimen/three"
+            android:textColor="@color/colorAccent"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/lbGists"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/topDivider"
+            android:layout_width="@dimen/zero"
+            android:layout_height="@dimen/sixteen"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivRepos" />
+
+        <TextView
+            android:id="@+id/lbEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/five"
+            android:fontFamily="@font/roboto_light"
+            android:text="Email"
+            android:textColor="@color/creator_text"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@id/ivTwit"
+            app:layout_constraintEnd_toStartOf="@id/ivEmail"
+            app:layout_constraintTop_toBottomOf="@id/topDivider" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/ivEmail"
+            android:layout_width="@dimen/forty"
+            android:layout_height="@dimen/forty"
+            android:layout_margin="@dimen/two"
+            android:padding="@dimen/two"
+            app:civ_border_color="@color/colorAccent"
+            app:civ_border_width="0.5dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/topDivider"
+            tools:src="@drawable/ic_email" />
+
+        <TextView
+            android:id="@+id/tvEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/five"
+            android:fontFamily="@font/roboto_light"
+            android:textColor="@color/colorAccent"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@id/ivTwit"
+            app:layout_constraintStart_toEndOf="@id/ivEmail"
+            app:layout_constraintTop_toBottomOf="@id/topDivider" />
+
+        <TextView
+            android:id="@+id/lbTwitter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/five"
+            android:fontFamily="@font/roboto_light"
+            android:text="Twitter"
+            android:textColor="@color/creator_text"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@id/ivLink"
+            app:layout_constraintEnd_toStartOf="@id/ivTwit"
+            app:layout_constraintTop_toBottomOf="@id/ivEmail" />
+
+        <ImageView
+            android:id="@+id/ivTwit"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_margin="@dimen/two"
+            android:background="@drawable/rounded_button"
+            android:src="@mipmap/twitter_logo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivEmail" />
+
+        <TextView
+            android:id="@+id/tvTwitter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/five"
+            android:fontFamily="@font/roboto_light"
+            android:textColor="@color/lang_text"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@id/ivLink"
+            app:layout_constraintStart_toEndOf="@id/ivTwit"
+            app:layout_constraintTop_toBottomOf="@id/ivEmail" />
+
+        <TextView
+            android:id="@+id/lbLink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/five"
+
+            android:fontFamily="@font/roboto_light"
+            android:text="Link"
+            android:textColor="@color/creator_text"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@id/tvName"
+            app:layout_constraintEnd_toStartOf="@id/ivLink"
+            app:layout_constraintTop_toBottomOf="@id/ivTwit" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/ivLink"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            app:civ_border_width="0.5dp"
+            app:civ_border_color="@color/colorAccent"
+            android:layout_margin="@dimen/two"
+            android:src="@drawable/ic_open"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivTwit" />
+
+        <TextView
+            android:id="@+id/tvLink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/five"
+            android:fontFamily="@font/roboto_light"
+            android:textColor="@color/creator_text"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@id/tvName"
+            app:layout_constraintStart_toEndOf="@id/ivLink"
+            app:layout_constraintTop_toBottomOf="@id/ivTwit" />
+
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/five"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivLink" />
+
+        <TextView
+            android:id="@+id/tvBioBack"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/ten"
+            android:paddingEnd="@dimen/ten"
+            android:paddingBottom="@dimen/ten"
+            android:text="@string/repositories"
+            android:textAlignment="center"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvName" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
