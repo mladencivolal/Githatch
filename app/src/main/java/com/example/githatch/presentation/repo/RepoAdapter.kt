@@ -111,7 +111,7 @@ class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolea
                 tvDateUpdated.text = Helper.dateFormatterAlt(repo.updatedAt)
                 tvFork.text = Helper.numberFormatter(repo.forksCount)
                 tvLanguage.text = repo.language
-                tvDescription.text =  repoList[bindingAdapterPosition].description.toString()
+                tvDescription.text =  repoList[bindingAdapterPosition].description
                 val clickers = listOf(ivRepoAuthor, tvRepoName)
                 clickers.toTypedArray().forEach { view ->
                     view.setOnClickListener {
