@@ -98,9 +98,18 @@ class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
     private fun initRecyclerView() {
         binding.repoRecyclerview.layoutManager = LinearLayoutManager(this)
         adapter = RepoAdapter(binding.repoRecyclerview, true)
-        adapter.onLoadMoreListener = this
-        adapter.onItemClickListener = this
-        binding.repoRecyclerview.adapter = adapter
+        adapter.apply {
+            onLoadMoreListener = this@RepoActivity
+            onItemClickListener = this@RepoActivity
+            //setHasStableIds(true)
+        }
+        binding.apply {
+            repoRecyclerview.adapter = adapter
+            repoRecyclerview.setHasFixedSize(true)
+            repoRecyclerview.setItemViewCacheSize(50);
+            repoRecyclerview.setDrawingCacheEnabled(true);
+            repoRecyclerview.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+        }
     }
 
     private fun initSortSheet() {

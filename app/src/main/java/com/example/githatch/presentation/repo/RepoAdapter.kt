@@ -22,7 +22,6 @@ class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolea
     private var loading: Boolean = false
     lateinit var onItemClickListener: OnItemClickListener
     lateinit var onLoadMoreListener: OnLoadMoreListener
-    private lateinit var description: String
 
     init {
         if (recyclerView.layoutManager is LinearLayoutManager) {
@@ -52,8 +51,9 @@ class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolea
     }
 
     fun updateList(repos: List<Repo>) {
-        repos.forEach { this.repoList.add(it) }
-        notifyDataSetChanged()
+        repos.forEach { this.repoList.add(it)
+            notifyItemInserted(repoList.indexOf(it))
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -139,13 +139,11 @@ class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolea
                                 delay(300)
                                 binding.itemBack.visible(true)
                                 flippedSideClickable(false)
-                               // binding.itemBack.visible(true)
 
                             } else {
                                 delay(300)
                                 binding.itemBack.visible(false)
                                 flippedSideClickable(true)
-                                //binding.itemBack.visible(true)
 
                             }
                         }
