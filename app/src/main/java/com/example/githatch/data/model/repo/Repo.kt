@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey
 import com.example.githatch.data.model.owner.Owner
 import com.google.gson.annotations.SerializedName
 
+
 data class Repo(
     @PrimaryKey
     @SerializedName("name") val name: String,

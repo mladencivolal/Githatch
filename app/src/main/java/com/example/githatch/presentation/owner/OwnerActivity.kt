@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewAnimationUtils
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.*
+import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -19,6 +19,8 @@ import com.example.githatch.R
 import com.example.githatch.data.model.owner.Owner
 import com.example.githatch.data.model.repo.Repo
 import com.example.githatch.databinding.ActivityOwnerBinding
+import com.example.githatch.helpers.pixelDensity
+import com.example.githatch.helpers.visible
 import com.example.githatch.presentation.detail.DetailActivity
 import com.example.githatch.presentation.di.Injector
 import kotlinx.android.synthetic.main.activity_owner.*
@@ -38,7 +40,6 @@ class OwnerActivity : AppCompatActivity(), OwnerRepoAdapter.OnItemClickListener,
     private lateinit var author: Owner
 
     lateinit var alphaAnimation: Animation
-    private var pixelDensity = 0f
     private var flag = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,10 +49,11 @@ class OwnerActivity : AppCompatActivity(), OwnerRepoAdapter.OnItemClickListener,
         (application as Injector).createOwnerSubComponent()
             .inject(this)
 
+
+
         ownerViewModel = ViewModelProvider(this, factory)
             .get(OwnerViewModel::class.java)
 
-        pixelDensity = resources.displayMetrics.density
         alphaAnimation = AnimationUtils.loadAnimation(this, R.anim.alpha_anim)
 
         initClickListeners()
@@ -66,7 +68,9 @@ class OwnerActivity : AppCompatActivity(), OwnerRepoAdapter.OnItemClickListener,
 
         var x: Int = clAuthor.right
         val y: Int = clAuthor.bottom
-        x -= (28 * pixelDensity + 16 * pixelDensity).toInt()
+
+        val density = pixelDensity
+        x -= (28 * density + 16 * density).toInt()
         val hypotenuse =
             hypot(clAuthor.width.toDouble(), clAuthor.height.toDouble()).toInt()
         if (flag) {
@@ -187,10 +191,6 @@ class OwnerActivity : AppCompatActivity(), OwnerRepoAdapter.OnItemClickListener,
                 binding.progressBar.visible(false)
             }
         })
-    }
-
-    private fun View.visible(show: Boolean) {
-        visibility = if (show) View.VISIBLE else View.GONE
     }
 
     private fun launchDetailActivity(repo: Repo) {

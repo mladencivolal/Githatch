@@ -16,6 +16,7 @@ import com.example.githatch.data.model.owner.Owner
 import com.example.githatch.data.model.repo.Repo
 import com.example.githatch.databinding.ActivityDetailBinding
 import com.example.githatch.helpers.Helper
+import com.example.githatch.helpers.visible
 import com.example.githatch.presentation.di.Injector
 import com.example.githatch.presentation.owner.OwnerActivity
 import javax.inject.Inject
@@ -84,15 +85,15 @@ class DetailActivity : AppCompatActivity(),
     }
 
     private fun getContributors(ownerName: String, repoName: String) {
-        binding.progressBar.visibility = View.VISIBLE
+        binding.progressBar.visible(true)
 
         val responseLiveData = detailViewModel.getContribs(ownerName, repoName)
         responseLiveData.observe(this, {
             if (it != null) {
                 adapter.updateList(it)
-                binding.progressBar.visibility = View.GONE
+                binding.progressBar.visible(false)
             } else {
-                binding.progressBar.visibility = View.GONE
+                binding.progressBar.visible(false)
                 Toast.makeText(applicationContext, "No data available", Toast.LENGTH_LONG).show()
             }
         })

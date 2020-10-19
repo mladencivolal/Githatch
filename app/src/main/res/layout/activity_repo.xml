@@ -8,6 +8,7 @@
         android:layout_height="match_parent"
         android:background="@color/recyclerview_background">
 
+
         <EditText
             android:id="@+id/etSearch"
             style="@style/Base.Widget.MaterialComponents.TextInputEditText"

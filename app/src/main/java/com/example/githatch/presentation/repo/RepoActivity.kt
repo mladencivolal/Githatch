@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
+import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.appcompat.app.AppCompatActivity
@@ -14,12 +15,13 @@ import com.example.githatch.R
 import com.example.githatch.data.model.owner.Owner
 import com.example.githatch.data.model.repo.Repo
 import com.example.githatch.databinding.ActivityRepoBinding
+import com.example.githatch.databinding.LayoutSortSheetBinding
 import com.example.githatch.helpers.Helper
+import com.example.githatch.helpers.visible
 import com.example.githatch.presentation.detail.DetailActivity
 import com.example.githatch.presentation.di.Injector
 import com.example.githatch.presentation.owner.OwnerActivity
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import kotlinx.android.synthetic.main.layout_sort_sheet.view.*
 import javax.inject.Inject
 
 class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
@@ -28,8 +30,8 @@ class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
     lateinit var factory: RepoViewModelFactory
     private lateinit var viewmodel: RepoViewModel
     private lateinit var binding: ActivityRepoBinding
+    private lateinit var bindingSortSheet: LayoutSortSheetBinding
     private lateinit var adapter: RepoAdapter
-    private lateinit var bottomSortView: View
     private lateinit var dialog: BottomSheetDialog
     private var searchTerm = ""
     private var orderBy: String = ""
@@ -101,32 +103,34 @@ class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
         adapter.apply {
             onLoadMoreListener = this@RepoActivity
             onItemClickListener = this@RepoActivity
-            //setHasStableIds(true)
         }
         binding.apply {
             repoRecyclerview.adapter = adapter
             repoRecyclerview.setHasFixedSize(true)
             repoRecyclerview.setItemViewCacheSize(50)
-            repoRecyclerview.setDrawingCacheEnabled(true)
-            repoRecyclerview.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH)
         }
     }
 
     private fun initSortSheet() {
-        bottomSortView = layoutInflater.inflate(R.layout.layout_sort_sheet, null)
-        bottomSortView.apply {
+        bindingSortSheet = DataBindingUtil.inflate(
+            LayoutInflater.from(this),
+            R.layout.layout_sort_sheet,
+            null,
+            false
+        )
+        bindingSortSheet.apply {
             val clickables = listOf(lbStars, lbForks, lbUpdated, tvAsc, tvDesc, lbApply, lbClear)
             clickables.toTypedArray().forEach { it.setOnClickListener(this@RepoActivity) }
         }
         dialog = BottomSheetDialog(this)
         dialog.apply {
-            setContentView(bottomSortView)
+            setContentView(bindingSortSheet.root)
             setOnCancelListener {}
         }
     }
 
     private fun resetSortFilters() {
-        bottomSortView.apply {
+        bindingSortSheet.apply {
             lbStars.isSelected = false
             lbForks.isSelected = false
             lbUpdated.isSelected = false
@@ -134,7 +138,7 @@ class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
     }
 
     private fun resetOrderFilters() {
-        bottomSortView.apply {
+        bindingSortSheet.apply {
             tvAsc.isSelected = false
             tvDesc.isSelected = false
         }
@@ -142,20 +146,18 @@ class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
 
     private fun manageSortFilters() {
         resetSortFilters()
-
         when (sortBy) {
-            Helper.SortBy.stars.name -> bottomSortView.lbStars.isSelected = true
-            Helper.SortBy.forks.name -> bottomSortView.lbForks.isSelected = true
-            Helper.SortBy.updated.name -> bottomSortView.lbUpdated.isSelected = true
+            Helper.SortBy.stars.name -> bindingSortSheet.lbStars.isSelected = true
+            Helper.SortBy.forks.name -> bindingSortSheet.lbForks.isSelected = true
+            Helper.SortBy.updated.name -> bindingSortSheet.lbUpdated.isSelected = true
         }
     }
 
     private fun manageOrderFilters() {
         resetOrderFilters()
-
         when (orderBy) {
-            Helper.OrderBy.asc.name -> bottomSortView.tvAsc.isSelected = true
-            Helper.OrderBy.desc.name -> bottomSortView.tvDesc.isSelected = true
+            Helper.OrderBy.asc.name -> bindingSortSheet.tvAsc.isSelected = true
+            Helper.OrderBy.desc.name -> bindingSortSheet.tvDesc.isSelected = true
         }
     }
 
@@ -190,44 +192,42 @@ class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
     }
 
     override fun onClick(p0: View?) {
-        when (p0!!.id) {
-            R.id.fabUp -> {
-                binding.repoRecyclerview.scrollToPosition(0)
-            }
-            R.id.fabSort -> {
-                dialog.show()
-            }
-            R.id.lbStars -> {
-                sortBy = Helper.SortBy.stars.name
-                manageSortFilters()
-            }
-            R.id.lbForks -> {
-                sortBy = Helper.SortBy.forks.name
-                manageSortFilters()
-            }
-            R.id.lbUpdated -> {
-                sortBy = Helper.SortBy.updated.name
-                manageSortFilters()
-            }
-            R.id.tvAsc -> {
-                orderBy = Helper.OrderBy.asc.name
-                manageOrderFilters()
-            }
-            R.id.tvDesc -> {
-                orderBy = Helper.OrderBy.desc.name
-                manageOrderFilters()
-            }
-            R.id.lbApply -> {
-                dialog.dismiss()
-                searchRepos(searchTerm, sortBy, orderBy)
-            }
-            R.id.lbClear -> {
-                dialog.dismiss()
-                resetOrderFilters()
-                resetSortFilters()
-                sortBy = ""
-                orderBy = ""
-                searchRepos(searchTerm, "", "")
+        bindingSortSheet.apply {
+            when (p0) {
+                binding.fabUp -> binding.repoRecyclerview.scrollToPosition(0)
+                binding.fabSort -> dialog.show()
+                lbStars -> {
+                    sortBy = Helper.SortBy.stars.name
+                    manageSortFilters()
+                }
+                lbForks -> {
+                    sortBy = Helper.SortBy.forks.name
+                    manageSortFilters()
+                }
+                lbUpdated -> {
+                    sortBy = Helper.SortBy.updated.name
+                    manageSortFilters()
+                }
+                tvAsc -> {
+                    orderBy = Helper.OrderBy.asc.name
+                    manageOrderFilters()
+                }
+                tvDesc -> {
+                    orderBy = Helper.OrderBy.desc.name
+                    manageOrderFilters()
+                }
+                lbApply -> {
+                    dialog.dismiss()
+                    searchRepos(searchTerm, sortBy, orderBy)
+                }
+                lbClear -> {
+                    dialog.dismiss()
+                    resetOrderFilters()
+                    resetSortFilters()
+                    sortBy = ""
+                    orderBy = ""
+                    searchRepos(searchTerm, "", "")
+                }
             }
         }
     }
@@ -237,10 +237,6 @@ class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
             R.id.ivRepoAuthor -> launchOwnerActivity(repo.owner)
             R.id.tvRepoName -> launchDetailActivity(repo)
         }
-    }
-
-    private fun View.visible(show:Boolean) {
-        visibility = if(show) View.VISIBLE else View.GONE
     }
 
     private fun launchDetailActivity(repo: Repo) {
