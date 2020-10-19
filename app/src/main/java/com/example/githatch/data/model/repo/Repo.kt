@@ -42,13 +42,13 @@ data class Repo(
         writeString(fullName)
         writeParcelable(owner, 1)
         writeString(htmlUrl)
-        writeString(if (description == null || description.isEmpty()) "No Description" else description )
+        writeString(description?.orEmpty() ?: "No description")
         writeInt(watchersCount)
         writeInt(forksCount)
         writeInt(openIssues)
-        writeString(if(createdAt.length == 0) "N/A" else createdAt)
-        writeString(if(updatedAt == null || updatedAt.isEmpty()) "N/A" else updatedAt)
-        writeString(if(language == null || language.isEmpty()) "N/A" else language)
+        writeString(createdAt)
+        writeString(updatedAt)
+        writeString(language?.orEmpty() ?: "n/a")
     }
 
     companion object {

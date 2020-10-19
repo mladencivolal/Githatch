@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -11,10 +12,7 @@ import com.example.githatch.R
 import com.example.githatch.data.model.repo.Repo
 import com.example.githatch.databinding.LayoutItemRepositoryBinding
 import com.example.githatch.helpers.Helper
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolean) :
     RecyclerView.Adapter<RepoAdapter.MyViewHolder>() {
@@ -22,6 +20,7 @@ class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolea
     private var loading: Boolean = false
     lateinit var onItemClickListener: OnItemClickListener
     lateinit var onLoadMoreListener: OnLoadMoreListener
+    lateinit var binding: LayoutItemRepositoryBinding
 
     init {
         if (recyclerView.layoutManager is LinearLayoutManager) {
@@ -44,6 +43,14 @@ class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolea
         }
     }
 
+    override fun onViewRecycled(holder: MyViewHolder) {
+       // holder.binding.cardView = null
+        holder.binding.executePendingBindings()
+        Glide.with(binding.ivRepoAuthor.context).clear(holder.binding.ivRepoAuthor)
+        holder.binding.ivRepoAuthor.setImageDrawable(null)
+        super.onViewRecycled(holder)
+    }
+
     fun setList(repos: List<Repo>) {
         repoList.clear()
         repoList.addAll(repos)
@@ -51,6 +58,7 @@ class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolea
     }
 
     fun updateList(repos: List<Repo>) {
+
         repos.forEach { this.repoList.add(it)
             notifyItemInserted(repoList.indexOf(it))
         }
@@ -58,7 +66,7 @@ class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolea
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val binding: LayoutItemRepositoryBinding = DataBindingUtil.inflate(
+        binding = DataBindingUtil.inflate(
             layoutInflater,
             R.layout.layout_item_repository,
             parent,
@@ -144,7 +152,6 @@ class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolea
                                 delay(300)
                                 binding.itemBack.visible(false)
                                 flippedSideClickable(true)
-
                             }
                         }
                     }

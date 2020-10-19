@@ -106,9 +106,9 @@ class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
         binding.apply {
             repoRecyclerview.adapter = adapter
             repoRecyclerview.setHasFixedSize(true)
-            repoRecyclerview.setItemViewCacheSize(50);
-            repoRecyclerview.setDrawingCacheEnabled(true);
-            repoRecyclerview.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+            repoRecyclerview.setItemViewCacheSize(50)
+            repoRecyclerview.setDrawingCacheEnabled(true)
+            repoRecyclerview.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH)
         }
     }
 
