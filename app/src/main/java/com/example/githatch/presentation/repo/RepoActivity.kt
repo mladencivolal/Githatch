@@ -113,7 +113,7 @@ class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
 
     private fun initSortSheet() {
         bindingSortSheet = DataBindingUtil.inflate(
-            LayoutInflater.from(this),
+            layoutInflater,
             R.layout.layout_sort_sheet,
             null,
             false

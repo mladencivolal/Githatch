@@ -31,7 +31,7 @@
                         android:layout_height="match_parent">
 
                             <androidx.constraintlayout.widget.ConstraintLayout
-                                android:id="@+id/clAuthor"
+                                android:id="@+id/firstFrame"
                                 android:background="@color/cardview"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -103,7 +103,7 @@
                             </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <androidx.constraintlayout.widget.ConstraintLayout
-                            android:id="@+id/outerView"
+                            android:id="@+id/secondFrame"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@color/cardview_dark_background"
@@ -113,7 +113,7 @@
                             xmlns:tools="http://schemas.android.com/tools">
 
                             <androidx.constraintlayout.widget.ConstraintLayout
-                                android:id="@+id/layoutContent"
+                                android:id="@+id/secondFrameContent"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="5dp"

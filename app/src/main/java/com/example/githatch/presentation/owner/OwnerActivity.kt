@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.ViewAnimationUtils
 import android.view.animation.Animation
@@ -16,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.githatch.R
+import com.example.githatch.custom.RevealAnimator
 import com.example.githatch.data.model.owner.Owner
 import com.example.githatch.data.model.repo.Repo
 import com.example.githatch.databinding.ActivityOwnerBinding
@@ -23,12 +25,11 @@ import com.example.githatch.helpers.pixelDensity
 import com.example.githatch.helpers.visible
 import com.example.githatch.presentation.detail.DetailActivity
 import com.example.githatch.presentation.di.Injector
-import kotlinx.android.synthetic.main.activity_owner.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.lang.Math.hypot
 import javax.inject.Inject
-import kotlin.math.hypot
 
 class OwnerActivity : AppCompatActivity(), OwnerRepoAdapter.OnItemClickListener,
     OwnerRepoAdapter.OnLoadMoreListener {
@@ -38,18 +39,15 @@ class OwnerActivity : AppCompatActivity(), OwnerRepoAdapter.OnItemClickListener,
     private lateinit var binding: ActivityOwnerBinding
     private lateinit var adapter: OwnerRepoAdapter
     private lateinit var author: Owner
+    private lateinit var revealAnimator: RevealAnimator
 
     lateinit var alphaAnimation: Animation
-    private var flag = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = DataBindingUtil.setContentView(this, R.layout.activity_owner)
         (application as Injector).createOwnerSubComponent()
             .inject(this)
-
-
 
         ownerViewModel = ViewModelProvider(this, factory)
             .get(OwnerViewModel::class.java)
@@ -59,59 +57,17 @@ class OwnerActivity : AppCompatActivity(), OwnerRepoAdapter.OnItemClickListener,
         initClickListeners()
         initRecyclerView()
         populateWithIntentData()
+        revealAnimator = RevealAnimator
+        revealAnimator.flag = true
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        revealAnimator.flag = true
     }
 
     fun revealAnim(view: View) {
-        val imageButton = binding.launchRevealAnimation
-        val revealView = binding.outerView
-        val layoutContent = binding.layoutContent
-
-        var x: Int = clAuthor.right
-        val y: Int = clAuthor.bottom
-
-        val density = pixelDensity
-        x -= (28 * density + 16 * density).toInt()
-        val hypotenuse =
-            hypot(clAuthor.width.toDouble(), clAuthor.height.toDouble()).toInt()
-        if (flag) {
-            imageButton.setImageResource(R.drawable.ic_cancel)
-            val parameters = revealView.layoutParams as FrameLayout.LayoutParams
-            parameters.height = clAuthor.height
-            revealView.layoutParams = parameters
-            val anim =
-                ViewAnimationUtils.createCircularReveal(revealView, x, y, 0f, hypotenuse.toFloat())
-            anim.duration = 700
-            anim.addListener(object : Animator.AnimatorListener {
-                override fun onAnimationStart(animator: Animator) {}
-                override fun onAnimationEnd(animator: Animator) {
-                    layoutContent.visible(true)
-                    layoutContent.startAnimation(alphaAnimation)
-                }
-
-                override fun onAnimationCancel(animator: Animator) {}
-                override fun onAnimationRepeat(animator: Animator) {}
-            })
-            revealView.visible(true)
-            anim.start()
-            flag = false
-        } else {
-            imageButton.setImageResource(R.drawable.ic_info)
-            val anim =
-                ViewAnimationUtils.createCircularReveal(revealView, x, y, hypotenuse.toFloat(), 0f)
-            anim.duration = 400
-            anim.addListener(object : Animator.AnimatorListener {
-                override fun onAnimationStart(animator: Animator) {}
-                override fun onAnimationEnd(animator: Animator) {
-                    revealView.visible(false)
-                    layoutContent.visible(false)
-                }
-
-                override fun onAnimationCancel(animator: Animator) {}
-                override fun onAnimationRepeat(animator: Animator) {}
-            })
-            anim.start()
-            flag = true
-        }
+        revealAnimator.animate(binding.launchRevealAnimation, binding.firstFrame, binding.secondFrame, binding.secondFrameContent, this)
     }
 
     private fun initClickListeners() {
@@ -148,7 +104,7 @@ class OwnerActivity : AppCompatActivity(), OwnerRepoAdapter.OnItemClickListener,
                 tvResults.text = author.login + "'s top rated repositories"
                 tvLocation.text = author.location.toString()
                 tvName.text = author.name
-                tvEmail.text = if (author.email.isNullOrBlank()) "n/a" else author.email
+                tvEmail.text = author.email?.orEmpty() ?: "n/a"
                 tvFollowers.text = author.followers.toString()
                 tvFollowing.text = author.following.toString()
                 tvRepos.text = author.publicRepos.toString()
@@ -156,7 +112,7 @@ class OwnerActivity : AppCompatActivity(), OwnerRepoAdapter.OnItemClickListener,
                 tvBio.text = author.bio
                 tvBioBack.text = author.bio
                 tvLink.text = author.htmlUrl.substring(8)
-                tvTwitter.text = if (author.twitter.isNullOrBlank()) "n/a" else author.twitter
+                tvTwitter.text = author.twitter?.orEmpty() ?: "n/a"
             }
             getReposFromAuthor(author.login)
         }

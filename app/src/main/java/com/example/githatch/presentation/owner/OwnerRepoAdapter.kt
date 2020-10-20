@@ -10,6 +10,7 @@ import com.example.githatch.R
 import com.example.githatch.data.model.repo.Repo
 import com.example.githatch.databinding.LayoutItemRepositoryBinding
 import com.example.githatch.helpers.Helper
+import com.example.githatch.helpers.visible
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -131,10 +132,6 @@ class OwnerRepoAdapter(recyclerView: RecyclerView) :
                     }
                 }
             }
-        }
-
-        private fun View.visible(show: Boolean) {
-            visibility = if (show) View.VISIBLE else View.GONE
         }
 
         private fun flippedSideClickable(clickable: Boolean) {

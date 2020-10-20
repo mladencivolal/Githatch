@@ -46,7 +46,6 @@ class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolea
     }
 
     override fun onViewRecycled(holder: MyViewHolder) {
-       // holder.binding.cardView = null
         holder.binding.executePendingBindings()
         Glide.with(binding.ivRepoAuthor.context).clear(holder.binding.ivRepoAuthor)
         holder.binding.ivRepoAuthor.setImageDrawable(null)
@@ -149,7 +148,6 @@ class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolea
                                 delay(300)
                                 binding.itemBack.visible(true)
                                 flippedSideClickable(false)
-
                             } else {
                                 delay(300)
                                 binding.itemBack.visible(false)
