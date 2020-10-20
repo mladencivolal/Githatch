@@ -6,6 +6,7 @@ import com.example.githatch.data.model.owner.Owner
 import com.example.githatch.data.model.repo.Repo
 import com.example.githatch.data.repository.owner.dataSource.OwnerRemoteDataSource
 import com.example.githatch.domain.repository.OwnerRepository
+import timber.log.Timber
 
 class OwnerRepositoryImpl(private val ownerRemoteDataSource: OwnerRemoteDataSource) :
     OwnerRepository {
@@ -18,13 +19,10 @@ class OwnerRepositoryImpl(private val ownerRemoteDataSource: OwnerRemoteDataSour
         try {
             val response = ownerRemoteDataSource.getAuthor(ownerName)
             val body = response.body()
-            if(body != null) {
-                author = body
-            }
+            if (body != null) author = body
         } catch (exception: Exception) {
-            Log.i("MYTAG", exception.message.toString())
+            Timber.i(exception.message.toString())
         }
-
         return author
     }
 
@@ -34,13 +32,9 @@ class OwnerRepositoryImpl(private val ownerRemoteDataSource: OwnerRemoteDataSour
         this.ownerName = ownerName
 
         try {
-            val response =
-                ownerRemoteDataSource.getReposFromAuthor(ownerName, pageNum)
+            val response = ownerRemoteDataSource.getReposFromAuthor(ownerName, pageNum)
             val body = response.body()
-
-            if (body != null) {
-                reposFromAuthor = body
-            }
+            if (body != null) reposFromAuthor = body
         } catch (exception: Exception) {
             Log.i("MYTAG", exception.message.toString())
         }
@@ -51,13 +45,9 @@ class OwnerRepositoryImpl(private val ownerRemoteDataSource: OwnerRemoteDataSour
     override suspend fun loadMoreReposFromAuthor(): List<Repo>? {
         try {
             this.pageNum++
-            val response =
-                ownerRemoteDataSource.getReposFromAuthor(ownerName, pageNum)
+            val response = ownerRemoteDataSource.getReposFromAuthor(ownerName, pageNum)
             val body = response.body()
-
-            if (body != null) {
-                reposFromAuthor = body
-            }
+            if (body != null) reposFromAuthor = body
         } catch (exception: java.lang.Exception) {
             Log.i("MYTAG", exception.message.toString())
         }

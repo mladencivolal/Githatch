@@ -155,7 +155,7 @@ class OwnerActivity : AppCompatActivity(), OwnerRepoAdapter.OnItemClickListener,
     }
 
     private fun launchBrowserActivity(htmlUrl: String) {
-        if (!htmlUrl.isNullOrEmpty()) {
+        if (htmlUrl.isNotEmpty()) {
             val webpage: Uri = Uri.parse(htmlUrl)
             val intent = Intent(Intent.ACTION_VIEW, webpage)
             if (intent.resolveActivity(packageManager) != null) startActivity(intent)
