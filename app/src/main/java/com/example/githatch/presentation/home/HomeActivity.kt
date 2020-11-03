@@ -22,8 +22,6 @@ class HomeActivity: AppCompatActivity() {
             btnBrowse.setOnClickListener {
                 launchRepoActivity()
             }
-
-
         }
     }
 

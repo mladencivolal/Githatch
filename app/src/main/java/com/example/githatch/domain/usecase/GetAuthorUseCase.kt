@@ -8,5 +8,4 @@ class GetAuthorUseCase(private val ownerRepository: OwnerRepository) {
     suspend fun execute(ownerName:String): Owner {
         return ownerRepository.getAuthor(ownerName)
     }
-
 }

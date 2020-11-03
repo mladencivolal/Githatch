@@ -95,6 +95,8 @@
                     android:layout_marginBottom="@dimen/five"
                     android:text="Repository Name"
                     android:textSize="17sp"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintEnd_toStartOf="@id/tvLanguage"
                     app:layout_constraintBottom_toTopOf="@id/bottomDivider"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/ivRepoAuthor" />

@@ -9,17 +9,17 @@ import com.example.githatch.presentation.di.owner.OwnerSubComponent
 import com.example.githatch.presentation.di.repo.RepoSubComponent
 
 class App : Application(), Injector {
-    private lateinit var appComponent: AppComponent
+        private lateinit var appComponent: AppComponent
 
-    override fun onCreate() {
-        super.onCreate()
-        @Suppress("DEPRECATION")
-        appComponent = DaggerAppComponent.builder()
-            .appModule(AppModule(applicationContext))
-            .netModule(NetModule(BuildConfig.BASE_URL))
-            .remoteDataModule(RemoteDataModule())
-            .build()
-    }
+        override fun onCreate() {
+            super.onCreate()
+            @Suppress("DEPRECATION")
+            appComponent = DaggerAppComponent.builder()
+                .appModule(AppModule(applicationContext))
+                .netModule(NetModule(BuildConfig.BASE_URL))
+                .remoteDataModule(RemoteDataModule())
+                .build()
+        }
 
     override fun createRepoSubComponent(): RepoSubComponent {
         return appComponent.repoSubComponent().create()

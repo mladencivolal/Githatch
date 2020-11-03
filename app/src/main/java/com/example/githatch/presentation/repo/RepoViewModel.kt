@@ -7,10 +7,11 @@ import com.example.githatch.domain.usecase.LoadMoreReposUseCase
 
 class RepoViewModel(
     private val getReposUseCase: GetReposUseCase,
-    private val loadMoreReposUseCase: LoadMoreReposUseCase) : ViewModel() {
+    private val loadMoreReposUseCase: LoadMoreReposUseCase
+) : ViewModel() {
     private var searchTerm = ""
 
-    fun getRepos(searchPhrase: String, sortBy: String, orderBy: String) = liveData {
+    fun getRepos(searchPhrase: String, sortBy: String, orderBy: String) =  liveData {
         searchTerm = searchPhrase
         val reposList = getReposUseCase.execute(searchPhrase, sortBy, orderBy)
         emit(reposList)

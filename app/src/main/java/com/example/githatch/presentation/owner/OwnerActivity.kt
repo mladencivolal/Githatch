@@ -1,16 +1,13 @@
 package com.example.githatch.presentation.owner
 
-import android.animation.Animator
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.view.ViewAnimationUtils
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -21,14 +18,12 @@ import com.example.githatch.custom.RevealAnimator
 import com.example.githatch.data.model.owner.Owner
 import com.example.githatch.data.model.repo.Repo
 import com.example.githatch.databinding.ActivityOwnerBinding
-import com.example.githatch.helpers.pixelDensity
 import com.example.githatch.helpers.visible
 import com.example.githatch.presentation.detail.DetailActivity
 import com.example.githatch.presentation.di.Injector
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.lang.Math.hypot
 import javax.inject.Inject
 
 class OwnerActivity : AppCompatActivity(), OwnerRepoAdapter.OnItemClickListener,
@@ -88,7 +83,7 @@ class OwnerActivity : AppCompatActivity(), OwnerRepoAdapter.OnItemClickListener,
 
     @SuppressLint("SetTextI18n")
     private fun populateWithIntentData() {
-        val authorName = intent.getParcelableExtra<Owner>("owner")!!.login
+        val authorName = intent.getParcelableExtra<Owner>(KEY_OWNER)!!.login
 
         CoroutineScope(Dispatchers.Main).launch {
             author = ownerViewModel.getAuthor(authorName)
@@ -150,7 +145,7 @@ class OwnerActivity : AppCompatActivity(), OwnerRepoAdapter.OnItemClickListener,
     }
 
     private fun launchDetailActivity(repo: Repo) {
-        val intent = Intent(this, DetailActivity::class.java).putExtra("repo", repo)
+        val intent = DetailActivity.intent(this, repo)
         startActivity(intent)
     }
 
@@ -169,6 +164,16 @@ class OwnerActivity : AppCompatActivity(), OwnerRepoAdapter.OnItemClickListener,
             val intent = Intent(Intent.ACTION_VIEW, parsedLink).setPackage("com.twitter.android")
             if (intent.resolveActivity(packageManager) != null) startActivity(intent)
             else launchBrowserActivity(link)
+        }
+    }
+
+    companion object {
+        const val KEY_OWNER = "owner"
+
+        fun intent(context: Context, owner: Owner): Intent {
+            val intent = Intent(context, OwnerActivity::class.java)
+            intent.putExtra(KEY_OWNER, owner)
+            return intent
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.example.githatch.presentation.detail
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -64,7 +65,7 @@ class DetailActivity : AppCompatActivity(),
     }
 
     private fun populateWithIntentData() {
-        repoData = intent.getParcelableExtra("repo")!!
+        repoData = intent.getParcelableExtra(KEY_REPO)!!
 
         binding.apply {
             tvTitle.text = repoData.name
@@ -104,9 +105,18 @@ class DetailActivity : AppCompatActivity(),
     }
 
     private fun launchOwnerActivity(owner: Owner) {
-        val intent = Intent(this, OwnerActivity::class.java)
-        intent.putExtra("owner", owner)
+        val intent = OwnerActivity.intent(this, owner)
         startActivity(intent)
+    }
+
+    companion object {
+        const val KEY_REPO = "repo"
+
+        fun intent(context: Context, repo: Repo): Intent {
+            val intent = Intent(context, DetailActivity::class.java)
+            intent.putExtra(KEY_REPO, repo)
+            return intent
+        }
     }
 }
 

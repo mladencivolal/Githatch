@@ -121,7 +121,7 @@ class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolea
                         )
                     }
                 }
-                binding.itemBack.visible(false)
+               // binding.itemBack.visible(false)
             }
 
             if (isRepoActivity) {

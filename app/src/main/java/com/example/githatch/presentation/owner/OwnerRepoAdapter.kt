@@ -11,6 +11,8 @@ import com.example.githatch.data.model.repo.Repo
 import com.example.githatch.databinding.LayoutItemRepositoryBinding
 import com.example.githatch.helpers.Helper
 import com.example.githatch.helpers.visible
+import kotlinx.android.synthetic.main.layout_item_repository.view.*
+import kotlinx.android.synthetic.main.layout_sort_sheet.view.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -24,6 +26,7 @@ class OwnerRepoAdapter(recyclerView: RecyclerView) :
     lateinit var onLoadMoreListener: OnLoadMoreListener
 
     init {
+
         val pageLength = 5
 
         if (recyclerView.layoutManager is LinearLayoutManager) {
@@ -88,6 +91,17 @@ class OwnerRepoAdapter(recyclerView: RecyclerView) :
 
         init {
             itemView.setOnClickListener(this)
+            shrinkTextSize()
+        }
+
+        fun shrinkTextSize() {
+            binding.apply {
+                tvRepoName.textSize = 13.0f
+                tvLanguage.textSize = 12.0f
+                listOf(lbWatch, lbFork, lbUpdated, tvWatch, tvFork, tvDateUpdated).forEach {
+                    it.textSize = 12.0f
+                }
+            }
         }
 
         fun bind(repo: Repo) {

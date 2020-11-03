@@ -4,12 +4,12 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
-import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.githatch.R
 import com.example.githatch.data.model.owner.Owner
@@ -22,7 +22,11 @@ import com.example.githatch.presentation.detail.DetailActivity
 import com.example.githatch.presentation.di.Injector
 import com.example.githatch.presentation.owner.OwnerActivity
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+
 
 class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
     RepoAdapter.OnItemClickListener, View.OnClickListener {
@@ -56,6 +60,7 @@ class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
 
         searchRepos(binding.etSearch.text.toString(), sortBy, orderBy)
     }
+
 
     private fun initOnActionListeners() {
         binding.apply {
@@ -163,11 +168,12 @@ class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
 
     private fun searchRepos(searchPhrase: String, sortBy: String, orderBy: String) {
         binding.progressBar.visible(true)
-        this.searchTerm = searchPhrase
+        searchTerm = searchPhrase
         this.sortBy = sortBy
         this.orderBy = orderBy
 
-        val responseLiveData = viewmodel.getRepos(searchPhrase, sortBy, orderBy)
+        val responseLiveData =
+            viewmodel.getRepos(searchPhrase, sortBy, orderBy)
         responseLiveData.observe(this, {
             if (it != null) {
                 adapter.setList(it)
@@ -240,12 +246,12 @@ class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
     }
 
     private fun launchDetailActivity(repo: Repo) {
-        val intent = Intent(this, DetailActivity::class.java).putExtra("repo", repo)
+        val intent = DetailActivity.intent(this, repo)
         startActivity(intent)
     }
 
     private fun launchOwnerActivity(owner: Owner) {
-        val intent = Intent(this, OwnerActivity::class.java).putExtra("owner", owner)
+        val intent = OwnerActivity.intent(this, owner)
         startActivity(intent)
     }
 }
