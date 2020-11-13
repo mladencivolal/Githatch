@@ -11,8 +11,6 @@ import com.example.githatch.data.model.repo.Repo
 import com.example.githatch.databinding.LayoutItemRepositoryBinding
 import com.example.githatch.helpers.Helper
 import com.example.githatch.helpers.visible
-import kotlinx.android.synthetic.main.layout_item_repository.view.*
-import kotlinx.android.synthetic.main.layout_sort_sheet.view.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
