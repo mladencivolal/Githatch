@@ -61,7 +61,6 @@ class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolea
     }
 
     fun updateList(repos: List<Repo>) {
-
         repos.forEach {
             this.repoList.add(it)
             notifyItemInserted(repoList.indexOf(it))
@@ -79,9 +78,7 @@ class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolea
         return MyViewHolder(binding, isRepoActivity)
     }
 
-    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.bind(repoList[position])
-    }
+    override fun onBindViewHolder(holder: MyViewHolder, position: Int) = holder.bind(repoList[position])
 
     override fun getItemCount() = repoList.size
 
