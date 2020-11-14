@@ -235,19 +235,9 @@ class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
 
     override fun onItemClick(repo: Repo, view: View) {
         when (view.id) {
-            R.id.ivRepoAuthor -> launchOwnerActivity(repo.owner)
-            R.id.tvRepoName -> launchDetailActivity(repo)
+            R.id.ivRepoAuthor -> startActivity(OwnerActivity.intent(this, repo.owner))
+            R.id.tvRepoName -> startActivity(DetailActivity.intent(this, repo))
         }
-    }
-
-    private fun launchDetailActivity(repo: Repo) {
-        val intent = DetailActivity.intent(this, repo)
-        startActivity(intent)
-    }
-
-    private fun launchOwnerActivity(owner: Owner) {
-        val intent = OwnerActivity.intent(this, owner)
-        startActivity(intent)
     }
 }
 

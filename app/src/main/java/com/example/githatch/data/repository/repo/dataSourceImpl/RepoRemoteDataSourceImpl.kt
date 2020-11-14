@@ -8,7 +8,6 @@ import retrofit2.Response
 
 class RepoRemoteDataSourceImpl(
     private val gitHubService: GitHubService
-
 ) :
     RepoRemoteDataSource {
 
@@ -19,7 +18,6 @@ class RepoRemoteDataSourceImpl(
         order: String,
         pageLength: Int,
         pageNum: Int
-    ): Response<RepoList> {
-        return gitHubService.getRepos(searchPhrase, sort, order, pageLength, pageNum)
-    }
+    ): Response<RepoList> = gitHubService.getRepositories(searchPhrase, sort, order, pageLength, pageNum)
+
 }

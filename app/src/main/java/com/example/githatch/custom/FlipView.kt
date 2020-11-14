@@ -11,7 +11,6 @@ import com.example.githatch.R
 class FlipView(context: Context?, attrs: AttributeSet?) : FrameLayout(
     context!!, attrs
 ) {
-
     init {
         loadAnimation()
     }
@@ -80,5 +79,4 @@ class FlipView(context: Context?, attrs: AttributeSet?) : FrameLayout(
         frontView!!.alpha = if (isFlipped) 0f else 1f
         backView!!.alpha = if (isFlipped) 1f else 0f
     }
-
 }

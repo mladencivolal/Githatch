@@ -10,7 +10,7 @@ import retrofit2.http.Query
 
 interface GitHubService {
     @GET("/search/repositories")
-    suspend fun getRepos(
+    suspend fun getRepositories(
         @Query("q") q: String,
         @Query("sort") sort: String,
         @Query("order") order: String,
@@ -19,12 +19,12 @@ interface GitHubService {
     ): Response<RepoList>
 
     @GET("/repos/{ownerName}/{repoName}/contributors")
-    suspend fun getContribs(
+    suspend fun getContributors(
         @Path("ownerName") ownerName: String, @Path("repoName") repoName: String
     ): Response<List<Owner>>
 
     @GET("/users/{ownerName}/repos?sort=updated&order=desc")
-    suspend fun getReposFromAuthor(
+    suspend fun getAuthorRepositories(
         @Path("ownerName") ownerName: String,
         @Query("page") page: Int
     ): Response<List<Repo>>

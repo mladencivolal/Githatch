@@ -8,7 +8,7 @@ import com.example.githatch.domain.repository.OwnerRepository
 
 class OwnerRepositoryImpl(private val ownerRemoteDataSource: OwnerRemoteDataSource) :
     OwnerRepository {
-    private var reposFromAuthor: List<Repo> = emptyList()
+    private var authorRepos: List<Repo> = emptyList()
     private lateinit var author: Owner
     private var pageNum: Int = 1
     private lateinit var ownerName: String
@@ -34,11 +34,11 @@ class OwnerRepositoryImpl(private val ownerRemoteDataSource: OwnerRemoteDataSour
         try {
             val response = ownerRemoteDataSource.getReposFromAuthor(ownerName, pageNum)
             val body = response.body()
-            if (body != null) reposFromAuthor = body
+            if (body != null) authorRepos = body
         } catch (exception: Exception) {
             Log.i("MYTAG", exception.message.toString())
         }
-        return reposFromAuthor
+        return authorRepos
     }
 
     override suspend fun loadMoreAuthorRepos(): List<Repo>? {
