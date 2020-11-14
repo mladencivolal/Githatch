@@ -34,7 +34,6 @@ class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
     private var orderBy: String = ""
     private var sortBy: String = ""
 
-    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_repo)
