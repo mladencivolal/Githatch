@@ -17,31 +17,16 @@ import javax.inject.Singleton
 class RepositoryModule {
     @Singleton
     @Provides
-    fun provideRepoRepository(
-        repoRemoteDataSource: RepoRemoteDataSource
-    ): RepoRepository {
-        return RepoRepositoryImpl(
-            repoRemoteDataSource
-        )
-    }
+    fun provideRepoRepository(repoRemoteDataSource: RepoRemoteDataSource): RepoRepository =
+        RepoRepositoryImpl(repoRemoteDataSource)
 
     @Singleton
     @Provides
-    fun provideDetailRepository(
-        detailRemoteDataSource: DetailRemoteDataSource
-    ): DetailRepository {
-        return DetailRepositoryImpl(
-            detailRemoteDataSource
-        )
-    }
+    fun provideDetailRepository(detailRemoteDataSource: DetailRemoteDataSource): DetailRepository =
+        DetailRepositoryImpl(detailRemoteDataSource)
 
     @Singleton
     @Provides
-    fun provideOwnerRepository(
-        ownerRemoteDataSource: OwnerRemoteDataSource
-    ): OwnerRepository {
-        return OwnerRepositoryImpl(
-            ownerRemoteDataSource
-        )
-    }
+    fun provideOwnerRepository(ownerRemoteDataSource: OwnerRemoteDataSource): OwnerRepository =
+        OwnerRepositoryImpl(ownerRemoteDataSource)
 }

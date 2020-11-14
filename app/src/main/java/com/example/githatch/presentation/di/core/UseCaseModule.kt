@@ -12,37 +12,25 @@ import javax.inject.Singleton
 class UseCaseModule {
     @Singleton
     @Provides
-    fun provideGetReposUseCase(repoRepository: RepoRepository): GetReposUseCase {
-        return GetReposUseCase(repoRepository)
-    }
+    fun provideGetReposUseCase(repoRepository: RepoRepository): GetReposUseCase = GetReposUseCase(repoRepository)
 
     @Singleton
     @Provides
-    fun provideLoadMoreReposUseCase(repoRepository: RepoRepository): LoadMoreReposUseCase {
-        return LoadMoreReposUseCase(repoRepository)
-    }
+    fun provideLoadMoreReposUseCase(repoRepository: RepoRepository): LoadMoreReposUseCase = LoadMoreReposUseCase(repoRepository)
 
     @Singleton
     @Provides
-    fun provideGetContribsUseCase(detailRepository: DetailRepository): GetContribsUseCase {
-        return GetContribsUseCase(detailRepository)
-    }
+    fun provideGetContribsUseCase(detailRepository: DetailRepository): GetContribsUseCase = GetContribsUseCase(detailRepository)
 
     @Singleton
     @Provides
-    fun provideGetReposFromAuthorUseCase(ownerRepository: OwnerRepository): GetReposFromAuthorUseCase {
-        return GetReposFromAuthorUseCase(ownerRepository)
-    }
+    fun provideGetReposFromAuthorUseCase(ownerRepository: OwnerRepository): GetReposFromAuthorUseCase = GetReposFromAuthorUseCase(ownerRepository)
 
     @Singleton
     @Provides
-    fun provideLoadMoreReposFromAuthorUseCase(ownerRepository: OwnerRepository): LoadMoreReposFromAuthor {
-        return LoadMoreReposFromAuthor(ownerRepository)
-    }
+    fun provideLoadMoreReposFromAuthorUseCase(ownerRepository: OwnerRepository): LoadMoreReposFromAuthor = LoadMoreReposFromAuthor(ownerRepository)
 
     @Singleton
     @Provides
-    fun provideGetAuthorUseCase(ownerRepository: OwnerRepository): GetAuthorUseCase {
-        return GetAuthorUseCase(ownerRepository)
-    }
+    fun provideGetAuthorUseCase(ownerRepository: OwnerRepository): GetAuthorUseCase = GetAuthorUseCase(ownerRepository)
 }

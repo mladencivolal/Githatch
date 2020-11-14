@@ -11,16 +11,13 @@ import javax.inject.Singleton
 class NetModule(private val baseUrl: String) {
     @Singleton
     @Provides
-    fun provideRetrofit(): Retrofit {
-        return Retrofit.Builder()
-            .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl(baseUrl)
-            .build()
-    }
+    fun provideRetrofit(): Retrofit = Retrofit.Builder()
+        .addConverterFactory(GsonConverterFactory.create())
+        .baseUrl(baseUrl)
+        .build()
 
     @Singleton
     @Provides
-    fun provideGitHubService(retrofit: Retrofit): GitHubService {
-        return retrofit.create(GitHubService::class.java)
-    }
+    fun provideGitHubService(retrofit: Retrofit): GitHubService =
+        retrofit.create(GitHubService::class.java)
 }

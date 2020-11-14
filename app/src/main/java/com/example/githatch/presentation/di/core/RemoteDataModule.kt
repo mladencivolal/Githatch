@@ -15,19 +15,16 @@ import javax.inject.Singleton
 class RemoteDataModule {
     @Singleton
     @Provides
-    fun provideRepoRemoteDataSource(gitHubService: GitHubService): RepoRemoteDataSource {
-        return RepoRemoteDataSourceImpl(gitHubService)
-    }
+    fun provideRepoRemoteDataSource(gitHubService: GitHubService): RepoRemoteDataSource =
+        RepoRemoteDataSourceImpl(gitHubService)
 
     @Singleton
     @Provides
-    fun provideDetailRemoteDataSource(gitHubService: GitHubService): DetailRemoteDataSource {
-        return DetailRemoteDataSourceImpl(gitHubService)
-    }
+    fun provideDetailRemoteDataSource(gitHubService: GitHubService): DetailRemoteDataSource =
+        DetailRemoteDataSourceImpl(gitHubService)
 
     @Singleton
     @Provides
-    fun provideOwnerRemoteDataSource(gitHubService: GitHubService): OwnerRemoteDataSource {
-        return OwnerRemoteDataSourceImpl(gitHubService)
-    }
+    fun provideOwnerRemoteDataSource(gitHubService: GitHubService): OwnerRemoteDataSource =
+        OwnerRemoteDataSourceImpl(gitHubService)
 }
