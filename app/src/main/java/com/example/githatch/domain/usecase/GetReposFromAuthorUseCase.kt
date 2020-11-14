@@ -5,6 +5,6 @@ import com.example.githatch.domain.repository.OwnerRepository
 
 class GetReposFromAuthorUseCase(private val ownerRepository: OwnerRepository) {
     suspend fun execute(ownerName:String): List<Repo>? {
-        return ownerRepository.getReposFromAuthor(ownerName)
+        return ownerRepository.getAuthorRepos(ownerName)
     }
 }

@@ -5,5 +5,5 @@ import com.example.githatch.domain.repository.OwnerRepository
 
 class LoadMoreReposFromAuthor(private val ownerRepository: OwnerRepository) {
     suspend fun execute(): List<Repo>? =
-        ownerRepository.loadMoreReposFromAuthor()
+        ownerRepository.loadMoreAuthorRepos()
 }
