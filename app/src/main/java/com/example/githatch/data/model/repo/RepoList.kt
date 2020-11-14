@@ -1,6 +1,5 @@
 package com.example.githatch.data.model.repo
 
-
 import com.google.gson.annotations.SerializedName
 
 data class RepoList(

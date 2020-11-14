@@ -1,12 +1,10 @@
 package com.example.githatch.data.model.repo
 
-
 import android.os.Parcel
 import android.os.Parcelable
 import androidx.room.PrimaryKey
 import com.example.githatch.data.model.owner.Owner
 import com.google.gson.annotations.SerializedName
-
 
 data class Repo(
     @PrimaryKey

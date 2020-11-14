@@ -38,23 +38,21 @@ class Helper {
 
         fun dateFormatterAlt(date: String): String {
             val zonedDateTime = ZonedDateTime.parse(date).withZoneSameInstant(ZoneId.of("Europe/Vienna"))
-            val year = zonedDateTime.year
-            when (year) {
+            return when (val year = zonedDateTime.year) {
                 ZonedDateTime.now().year -> {
-                    val fmt: DateTimeFormatter =
-                        DateTimeFormatter.ofPattern("d MMM", Locale.ENGLISH)
-                    return fmt.format(zonedDateTime)
+                    val fmt: DateTimeFormatter = DateTimeFormatter.ofPattern("d MMM", Locale.ENGLISH)
+                    fmt.format(zonedDateTime)
                 }
-                else -> return "${ZonedDateTime.now().year - year}y ago"
+                else -> "${ZonedDateTime.now().year - year}y ago"
             }
         }
     }
 
     internal enum class SortBy {
-        stars, forks, updated;
+        Stars, Forks, Updated;
     }
 
     internal enum class OrderBy {
-        asc, desc;
+        Asc, Desc;
     }
 }

@@ -142,17 +142,17 @@ class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
     private fun manageSortFilters() {
         resetSortFilters()
         when (sortBy) {
-            Helper.SortBy.stars.name -> bindingSortSheet.lbStars.isSelected = true
-            Helper.SortBy.forks.name -> bindingSortSheet.lbForks.isSelected = true
-            Helper.SortBy.updated.name -> bindingSortSheet.lbUpdated.isSelected = true
+            Helper.SortBy.Stars.name -> bindingSortSheet.lbStars.isSelected = true
+            Helper.SortBy.Forks.name -> bindingSortSheet.lbForks.isSelected = true
+            Helper.SortBy.Updated.name -> bindingSortSheet.lbUpdated.isSelected = true
         }
     }
 
     private fun manageOrderFilters() {
         resetOrderFilters()
         when (orderBy) {
-            Helper.OrderBy.asc.name -> bindingSortSheet.tvAsc.isSelected = true
-            Helper.OrderBy.desc.name -> bindingSortSheet.tvDesc.isSelected = true
+            Helper.OrderBy.Asc.name -> bindingSortSheet.tvAsc.isSelected = true
+            Helper.OrderBy.Desc.name -> bindingSortSheet.tvDesc.isSelected = true
         }
     }
 
@@ -194,23 +194,23 @@ class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
                 binding.fabUp -> binding.repoRecyclerview.scrollToPosition(0)
                 binding.fabSort -> dialog.show()
                 lbStars -> {
-                    sortBy = Helper.SortBy.stars.name
+                    sortBy = Helper.SortBy.Stars.name
                     manageSortFilters()
                 }
                 lbForks -> {
-                    sortBy = Helper.SortBy.forks.name
+                    sortBy = Helper.SortBy.Forks.name
                     manageSortFilters()
                 }
                 lbUpdated -> {
-                    sortBy = Helper.SortBy.updated.name
+                    sortBy = Helper.SortBy.Updated.name
                     manageSortFilters()
                 }
                 tvAsc -> {
-                    orderBy = Helper.OrderBy.asc.name
+                    orderBy = Helper.OrderBy.Asc.name
                     manageOrderFilters()
                 }
                 tvDesc -> {
-                    orderBy = Helper.OrderBy.desc.name
+                    orderBy = Helper.OrderBy.Desc.name
                     manageOrderFilters()
                 }
                 lbApply -> {
