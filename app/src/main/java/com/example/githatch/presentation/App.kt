@@ -21,15 +21,9 @@ class App : Application(), Injector {
                 .build()
         }
 
-    override fun createRepoSubComponent(): RepoSubComponent {
-        return appComponent.repoSubComponent().create()
-    }
+    override fun createRepoSubComponent(): RepoSubComponent = appComponent.repoSubComponent().create()
 
-    override fun createDetailSubComponent(): DetailSubComponent {
-        return appComponent.detailSubComponent().create()
-    }
+    override fun createDetailSubComponent(): DetailSubComponent = appComponent.detailSubComponent().create()
 
-    override fun createOwnerSubComponent(): OwnerSubComponent {
-        return appComponent.ownerSubComponent().create()
-    }
+    override fun createOwnerSubComponent(): OwnerSubComponent = appComponent.ownerSubComponent().create()
 }
