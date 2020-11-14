@@ -479,7 +479,7 @@
                 android:id="@+id/progressBar"
                 style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="4dp"
+                android:layout_height="@dimen/two"
                 android:layout_marginTop="@dimen/five"
                 android:indeterminate="true"
                 app:layout_constraintEnd_toEndOf="parent"

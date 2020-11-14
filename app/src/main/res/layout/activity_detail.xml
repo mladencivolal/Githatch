@@ -326,7 +326,7 @@
             android:id="@+id/progressBar"
             style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal"
             android:layout_width="match_parent"
-            android:layout_height="4dp"
+            android:layout_height="@dimen/two"
             android:indeterminate="true"
             app:layout_constraintTop_toBottomOf="@id/clProfile"
             app:mpb_progressStyle="horizontal"
