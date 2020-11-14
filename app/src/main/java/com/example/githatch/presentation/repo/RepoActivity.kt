@@ -44,7 +44,7 @@ class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
         viewmodel = ViewModelProvider(this, factory)
             .get(RepoViewModel::class.java)
 
-        binding.etSearch.setText("Kotlin")
+        binding.etSearch.setText(resources.getString(R.string.default_search_text))
 
         initOnClickListeners()
         initOnActionListeners()
