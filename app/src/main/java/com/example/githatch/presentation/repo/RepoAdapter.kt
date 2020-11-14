@@ -36,7 +36,7 @@ class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolea
                     val lastVisibleItem =
                         linearLayoutManager.findLastCompletelyVisibleItemPosition()
 
-                    if (!loading && totalItemCount - 1 <= lastVisibleItem + 20 && lastVisibleItem > repoList.size - 20) {
+                    if (!loading && totalItemCount - 1 <= lastVisibleItem && lastVisibleItem > repoList.size - 5) {
                         onLoadMoreListener.onLoadMore()
                         loading = true
                     }

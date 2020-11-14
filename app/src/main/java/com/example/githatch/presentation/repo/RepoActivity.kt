@@ -1,7 +1,6 @@
 package com.example.githatch.presentation.repo
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
@@ -9,7 +8,6 @@ import android.view.inputmethod.EditorInfo
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.githatch.R
 import com.example.githatch.data.model.owner.Owner
@@ -22,10 +20,7 @@ import com.example.githatch.presentation.detail.DetailActivity
 import com.example.githatch.presentation.di.Injector
 import com.example.githatch.presentation.owner.OwnerActivity
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 
 class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
@@ -60,7 +55,6 @@ class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
 
         searchRepos(binding.etSearch.text.toString(), sortBy, orderBy)
     }
-
 
     private fun initOnActionListeners() {
         binding.apply {
@@ -189,11 +183,11 @@ class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
         binding.progressBar.visible(true)
         val responseLiveData = viewmodel.loadMoreRepos()
         responseLiveData.observe(this, {
-            if (it!!.size > 5) {
-                adapter.updateList(it)
-                adapter.setIsLoading(false)
-                binding.progressBar.visible(false)
-            }
+                if (it != null) {
+                    adapter.updateList(it)
+                    adapter.setIsLoading(false)
+                }
+            binding.progressBar.visible(false)
         })
     }
 
