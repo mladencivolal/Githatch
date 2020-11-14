@@ -25,6 +25,8 @@ class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolea
     lateinit var binding: LayoutItemRepositoryBinding
 
     init {
+        val pageLength = 5
+
         if (recyclerView.layoutManager is LinearLayoutManager) {
             val linearLayoutManager = recyclerView.layoutManager as LinearLayoutManager
 
@@ -36,7 +38,7 @@ class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolea
                     val lastVisibleItem =
                         linearLayoutManager.findLastCompletelyVisibleItemPosition()
 
-                    if (!loading && totalItemCount - 1 <= lastVisibleItem && lastVisibleItem > repoList.size - 5) {
+                    if (totalItemCount > pageLength && !loading && totalItemCount - 1 <= lastVisibleItem + pageLength && lastVisibleItem > repoList.size - 2 * pageLength) {
                         onLoadMoreListener.onLoadMore()
                         loading = true
                     }
@@ -60,7 +62,8 @@ class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolea
 
     fun updateList(repos: List<Repo>) {
 
-        repos.forEach { this.repoList.add(it)
+        repos.forEach {
+            this.repoList.add(it)
             notifyItemInserted(repoList.indexOf(it))
         }
     }
@@ -112,7 +115,7 @@ class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolea
                 tvDateUpdated.text = Helper.dateFormatterAlt(repo.updatedAt)
                 tvFork.text = Helper.numberFormatter(repo.forksCount)
                 tvLanguage.text = repo.language
-                tvDescription.text =  repoList[bindingAdapterPosition].description
+                tvDescription.text = repoList[bindingAdapterPosition].description
                 val clickers = listOf(ivRepoAuthor, tvRepoName)
                 clickers.toTypedArray().forEach { view ->
                     view.setOnClickListener {

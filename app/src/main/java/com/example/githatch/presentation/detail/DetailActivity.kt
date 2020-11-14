@@ -30,6 +30,16 @@ class DetailActivity : AppCompatActivity(),
     private lateinit var adapter: ContributorsAdapter
     private lateinit var repoData: Repo
 
+    companion object {
+        const val KEY_REPO = "repo"
+
+        fun intent(context: Context, repo: Repo): Intent {
+            val intent = Intent(context, DetailActivity::class.java)
+            intent.putExtra(KEY_REPO, repo)
+            return intent
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -106,16 +116,6 @@ class DetailActivity : AppCompatActivity(),
     private fun launchOwnerActivity(owner: Owner) {
         val intent = OwnerActivity.intent(this, owner)
         startActivity(intent)
-    }
-
-    companion object {
-        const val KEY_REPO = "repo"
-
-        fun intent(context: Context, repo: Repo): Intent {
-            val intent = Intent(context, DetailActivity::class.java)
-            intent.putExtra(KEY_REPO, repo)
-            return intent
-        }
     }
 }
 

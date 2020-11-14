@@ -186,6 +186,7 @@ class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
                 if (it != null) {
                     adapter.updateList(it)
                     adapter.setIsLoading(false)
+                    binding.progressBar.visible(false)
                 }
             binding.progressBar.visible(false)
         })
