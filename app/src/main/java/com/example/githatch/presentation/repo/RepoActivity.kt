@@ -10,7 +10,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.githatch.R
-import com.example.githatch.data.model.owner.Owner
 import com.example.githatch.data.model.repo.Repo
 import com.example.githatch.databinding.ActivityRepoBinding
 import com.example.githatch.databinding.LayoutSortSheetBinding
@@ -21,7 +20,6 @@ import com.example.githatch.presentation.di.Injector
 import com.example.githatch.presentation.owner.OwnerActivity
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import javax.inject.Inject
-
 
 class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
     RepoAdapter.OnItemClickListener, View.OnClickListener {
@@ -63,18 +61,16 @@ class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
                     searchTerm = binding.etSearch.text.toString()
                     searchRepos(searchTerm, sortBy, orderBy)
                     return@setOnEditorActionListener true
-                } else {
-                    return@setOnEditorActionListener false
                 }
+                return@setOnEditorActionListener false
             }
             etSearch.setOnEditorActionListener { _, actionId, _ ->
                 if (actionId == EditorInfo.IME_ACTION_GO) {
                     searchTerm = binding.etSearch.text.toString()
                     searchRepos(searchTerm, sortBy, orderBy)
                     return@setOnEditorActionListener true
-                } else {
-                    return@setOnEditorActionListener false
                 }
+                return@setOnEditorActionListener false
             }
             etSearch.setOnKeyListener { _, keyCode, event ->
                 if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
@@ -183,11 +179,11 @@ class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
         binding.progressBar.visible(true)
         val responseLiveData = viewmodel.loadMoreRepos()
         responseLiveData.observe(this, {
-                if (it != null) {
-                    adapter.updateList(it)
-                    adapter.setIsLoading(false)
-                    binding.progressBar.visible(false)
-                }
+            if (it != null) {
+                adapter.updateList(it)
+                adapter.setIsLoading(false)
+                binding.progressBar.visible(false)
+            }
             binding.progressBar.visible(false)
         })
     }
