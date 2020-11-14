@@ -38,6 +38,16 @@ class OwnerActivity : AppCompatActivity(), OwnerRepoAdapter.OnItemClickListener,
 
     lateinit var alphaAnimation: Animation
 
+    companion object {
+        const val KEY_OWNER = "owner"
+
+        fun intent(context: Context, owner: Owner): Intent {
+            val intent = Intent(context, OwnerActivity::class.java)
+            intent.putExtra(KEY_OWNER, owner)
+            return intent
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_owner)
@@ -97,7 +107,7 @@ class OwnerActivity : AppCompatActivity(), OwnerRepoAdapter.OnItemClickListener,
                 tvAuthor.text = author.login
                 tvBio.text = author.bio
                 tvResults.text = author.login + "'s top rated repositories"
-                tvLocation.text = author.location.toString()
+                tvLocation.text = author.location?.orEmpty() ?: "n/a"
                 tvName.text = author.name
                 tvEmail.text = author.email?.orEmpty() ?: "n/a"
                 tvFollowers.text = author.followers.toString()
@@ -164,16 +174,6 @@ class OwnerActivity : AppCompatActivity(), OwnerRepoAdapter.OnItemClickListener,
             val intent = Intent(Intent.ACTION_VIEW, parsedLink).setPackage("com.twitter.android")
             if (intent.resolveActivity(packageManager) != null) startActivity(intent)
             else launchBrowserActivity(link)
-        }
-    }
-
-    companion object {
-        const val KEY_OWNER = "owner"
-
-        fun intent(context: Context, owner: Owner): Intent {
-            val intent = Intent(context, OwnerActivity::class.java)
-            intent.putExtra(KEY_OWNER, owner)
-            return intent
         }
     }
 }
