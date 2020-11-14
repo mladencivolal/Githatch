@@ -72,7 +72,13 @@ class OwnerActivity : AppCompatActivity(), OwnerRepoAdapter.OnItemClickListener,
     }
 
     fun revealAnim(view: View) {
-        revealAnimator.animate(binding.launchRevealAnimation, binding.firstFrame, binding.secondFrame, binding.secondFrameContent, this)
+        revealAnimator.animate(
+            binding.launchRevealAnimation,
+            binding.firstFrame,
+            binding.secondFrame,
+            binding.secondFrameContent,
+            this
+        )
     }
 
     private fun initClickListeners() {
@@ -131,15 +137,11 @@ class OwnerActivity : AppCompatActivity(), OwnerRepoAdapter.OnItemClickListener,
             if (it != null) {
                 adapter.updateList(it)
                 binding.progressBar.visible(false)
-            } else {
-                binding.progressBar.visible(false)
-            }
+            } else binding.progressBar.visible(false)
         })
     }
 
-    override fun onItemClick(repo: Repo, view: View) {
-        launchDetailActivity(repo)
-    }
+    override fun onItemClick(repo: Repo, view: View) = launchDetailActivity(repo)
 
     override fun onLoadMore() {
         binding.progressBar.visible(true)
@@ -154,10 +156,7 @@ class OwnerActivity : AppCompatActivity(), OwnerRepoAdapter.OnItemClickListener,
         })
     }
 
-    private fun launchDetailActivity(repo: Repo) {
-        val intent = DetailActivity.intent(this, repo)
-        startActivity(intent)
-    }
+    private fun launchDetailActivity(repo: Repo) = startActivity(DetailActivity.intent(this, repo))
 
     private fun launchBrowserActivity(htmlUrl: String) {
         if (htmlUrl.isNotEmpty()) {
