@@ -11,6 +11,7 @@ import com.example.githatch.R
 import com.example.githatch.data.model.repo.Repo
 import com.example.githatch.databinding.LayoutItemRepositoryBinding
 import com.example.githatch.helpers.Helper
+import com.example.githatch.helpers.visible
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -146,11 +147,11 @@ class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolea
                             if (binding.myFlipView.isFlipped()) {
                                 delay(300)
                                 binding.itemBack.visible(true)
-                                flippedSideClickable(false)
+                                frontClickable(false)
                             } else {
                                 delay(300)
                                 binding.itemBack.visible(false)
-                                flippedSideClickable(true)
+                                frontClickable(true)
                             }
                         }
                     }
@@ -158,11 +159,7 @@ class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolea
             }
         }
 
-        private fun View.visible(show: Boolean) {
-            visibility = if (show) View.VISIBLE else View.GONE
-        }
-
-        private fun flippedSideClickable(clickable: Boolean) {
+        private fun frontClickable(clickable: Boolean) {
             binding.apply {
                 ivRepoAuthor.isClickable = clickable
                 tvRepoName.isClickable = clickable
