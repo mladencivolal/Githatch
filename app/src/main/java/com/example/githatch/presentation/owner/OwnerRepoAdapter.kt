@@ -24,7 +24,6 @@ class OwnerRepoAdapter(recyclerView: RecyclerView) :
     lateinit var onLoadMoreListener: OnLoadMoreListener
 
     init {
-
         val pageLength = 5
 
         if (recyclerView.layoutManager is LinearLayoutManager) {

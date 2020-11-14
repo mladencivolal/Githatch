@@ -29,6 +29,10 @@
     <string name="star_label">Star</string>
     <string name="update_label">Updated</string>
 
+    <string name="author_repos_header">Top rated repositories by %1$s</string>
+    <string name="twitter_link">https://twitter.com/%1$s</string>
+    <string name="twitter_package">com.twitter.android</string>
+
 
 
 
@@ -40,5 +44,8 @@
     <string name="duplicate">DUPLICATE</string>
     <string name="schedule">SCHEDULE</string>
     <string name="delete">DELETE</string>
+
+
+    <string name="not_available">n/a</string>
 
 </resources>

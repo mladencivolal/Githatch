@@ -97,7 +97,6 @@ class OwnerActivity : AppCompatActivity(), OwnerRepoAdapter.OnItemClickListener,
         binding.recyclerview.adapter = adapter
     }
 
-    @SuppressLint("SetTextI18n")
     private fun populateWithIntentData() {
         val authorName = intent.getParcelableExtra<Owner>(KEY_OWNER)!!.login
 
@@ -112,10 +111,10 @@ class OwnerActivity : AppCompatActivity(), OwnerRepoAdapter.OnItemClickListener,
             binding.apply {
                 tvAuthor.text = author.login
                 tvBio.text = author.bio
-                tvResults.text = author.login + "'s top rated repositories"
-                tvLocation.text = author.location?.orEmpty() ?: "n/a"
+                tvResults.text = resources.getString(R.string.author_repos_header, author.login)
+                tvLocation.text = author.location?.orEmpty() ?: resources.getString(R.string.not_available)
                 tvName.text = author.name
-                tvEmail.text = author.email?.orEmpty() ?: "n/a"
+                tvEmail.text = author.email?.orEmpty() ?: resources.getString(R.string.not_available)
                 tvFollowers.text = author.followers.toString()
                 tvFollowing.text = author.following.toString()
                 tvRepos.text = author.publicRepos.toString()
@@ -123,7 +122,7 @@ class OwnerActivity : AppCompatActivity(), OwnerRepoAdapter.OnItemClickListener,
                 tvBio.text = author.bio
                 tvBioBack.text = author.bio
                 tvLink.text = author.htmlUrl.substring(8)
-                tvTwitter.text = author.twitter?.orEmpty() ?: "n/a"
+                tvTwitter.text = author.twitter?.orEmpty() ?: resources.getString(R.string.not_available)
             }
             getReposFromAuthor(author.login)
         }
@@ -141,7 +140,7 @@ class OwnerActivity : AppCompatActivity(), OwnerRepoAdapter.OnItemClickListener,
         })
     }
 
-    override fun onItemClick(repo: Repo, view: View) = launchDetailActivity(repo)
+    override fun onItemClick(repo: Repo, view: View) = startActivity(DetailActivity.intent(this, repo))
 
     override fun onLoadMore() {
         binding.progressBar.visible(true)
@@ -156,8 +155,6 @@ class OwnerActivity : AppCompatActivity(), OwnerRepoAdapter.OnItemClickListener,
         })
     }
 
-    private fun launchDetailActivity(repo: Repo) = startActivity(DetailActivity.intent(this, repo))
-
     private fun launchBrowserActivity(htmlUrl: String) {
         if (htmlUrl.isNotEmpty()) {
             val webpage: Uri = Uri.parse(htmlUrl)
@@ -168,9 +165,9 @@ class OwnerActivity : AppCompatActivity(), OwnerRepoAdapter.OnItemClickListener,
 
     private fun launchTwitterActivity(author: Owner) {
         if (!author.twitter.isNullOrEmpty()) {
-            val link = "https://twitter.com/${author.twitter}"
-            val parsedLink: Uri = Uri.parse("https://twitter.com/${author.twitter}")
-            val intent = Intent(Intent.ACTION_VIEW, parsedLink).setPackage("com.twitter.android")
+            val link = resources.getString(R.string.twitter_link, author.twitter)
+            val parsedLink: Uri = Uri.parse(link)
+            val intent = Intent(Intent.ACTION_VIEW, parsedLink).setPackage(resources.getString(R.string.twitter_package))
             if (intent.resolveActivity(packageManager) != null) startActivity(intent)
             else launchBrowserActivity(link)
         }
