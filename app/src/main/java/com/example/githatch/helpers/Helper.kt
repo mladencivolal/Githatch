@@ -49,10 +49,10 @@ class Helper {
     }
 
     internal enum class SortBy {
-        Stars, Forks, Updated;
+        stars, forks, updated;
     }
 
     internal enum class OrderBy {
-        Asc, Desc;
+        asc, desc;
     }
 }

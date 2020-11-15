@@ -34,9 +34,6 @@
     <string name="twitter_package">com.twitter.android</string>
     <string name="default_search_text">Kotlin</string>
 
-
-
-
     <string name="image">image</string>
     <string name="desc">Being the savage\'s bowsman, that is, the person who pulled the
     bow-oar in his boat. Dolor sit amet.</string>
@@ -48,5 +45,4 @@
 
 
     <string name="not_available">n/a</string>
-
 </resources>

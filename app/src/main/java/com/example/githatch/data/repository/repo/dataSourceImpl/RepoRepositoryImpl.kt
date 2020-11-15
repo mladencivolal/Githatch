@@ -45,6 +45,8 @@ class RepoRepositoryImpl(
         this.sortBy = sortBy
         this.orderBy = orderBy
         this.searchPhrase = searchPhrase
+        Log.i("MYTAG", "sortBy: $sortBy, orderBy: $orderBy")
+
         try {
             val response =
                 repoRemoteDataSource.getRepos(searchPhrase, sortBy, orderBy, pageLength, pageNum)
