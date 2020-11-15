@@ -1,6 +1,5 @@
 package com.example.githatch.presentation.repo
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
@@ -100,7 +99,7 @@ class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
         }
         binding.apply {
             repoRecyclerview.adapter = adapter
-            //repoRecyclerview.setHasFixedSize(true)
+            repoRecyclerview.setHasFixedSize(true)
             repoRecyclerview.isNestedScrollingEnabled = false
         }
     }

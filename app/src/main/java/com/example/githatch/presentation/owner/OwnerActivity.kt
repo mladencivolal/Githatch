@@ -20,18 +20,19 @@ import com.example.githatch.databinding.ActivityOwnerBinding
 import com.example.githatch.helpers.visible
 import com.example.githatch.presentation.detail.DetailActivity
 import com.example.githatch.presentation.di.Injector
+import com.example.githatch.presentation.repo.RepoAdapter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class OwnerActivity : AppCompatActivity(), OwnerRepoAdapter.OnItemClickListener,
-    OwnerRepoAdapter.OnLoadMoreListener {
+class OwnerActivity : AppCompatActivity(), RepoAdapter.OnItemClickListener,
+    RepoAdapter.OnLoadMoreListener {
     @Inject
     lateinit var factory: OwnerViewModelFactory
     private lateinit var ownerViewModel: OwnerViewModel
     private lateinit var binding: ActivityOwnerBinding
-    private lateinit var adapter: OwnerRepoAdapter
+    private lateinit var adapter: RepoAdapter
     private lateinit var author: Owner
     private lateinit var revealAnimator: RevealAnimator
 
@@ -90,7 +91,7 @@ class OwnerActivity : AppCompatActivity(), OwnerRepoAdapter.OnItemClickListener,
 
     private fun initRecyclerView() {
         binding.recyclerview.layoutManager = LinearLayoutManager(this)
-        adapter = OwnerRepoAdapter(binding.recyclerview)
+        adapter = RepoAdapter(binding.recyclerview, false)
         adapter.onItemClickListener = this
         adapter.onLoadMoreListener = this
         binding.recyclerview.adapter = adapter

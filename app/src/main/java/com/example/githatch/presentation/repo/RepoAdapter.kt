@@ -48,6 +48,17 @@ class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolea
         }
     }
 
+    fun shrinkIfNotRepoActivity() =
+        binding.apply {
+            tvRepoName.textSize = 13.0f
+            listOf(lbWatch, lbFork, lbUpdated, tvWatch, tvFork, tvDateUpdated, tvLanguage).forEach {
+                it.textSize = 12.0f
+            }
+            ivRepoAuthor.visible(false)
+            tvAuthorName.visible(false)
+            lbAuthor.visible(false)
+        }
+
     override fun onViewRecycled(holder: MyViewHolder) {
         holder.binding.executePendingBindings()
         Glide.with(binding.ivRepoAuthor.context).clear(holder.binding.ivRepoAuthor)
@@ -79,7 +90,8 @@ class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolea
         return MyViewHolder(binding, isRepoActivity)
     }
 
-    override fun onBindViewHolder(holder: MyViewHolder, position: Int) = holder.bind(repoList[position])
+    override fun onBindViewHolder(holder: MyViewHolder, position: Int) =
+        holder.bind(repoList[position])
 
     override fun getItemCount() = repoList.size
 
@@ -131,28 +143,23 @@ class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolea
                     .into(binding.ivRepoAuthor)
                 binding.tvAuthorName.text = repo.owner.login
             } else {
-                binding.apply {
-                    ivRepoAuthor.visible(false)
-                    tvAuthorName.visible(false)
-                }
+                shrinkIfNotRepoActivity()
             }
         }
 
         override fun onClick(v: View?) {
-            if (isRepoActivity) {
-                when (v) {
-                    binding.myFlipView -> {
-                        binding.myFlipView.flip()
-                        CoroutineScope(Dispatchers.Main).launch {
-                            if (binding.myFlipView.isFlipped()) {
-                                delay(300)
-                                binding.itemBack.visible(true)
-                                frontClickable(false)
-                            } else {
-                                delay(300)
-                                binding.itemBack.visible(false)
-                                frontClickable(true)
-                            }
+            when (v) {
+                binding.myFlipView -> {
+                    binding.myFlipView.flip()
+                    CoroutineScope(Dispatchers.Main).launch {
+                        if (binding.myFlipView.isFlipped()) {
+                            delay(300)
+                            binding.itemBack.visible(true)
+                            frontClickable(false)
+                        } else {
+                            delay(300)
+                            binding.itemBack.visible(false)
+                            frontClickable(true)
                         }
                     }
                 }
