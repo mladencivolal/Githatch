@@ -14,6 +14,9 @@ import com.example.githatch.data.model.repo.Repo
 import com.example.githatch.databinding.ActivityRepoBinding
 import com.example.githatch.databinding.LayoutSortSheetBinding
 import com.example.githatch.helpers.Helper
+import com.example.githatch.helpers.Helper.*
+import com.example.githatch.helpers.Helper.OrderBy
+import com.example.githatch.helpers.Helper.SortBy
 import com.example.githatch.helpers.visible
 import com.example.githatch.presentation.detail.DetailActivity
 import com.example.githatch.presentation.di.Injector
@@ -50,7 +53,9 @@ class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
         initRecyclerView()
         initSortSheet()
 
-        searchRepos(binding.etSearch.text.toString(), sortBy, orderBy)
+        searchRepos(binding.etSearch.text.toString(), SortBy.updated.name, OrderBy.desc.name)
+        manageSortFilters()
+        manageOrderFilters()
     }
 
     private fun initOnActionListeners() {
@@ -139,17 +144,17 @@ class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
     private fun manageSortFilters() {
         resetSortFilters()
         when (sortBy) {
-            Helper.SortBy.stars.name -> bindingSortSheet.lbStars.isSelected = true
-            Helper.SortBy.forks.name -> bindingSortSheet.lbForks.isSelected = true
-            Helper.SortBy.updated.name -> bindingSortSheet.lbUpdated.isSelected = true
+            SortBy.stars.name -> bindingSortSheet.lbStars.isSelected = true
+            SortBy.forks.name -> bindingSortSheet.lbForks.isSelected = true
+            SortBy.updated.name -> bindingSortSheet.lbUpdated.isSelected = true
         }
     }
 
     private fun manageOrderFilters() {
         resetOrderFilters()
         when (orderBy) {
-            Helper.OrderBy.asc.name -> bindingSortSheet.tvAsc.isSelected = true
-            Helper.OrderBy.desc.name -> bindingSortSheet.tvDesc.isSelected = true
+            OrderBy.asc.name -> bindingSortSheet.tvAsc.isSelected = true
+            OrderBy.desc.name -> bindingSortSheet.tvDesc.isSelected = true
         }
     }
 
@@ -193,23 +198,23 @@ class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
                 binding.fabUp -> binding.repoRecyclerview.scrollToPosition(0)
                 binding.fabSort -> dialog.show()
                 lbStars -> {
-                    sortBy = Helper.SortBy.stars.name
+                    sortBy = SortBy.stars.name
                     manageSortFilters()
                 }
                 lbForks -> {
-                    sortBy = Helper.SortBy.forks.name
+                    sortBy = SortBy.forks.name
                     manageSortFilters()
                 }
                 lbUpdated -> {
-                    sortBy = Helper.SortBy.updated.name
+                    sortBy = SortBy.updated.name
                     manageSortFilters()
                 }
                 tvAsc -> {
-                    orderBy = Helper.OrderBy.asc.name
+                    orderBy = OrderBy.asc.name
                     manageOrderFilters()
                 }
                 tvDesc -> {
-                    orderBy = Helper.OrderBy.desc.name
+                    orderBy = OrderBy.desc.name
                     manageOrderFilters()
                 }
                 lbApply -> {

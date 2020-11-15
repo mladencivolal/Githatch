@@ -50,8 +50,7 @@
         <com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginStart="@dimen/five"
-            android:layout_marginEnd="@dimen/five"
+            android:layout_marginStart="@dimen/three"
             app:handleDrawable="@drawable/thumb"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -60,9 +59,9 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/repo_recyclerview"
+                android:layout_marginEnd="@dimen/three"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/three"
                 android:background="@color/recyclerview_background"
                 android:visibility="visible" />
         </com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller>

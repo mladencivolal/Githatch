@@ -8,235 +8,222 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <androidx.cardview.widget.CardView
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/item_back"
             android:layout_width="match_parent"
-            android:visibility="gone"
             android:layout_height="match_parent"
-            android:layout_marginBottom="@dimen/three"
-            app:cardBackgroundColor="@color/cardview_dark_background"
-            app:cardCornerRadius="@dimen/five">
+            android:layout_margin="@dimen/one"
+            android:background="@color/cardview_dark_background"
+            android:padding="@dimen/eight"
+            android:visibility="gone">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <TextView
+                android:id="@+id/lbDescription"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="@dimen/three">
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_light"
+                android:text="@string/Description"
+                android:textAlignment="center"
+                android:textColor="@color/creator_text"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/lbDescription"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto_light"
-                    android:text="@string/Description"
-                    android:textAlignment="center"
-                    android:textColor="@color/creator_text"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/tvDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/three"
+                android:padding="@dimen/two"
+                android:textAlignment="center"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/lbDescription" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <TextView
-                    android:id="@+id/tvDescription"
-                    android:layout_marginTop="@dimen/three"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textAlignment="center"
-                    android:padding="@dimen/two"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/lbDescription" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.cardview.widget.CardView>
-
-
-        <androidx.cardview.widget.CardView
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/card_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/one"
+
+
             android:layout_marginBottom="@dimen/three"
-            app:cardBackgroundColor="@color/cardview"
-            app:cardCornerRadius="@dimen/five">
+            android:background="@color/cardview"
+            android:padding="@dimen/eight">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/tvLanguage"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/five"
-                android:padding="@dimen/three">
+                android:layout_marginBottom="@dimen/five"
+                android:text="Language"
+                android:textColor="#33BBFF"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/tvLanguage"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/five"
-                    android:text="Language"
-                    android:textColor="#33BBFF"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/ivRepoAuthor"
+                android:layout_width="@dimen/forty"
+                android:layout_height="@dimen/forty"
+                android:layout_marginTop="@dimen/five"
+                android:layout_marginBottom="@dimen/five"
+                app:civ_border_color="@color/colorAccent"
+                app:civ_border_width="0.5dp"
+                app:layout_constraintBottom_toTopOf="@id/tvRepoName"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvAuthorName"
+                tools:src="@tools:sample/avatars" />
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/ivRepoAuthor"
-                    android:layout_width="@dimen/forty"
-                    android:layout_height="@dimen/forty"
-                    android:layout_marginTop="@dimen/five"
-                    android:layout_marginBottom="@dimen/five"
-                    app:civ_border_color="@color/colorAccent"
-                    app:civ_border_width="0.5dp"
-                    app:layout_constraintBottom_toTopOf="@id/tvRepoName"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvAuthorName"
-                    tools:src="@tools:sample/avatars" />
+            <TextView
+                android:id="@+id/tvRepoName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/three"
+                android:layout_marginEnd="@dimen/five"
+                android:layout_marginBottom="@dimen/five"
+                android:text="Repository Name"
+                android:textSize="17sp"
+                app:layout_constraintBottom_toTopOf="@id/bottomDivider"
+                app:layout_constraintEnd_toStartOf="@id/tvLanguage"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ivRepoAuthor" />
 
-                <TextView
-                    android:id="@+id/tvRepoName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/three"
-                    android:layout_marginEnd="@dimen/five"
-                    android:layout_marginBottom="@dimen/five"
-                    android:text="Repository Name"
-                    android:textSize="17sp"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintEnd_toStartOf="@id/tvLanguage"
-                    app:layout_constraintBottom_toTopOf="@id/bottomDivider"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/ivRepoAuthor" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/lbAuthor"
-                    android:textColor="@color/creator_text"
-                    android:text="Author"
-                    android:layout_marginEnd="@dimen/five"
-                    android:layout_marginBottom="@dimen/five"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
+            <TextView
+                android:id="@+id/lbAuthor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/five"
+                android:layout_marginBottom="@dimen/five"
+                android:text="Author"
+                android:textColor="@color/creator_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
 
-                <TextView
-                    android:id="@+id/tvAuthorName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/five"
-                    android:layout_marginEnd="@dimen/five"
-                    android:layout_marginBottom="@dimen/five"
-                    android:fontFamily="@font/roboto_light"
-                    app:layout_constraintBottom_toTopOf="@id/ivRepoAuthor"
-                    app:layout_constraintStart_toEndOf="@id/lbAuthor"
-                    app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/tvAuthorName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/five"
+                android:layout_marginEnd="@dimen/five"
+                android:layout_marginBottom="@dimen/five"
+                android:fontFamily="@font/roboto_light"
+                app:layout_constraintBottom_toTopOf="@id/ivRepoAuthor"
+                app:layout_constraintStart_toEndOf="@id/lbAuthor"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/bottomDivider"
-                    android:layout_width="@dimen/zero"
-                    android:layout_height="@dimen/zero"
-                    app:layout_constraintBottom_toTopOf="@id/lbWatch"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"/>
+            <TextView
+                android:id="@+id/bottomDivider"
+                android:layout_width="@dimen/zero"
+                android:layout_height="@dimen/zero"
+                app:layout_constraintBottom_toTopOf="@id/lbWatch"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
-                <!-- bottom sheet -->
+            <!-- bottom sheet -->
 
-                <ImageView
-                    android:id="@+id/ivWatch"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    app:layout_constraintEnd_toStartOf="@+id/lbWatch"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:srcCompat="@drawable/ic_star" />
+            <ImageView
+                android:id="@+id/ivWatch"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/lbWatch"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:srcCompat="@drawable/ic_star" />
 
-                <TextView
-                    android:id="@+id/lbWatch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/star_label"
-                    android:textColor="@color/creator_text"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/tvWatch"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/ivWatch"
-                    tools:layout_editor_absoluteY="7dp" />
+            <TextView
+                android:id="@+id/lbWatch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/star_label"
+                android:textColor="@color/creator_text"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/tvWatch"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/ivWatch"
+                tools:layout_editor_absoluteY="7dp" />
 
-                <TextView
-                    android:id="@+id/tvWatch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/colorAccent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/ivFork"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/lbWatch"
-                    tools:layout_editor_absoluteY="7dp" />
+            <TextView
+                android:id="@+id/tvWatch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorAccent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/ivFork"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/lbWatch"
+                tools:layout_editor_absoluteY="7dp" />
 
-                <ImageView
-                    android:id="@+id/ivFork"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/lbFork"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/tvWatch"
-                    app:srcCompat="@drawable/ic_fork" />
+            <ImageView
+                android:id="@+id/ivFork"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/lbFork"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/tvWatch"
+                app:srcCompat="@drawable/ic_fork" />
 
-                <TextView
-                    android:id="@+id/lbFork"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/fork_label"
-                    android:textColor="@color/creator_text"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/tvFork"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/ivFork"
-                    tools:layout_editor_absoluteY="7dp" />
+            <TextView
+                android:id="@+id/lbFork"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fork_label"
+                android:textColor="@color/creator_text"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/tvFork"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/ivFork"
+                tools:layout_editor_absoluteY="7dp" />
 
-                <TextView
-                    android:id="@+id/tvFork"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/colorAccent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/ivUpdated"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/lbFork"
-                    tools:layout_editor_absoluteY="7dp" />
+            <TextView
+                android:id="@+id/tvFork"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorAccent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/ivUpdated"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/lbFork"
+                tools:layout_editor_absoluteY="7dp" />
 
-                <ImageView
-                    android:id="@+id/ivUpdated"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/lbUpdated"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/tvFork"
-                    app:srcCompat="@drawable/ic_update" />
+            <ImageView
+                android:id="@+id/ivUpdated"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/lbUpdated"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/tvFork"
+                app:srcCompat="@drawable/ic_update" />
 
-                <TextView
-                    android:id="@+id/lbUpdated"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/update_label"
-                    android:textColor="@color/creator_text"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/tvDateUpdated"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/ivUpdated"
-                    tools:layout_editor_absoluteY="7dp" />
+            <TextView
+                android:id="@+id/lbUpdated"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/update_label"
+                android:textColor="@color/creator_text"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/tvDateUpdated"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/ivUpdated"
+                tools:layout_editor_absoluteY="7dp" />
 
-                <TextView
-                    android:id="@+id/tvDateUpdated"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/colorAccent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/lbUpdated"
-                    tools:layout_editor_absoluteY="7dp" />
+            <TextView
+                android:id="@+id/tvDateUpdated"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorAccent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/lbUpdated"
+                tools:layout_editor_absoluteY="7dp" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.cardview.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.example.githatch.custom.FlipView>
 
