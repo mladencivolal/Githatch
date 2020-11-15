@@ -89,12 +89,14 @@ class OwnerActivity : AppCompatActivity(), RepoAdapter.OnItemClickListener,
         }
     }
 
-    private fun initRecyclerView() {
-        binding.recyclerview.layoutManager = LinearLayoutManager(this)
-        adapter = RepoAdapter(binding.recyclerview, false)
-        adapter.onItemClickListener = this
-        adapter.onLoadMoreListener = this
-        binding.recyclerview.adapter = adapter
+    private fun initRecyclerView()  = binding.apply {
+        recyclerview.layoutManager = LinearLayoutManager(this@OwnerActivity)
+        adapter = RepoAdapter(recyclerview, false)
+        adapter.onItemClickListener = this@OwnerActivity
+        adapter.onLoadMoreListener = this@OwnerActivity
+        recyclerview.setHasFixedSize(true)
+        recyclerview.isNestedScrollingEnabled = false
+        recyclerview.adapter = adapter
     }
 
     private fun populateWithIntentData() {
@@ -134,7 +136,7 @@ class OwnerActivity : AppCompatActivity(), RepoAdapter.OnItemClickListener,
         val responseLiveData = ownerViewModel.getReposFromAuthor(ownerName)
         responseLiveData.observe(this, {
             if (it != null) {
-                adapter.updateList(it)
+                adapter.setList(it)
                 binding.progressBar.visible(false)
             } else binding.progressBar.visible(false)
         })

@@ -1,5 +1,6 @@
 package com.example.githatch.presentation.repo
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,8 +39,8 @@ class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolea
                     val totalItemCount = linearLayoutManager.itemCount
                     val lastVisibleItem =
                         linearLayoutManager.findLastCompletelyVisibleItemPosition()
-
-                    if (totalItemCount > pageLength && !loading && totalItemCount - 1 <= lastVisibleItem + pageLength && lastVisibleItem > repoList.size - 2 * pageLength) {
+                    if (dy > 0 && totalItemCount > pageLength && !loading && totalItemCount - 1 <= lastVisibleItem + pageLength && lastVisibleItem > repoList.size - 2 * pageLength) {
+                        Log.i("MYTAG", "RepoAdapter: onLoadMoreListener triggered")
                         onLoadMoreListener.onLoadMore()
                         loading = true
                     }

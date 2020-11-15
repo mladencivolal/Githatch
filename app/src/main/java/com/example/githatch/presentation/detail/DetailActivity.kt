@@ -64,13 +64,14 @@ class DetailActivity : AppCompatActivity(),
         }
     }
 
-    private fun initRecyclerView() {
-        binding.recyclerview.itemAnimator = DefaultItemAnimator()
-        binding.recyclerview.layoutManager = GridLayoutManager(this, 4)
-        ViewCompat.setNestedScrollingEnabled(binding.recyclerview, false)
+    private fun initRecyclerView() = binding.apply {
+        recyclerview.itemAnimator = DefaultItemAnimator()
+        recyclerview.layoutManager = GridLayoutManager(this@DetailActivity, 4)
         adapter = ContributorsAdapter()
-        adapter.onItemClickListener = this
-        binding.recyclerview.adapter = adapter
+        adapter.onItemClickListener = this@DetailActivity
+        recyclerview.setHasFixedSize(true)
+        recyclerview.isNestedScrollingEnabled = false
+        recyclerview.adapter = adapter
     }
 
     private fun populateWithIntentData() {

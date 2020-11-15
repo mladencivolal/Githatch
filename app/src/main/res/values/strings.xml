@@ -29,7 +29,7 @@
     <string name="star_label">Star</string>
     <string name="update_label">Updated</string>
 
-    <string name="author_repos_header">Top rated repositories by %1$s</string>
+    <string name="author_repos_header">Most recent repositories by %1$s</string>
     <string name="twitter_link">https://twitter.com/%1$s</string>
     <string name="twitter_package">com.twitter.android</string>
     <string name="default_search_text">Kotlin</string>
@@ -45,4 +45,5 @@
 
 
     <string name="not_available">n/a</string>
+    <string name="loading_repositories">Loading repositories...</string>
 </resources>

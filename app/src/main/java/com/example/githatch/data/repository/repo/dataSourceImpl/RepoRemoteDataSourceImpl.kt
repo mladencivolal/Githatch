@@ -1,6 +1,7 @@
 package com.example.githatch.data.repository.repo.dataSourceImpl
 
 import android.annotation.SuppressLint
+import android.util.Log
 import com.example.githatch.data.api.GitHubService
 import com.example.githatch.data.model.repo.RepoList
 import com.example.githatch.data.repository.repo.dataSource.RepoRemoteDataSource
@@ -18,6 +19,10 @@ class RepoRemoteDataSourceImpl(
         order: String,
         pageLength: Int,
         pageNum: Int
-    ): Response<RepoList> = gitHubService.getRepositories(searchPhrase, sort, order, pageLength, pageNum)
+    ): Response<RepoList> {
+
+        Log.i("MYTAG", "DataSourceImpl: getRepos: searchPhrase: $searchPhrase, sortBy: $sort, orderBy: $order")
+
+        return gitHubService.getRepositories(searchPhrase, sort, order, pageLength, pageNum)}
 
 }

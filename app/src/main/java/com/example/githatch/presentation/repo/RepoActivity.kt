@@ -1,6 +1,7 @@
 package com.example.githatch.presentation.repo
 
 import android.os.Bundle
+import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
@@ -90,18 +91,16 @@ class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
         }
     }
 
-    private fun initRecyclerView() {
-        binding.repoRecyclerview.layoutManager = LinearLayoutManager(this)
+    private fun initRecyclerView() = binding.apply {
+        binding.repoRecyclerview.layoutManager = LinearLayoutManager(this@RepoActivity)
         adapter = RepoAdapter(binding.repoRecyclerview, true)
         adapter.apply {
             onLoadMoreListener = this@RepoActivity
             onItemClickListener = this@RepoActivity
         }
-        binding.apply {
-            repoRecyclerview.adapter = adapter
-            repoRecyclerview.setHasFixedSize(true)
-            repoRecyclerview.isNestedScrollingEnabled = false
-        }
+        repoRecyclerview.setHasFixedSize(true)
+        repoRecyclerview.isNestedScrollingEnabled = false
+        repoRecyclerview.adapter = adapter
     }
 
     private fun initSortSheet() {
@@ -174,6 +173,8 @@ class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
     }
 
     override fun onLoadMore() {
+        Log.i("MYTAG", "RepoActivity: onLoadMore")
+
         binding.progressBar.visible(true)
         val responseLiveData = viewmodel.loadMoreRepos()
         responseLiveData.observe(this, {
@@ -212,6 +213,7 @@ class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
                     manageOrderFilters()
                 }
                 lbApply -> {
+                    Log.i("MYTAG", "RepoActivity: clicked Apply Filters: searchPhrase: $searchTerm, sortBy: $sortBy, orderBy: $orderBy")
                     dialog.dismiss()
                     searchRepos(searchTerm, sortBy, orderBy)
                 }
