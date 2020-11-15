@@ -121,12 +121,13 @@ class RepoAdapter(recyclerView: RecyclerView, private var isRepoActivity: Boolea
         fun bind(repo: Repo) {
             binding.apply {
                 myFlipView.setFlipped(false)
+                itemBack.visible(false)
                 tvRepoName.text = repo.name
                 tvWatch.text = Helper.numberFormatter(repo.watchersCount)
                 tvDateUpdated.text = Helper.dateFormatterAlt(repo.updatedAt)
                 tvFork.text = Helper.numberFormatter(repo.forksCount)
                 tvLanguage.text = repo.language
-                tvDescription.text = repoList[bindingAdapterPosition].description
+                tvDescription.text = repoList[bindingAdapterPosition].description?.orEmpty() ?: "No description provided"
                 val clickers = listOf(ivRepoAuthor, tvRepoName)
                 clickers.toTypedArray().forEach { view ->
                     view.setOnClickListener {

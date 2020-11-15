@@ -46,4 +46,5 @@
 
     <string name="not_available">n/a</string>
     <string name="loading_repositories">Loading repositories...</string>
+    <string name="no_description_provided">No description provided</string>
 </resources>

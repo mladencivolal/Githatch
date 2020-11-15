@@ -86,7 +86,7 @@ class DetailActivity : AppCompatActivity(),
             tvWatch.text = Helper.numberFormatter(repoData.watchersCount)
             tvFork.text = Helper.numberFormatter(repoData.forksCount)
             tvIssue.text = Helper.numberFormatter(repoData.openIssues)
-            tvDescription.text = repoData.description
+            tvDescription.text = repoData.description?.orEmpty() ?: getString(R.string.no_description_provided)
         }
 
         val imageURL = repoData.owner.avatarUrl
