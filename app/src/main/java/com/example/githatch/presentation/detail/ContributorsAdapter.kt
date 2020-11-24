@@ -23,7 +23,6 @@ class ContributorsAdapter : RecyclerView.Adapter<ContributorsAdapter.MyViewHolde
             parent,
             false
         )
-
         return MyViewHolder(binding)
     }
 

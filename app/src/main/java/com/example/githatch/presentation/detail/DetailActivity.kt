@@ -77,10 +77,8 @@ class DetailActivity : AppCompatActivity(),
 
         val responseLiveData = detailViewModel.getContribs(ownerName, repoName)
         responseLiveData.observe(this, {
-            if (it != null) {
-                adapter.updateList(it)
-                binding.progressBar.visible(false)
-            } else binding.progressBar.visible(false)
+            if (it != null) adapter.updateList(it)
+            binding.progressBar.visible(false)
         })
     }
 
