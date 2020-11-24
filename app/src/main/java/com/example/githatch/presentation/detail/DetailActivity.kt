@@ -3,7 +3,6 @@ package com.example.githatch.presentation.detail
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -30,7 +29,6 @@ class DetailActivity : AppCompatActivity(),
 
     companion object {
         const val KEY_REPO = "repo"
-
         fun intent(context: Context, repo: Repo): Intent =
             Intent(context, DetailActivity::class.java).putExtra(KEY_REPO, repo)
     }
@@ -82,10 +80,7 @@ class DetailActivity : AppCompatActivity(),
             if (it != null) {
                 adapter.updateList(it)
                 binding.progressBar.visible(false)
-            } else {
-                binding.progressBar.visible(false)
-                Toast.makeText(applicationContext, "No data available", Toast.LENGTH_LONG).show()
-            }
+            } else binding.progressBar.visible(false)
         })
     }
 

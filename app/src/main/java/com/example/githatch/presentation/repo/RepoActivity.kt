@@ -218,7 +218,6 @@ class RepoActivity : AppCompatActivity(), RepoAdapter.OnLoadMoreListener,
                     manageOrderFilters()
                 }
                 lbApply -> {
-                    Log.i("MYTAG", "RepoActivity: clicked Apply Filters: searchPhrase: $searchTerm, sortBy: $sortBy, orderBy: $orderBy")
                     dialog.dismiss()
                     searchRepos(searchTerm, sortBy, orderBy)
                 }

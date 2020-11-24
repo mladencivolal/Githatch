@@ -3,6 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="owner"
+            type="com.example.githatch.data.model.owner.Owner" />
+
+        <variable
+            name="ownerViewModel"
+            type="com.example.githatch.presentation.owner.OwnerViewModel" />
+    </data>
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -53,6 +63,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:textSize="12sp"
+                                    android:text="@{owner.location.isEmpty() ? @string/not_available : owner.location}"
                                     android:layout_marginStart="@dimen/two"
                                     android:layout_marginTop="@dimen/five"
                                     android:textColor="@color/creator_text"
@@ -63,6 +74,7 @@
                                     android:id="@+id/ivRepoAuthor"
                                     android:layout_width="@dimen/oneFifty"
                                     android:layout_height="@dimen/oneFifty"
+                                    app:imageUrl="@{owner.avatarUrl}"
                                     android:layout_gravity="center_horizontal"
                                     android:layout_margin="@dimen/sixteen"
                                     app:layout_constraintEnd_toEndOf="parent"
@@ -78,7 +90,7 @@
                                     android:layout_gravity="bottom|center_horizontal"
                                     android:layout_margin="@dimen/two"
                                     android:layout_marginTop="@dimen/eight"
-                                    android:text="@string/repositories"
+                                    android:text="@{owner.login}"
                                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                                     android:textColor="@color/colorAccent"
                                     android:textStyle="bold"
@@ -94,7 +106,7 @@
                                     android:paddingStart="@dimen/ten"
                                     android:paddingEnd="@dimen/ten"
                                     android:paddingBottom="@dimen/ten"
-                                    android:text="@string/repositories"
+                                    android:text="@{owner.bio}"
                                     android:textAlignment="center"
                                     android:textSize="12sp"
                                     app:layout_constraintBottom_toBottomOf="parent"
@@ -148,6 +160,7 @@
 
                                 <TextView
                                     android:id="@+id/tvFollowers"
+                                    android:text="@{Integer.toString(owner.followers)}"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/three"
@@ -187,6 +200,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/three"
+                                    android:text="@{Integer.toString(owner.following)}"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="12sp"
                                     app:layout_constraintEnd_toStartOf="@+id/ivRepos"
@@ -223,6 +237,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/three"
+                                    android:text="@{Integer.toString(owner.publicRepos)}"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="12sp"
                                     app:layout_constraintEnd_toStartOf="@+id/ivGists"
@@ -263,6 +278,7 @@
                                     android:layout_marginTop="@dimen/three"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="12sp"
+                                    android:text="@{Integer.toString(owner.publicGists)}"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintHorizontal_bias="0.5"
                                     app:layout_constraintStart_toEndOf="@+id/lbGists"
@@ -308,6 +324,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_margin="@dimen/five"
+                                    android:text="@{owner.email.isEmpty() ? @string/not_available : owner.email}"
                                     android:fontFamily="@font/roboto_light"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="14sp"
@@ -345,6 +362,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_margin="@dimen/five"
+                                    android:text="@{owner.twitter.isEmpty() ? @string/not_available : owner.twitter}"
                                     android:fontFamily="@font/roboto_light"
                                     android:textColor="@color/lang_text"
                                     android:textSize="14sp"
@@ -384,6 +402,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_margin="@dimen/five"
+                                    android:text="@{owner.htmlUrl.substring(8)}"
                                     android:fontFamily="@font/roboto_light"
                                     android:textColor="@color/creator_text"
                                     android:textSize="14sp"
@@ -405,6 +424,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_margin="@dimen/five"
+                                    android:text="@{owner.name}"
                                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                                     android:textColor="@color/colorAccent"
                                     android:textStyle="bold"
@@ -419,7 +439,7 @@
                                     android:paddingStart="@dimen/ten"
                                     android:paddingEnd="@dimen/ten"
                                     android:paddingBottom="@dimen/ten"
-                                    android:text="@string/repositories"
+                                    android:text="@{owner.bio}"
                                     android:textAlignment="center"
                                     android:textSize="12sp"
                                     app:layout_constraintBottom_toBottomOf="parent"
@@ -466,6 +486,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/three"
+                android:text="@{String.format(@string/author_repos_header, owner.login)}"
                 android:textAlignment="center"
                 android:textSize="@dimen/sixteenSp"
                 android:paddingBottom="@dimen/five"

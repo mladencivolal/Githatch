@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="repo"
             type="com.example.githatch.data.model.repo.Repo" />
