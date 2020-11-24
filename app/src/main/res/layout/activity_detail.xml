@@ -8,8 +8,6 @@
         android:layout_height="match_parent"
         android:background="@color/recyclerview_background">
 
-
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/clProfile"
             android:layout_width="match_parent"
@@ -160,7 +158,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/five"
                 android:fontFamily="@font/roboto_light"
-                android:text="Author"
+                android:text="@string/author"
                 android:textColor="@color/creator_text"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toTopOf="@id/ivLanguage"
@@ -199,7 +197,7 @@
                 android:layout_margin="@dimen/five"
                 android:fontFamily="@font/roboto_light"
 
-                android:text="Language"
+                android:text="@string/language"
                 android:textColor="@color/creator_text"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toTopOf="@id/ivCreated"
@@ -236,7 +234,7 @@
                 android:layout_margin="@dimen/five"
 
                 android:fontFamily="@font/roboto_light"
-                android:text="Initial Commit"
+                android:text="@string/initial_commit"
                 android:textColor="@color/creator_text"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toTopOf="@id/ivUpdated"
@@ -273,7 +271,7 @@
                 android:layout_margin="@dimen/five"
                 android:fontFamily="@font/roboto_light"
 
-                android:text="Last Update"
+                android:text="@string/last_update"
                 android:textColor="@color/creator_text"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toTopOf="@id/tvTitle"

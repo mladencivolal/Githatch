@@ -47,4 +47,15 @@
     <string name="not_available">n/a</string>
     <string name="loading_repositories">Loading repositories...</string>
     <string name="no_description_provided">No description provided</string>
+    <string name="author">Author</string>
+    <string name="language">Language</string>
+    <string name="initial_commit">Initial Commit</string>
+    <string name="last_update">Last Update</string>
+    <string name="followers">Followers</string>
+    <string name="following">Following</string>
+    <string name="repos">Repos</string>
+    <string name="gists">Gists</string>
+    <string name="email">Email</string>
+    <string name="twitter">Twitter</string>
+    <string name="link">Link</string>
 </resources>

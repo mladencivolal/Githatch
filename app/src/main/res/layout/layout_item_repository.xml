@@ -57,7 +57,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/five"
-                android:text="Language"
                 android:textColor="#33BBFF"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -82,7 +81,6 @@
                 android:layout_marginTop="@dimen/three"
                 android:layout_marginEnd="@dimen/five"
                 android:layout_marginBottom="@dimen/five"
-                android:text="Repository Name"
                 android:textSize="17sp"
                 app:layout_constraintBottom_toTopOf="@id/bottomDivider"
                 app:layout_constraintEnd_toStartOf="@id/tvLanguage"
@@ -96,7 +94,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/five"
                 android:layout_marginBottom="@dimen/five"
-                android:text="Author"
+                android:text="@string/author"
                 android:textColor="@color/creator_text"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
