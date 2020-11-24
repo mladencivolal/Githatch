@@ -27,20 +27,18 @@ class ContributorsAdapter : RecyclerView.Adapter<ContributorsAdapter.MyViewHolde
         return MyViewHolder(binding)
     }
 
-    override fun getItemCount(): Int {
-        return items.size
-    }
+    override fun getItemCount(): Int = items.size
 
-    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MyViewHolder, position: Int) =
         holder.bind(items[position])
-    }
 
     fun updateList(list: List<Owner>?) {
         this.items = list as MutableList<Owner>
         notifyDataSetChanged()
     }
 
-    inner class MyViewHolder(val binding: LayoutItemContributorBinding) : RecyclerView.ViewHolder(binding.root),
+    inner class MyViewHolder(val binding: LayoutItemContributorBinding) :
+        RecyclerView.ViewHolder(binding.root),
         View.OnClickListener {
 
         init {
@@ -48,17 +46,14 @@ class ContributorsAdapter : RecyclerView.Adapter<ContributorsAdapter.MyViewHolde
         }
 
         fun bind(owner: Owner) {
-            binding.tvName.text = owner.login
-
-            val imageURL = owner.avatarUrl
+            binding.owner = owner
             Glide.with(binding.ivAuthorProfile.context)
-                .load(imageURL)
+                .load(owner.avatarUrl)
                 .into(binding.ivAuthorProfile)
         }
 
-        override fun onClick(view: View?) {
+        override fun onClick(view: View?) =
             onItemClickListener.onItemClick(items[bindingAdapterPosition])
-        }
     }
 
     interface OnItemClickListener {
