@@ -3,6 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="repo"
+            type="com.example.githatch.data.model.repo.Repo" />
+
+        <variable
+            name="helper"
+            type="com.example.githatch.helpers.Helper.Companion" />
+
+        <variable
+            name="detailViewModel"
+            type="com.example.githatch.presentation.detail.DetailViewModel" />
+    </data>
+
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -20,9 +36,9 @@
 
             <ImageView
                 android:id="@+id/ivWatch"
-                android:layout_marginTop="@dimen/five"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
+                android:layout_marginTop="@dimen/five"
                 app:layout_constraintEnd_toStartOf="@+id/lbWatch"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
@@ -31,19 +47,19 @@
 
             <TextView
                 android:id="@+id/lbWatch"
-                android:layout_marginTop="@dimen/three"
-                android:textColor="@color/creator_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/three"
                 android:text="@string/star_label"
+                android:textColor="@color/creator_text"
                 app:layout_constraintEnd_toStartOf="@+id/tvWatch"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/ivWatch"
-                app:layout_constraintTop_toTopOf="parent"
-                />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tvWatch"
+                android:text="@{helper.numberFormatter(repo.watchersCount)}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/three"
@@ -56,10 +72,10 @@
 
             <ImageView
                 android:id="@+id/ivFork"
-                android:layout_marginTop="@dimen/five"
-                android:layout_marginBottom="@dimen/five"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
+                android:layout_marginTop="@dimen/five"
+                android:layout_marginBottom="@dimen/five"
                 app:layout_constraintEnd_toStartOf="@+id/lbFork"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/tvWatch"
@@ -68,9 +84,9 @@
 
             <TextView
                 android:id="@+id/lbFork"
-                android:layout_marginTop="@dimen/three"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/three"
                 android:text="@string/fork_label"
                 android:textColor="@color/creator_text"
                 app:layout_constraintEnd_toStartOf="@+id/tvFork"
@@ -84,6 +100,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/three"
+                android:text="@{helper.numberFormatter(repo.forksCount)}"
                 android:textColor="@color/colorAccent"
                 app:layout_constraintEnd_toStartOf="@+id/ivIssue"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -92,10 +109,10 @@
 
             <ImageView
                 android:id="@+id/ivIssue"
-                android:layout_marginTop="@dimen/five"
-                android:layout_marginBottom="@dimen/five"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
+                android:layout_marginTop="@dimen/five"
+                android:layout_marginBottom="@dimen/five"
                 app:layout_constraintEnd_toStartOf="@+id/lbIssue"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/tvFork"
@@ -104,10 +121,10 @@
 
             <TextView
                 android:id="@+id/lbIssue"
-                android:layout_marginTop="@dimen/three"
-                android:layout_marginBottom="@dimen/five"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/three"
+                android:layout_marginBottom="@dimen/five"
                 android:text="@string/issues_label"
                 android:textColor="@color/creator_text"
                 app:layout_constraintEnd_toStartOf="@+id/tvIssue"
@@ -121,6 +138,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/three"
+                android:text="@{helper.numberFormatter(repo.openIssues)}"
                 android:textColor="@color/colorAccent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -129,27 +147,27 @@
 
             <TextView
                 android:id="@+id/topDivider"
-                app:layout_constraintTop_toBottomOf="@id/lbFork"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/ten"/>
+                android:layout_height="@dimen/ten"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/lbFork" />
 
             <TextView
                 android:id="@+id/tvTitle"
-                android:text="hhhhhhhhhhhhh"
-                android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/three"
-                android:textAlignment="center"
                 android:layout_marginStart="@dimen/five"
+                android:layout_marginTop="@dimen/three"
                 android:layout_marginEnd="@dimen/five"
                 android:fontFamily="@font/roboto_regular"
+                android:text="@{repo.name}"
+                android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="@color/colorAccent"
-                app:layout_constraintStart_toStartOf="parent"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/ivUpdated" />
 
             <TextView
@@ -171,6 +189,7 @@
                 android:layout_height="@dimen/forty"
                 android:layout_margin="@dimen/two"
                 android:padding="@dimen/two"
+                app:imageUrl="@{repo.owner.avatarUrl}"
                 app:civ_border_color="@color/colorAccent"
                 app:civ_border_width="0.5dp"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -184,6 +203,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/five"
                 android:fontFamily="@font/roboto_light"
+                android:text="@{repo.owner.login}"
                 android:textColor="@color/colorAccent"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toTopOf="@id/ivLanguage"
@@ -196,7 +216,6 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/five"
                 android:fontFamily="@font/roboto_light"
-
                 android:text="@string/language"
                 android:textColor="@color/creator_text"
                 android:textSize="14sp"
@@ -219,8 +238,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/five"
-
                 android:fontFamily="@font/roboto_light"
+                android:text="@{repo.language}"
                 android:textColor="@color/lang_text"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toTopOf="@id/ivCreated"
@@ -232,7 +251,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/five"
-
                 android:fontFamily="@font/roboto_light"
                 android:text="@string/initial_commit"
                 android:textColor="@color/creator_text"
@@ -256,8 +274,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/five"
-
                 android:fontFamily="@font/roboto_light"
+                android:text="@{helper.dateFormatter(repo.createdAt)}"
                 android:textColor="@color/creator_text"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toTopOf="@id/ivUpdated"
@@ -270,7 +288,6 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/five"
                 android:fontFamily="@font/roboto_light"
-
                 android:text="@string/last_update"
                 android:textColor="@color/creator_text"
                 android:textSize="14sp"
@@ -293,9 +310,9 @@
                 android:id="@+id/tvDateUpdated"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:layout_margin="@dimen/five"
                 android:fontFamily="@font/roboto_light"
+                android:text="@{helper.dateFormatter(repo.updatedAt)}"
                 android:textColor="@color/creator_text"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toTopOf="@id/tvTitle"
@@ -307,6 +324,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/one"
+                android:text="@{repo.description.isEmpty() ? @string/no_description_provided : repo.description}"
                 android:fontFamily="@font/roboto_light"
                 android:paddingStart="@dimen/ten"
                 android:paddingEnd="@dimen/ten"
@@ -345,8 +363,8 @@
             android:layout_width="@dimen/zero"
             android:layout_height="@dimen/zero"
             android:layout_marginStart="@dimen/five"
-            android:layout_marginEnd="@dimen/five"
             android:layout_marginTop="@dimen/three"
+            android:layout_marginEnd="@dimen/five"
             app:handleDrawable="@drawable/thumb"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

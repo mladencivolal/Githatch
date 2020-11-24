@@ -5,12 +5,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
-import com.bumptech.glide.Glide
 import com.example.githatch.R
 import com.example.githatch.data.model.owner.Owner
 import com.example.githatch.data.model.repo.Repo
@@ -33,26 +31,28 @@ class DetailActivity : AppCompatActivity(),
     companion object {
         const val KEY_REPO = "repo"
 
-        fun intent(context: Context, repo: Repo): Intent {
-            val intent = Intent(context, DetailActivity::class.java)
-            intent.putExtra(KEY_REPO, repo)
-            return intent
-        }
+        fun intent(context: Context, repo: Repo): Intent =
+            Intent(context, DetailActivity::class.java).putExtra(KEY_REPO, repo)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        repoData = intent.getParcelableExtra(KEY_REPO)!!
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_detail)
         (application as Injector).createDetailSubComponent()
             .inject(this)
+        binding.repo = repoData
+        binding.helper = Helper.Companion
 
         detailViewModel = ViewModelProvider(this, factory)
             .get(DetailViewModel::class.java)
 
+        binding.detailViewModel = detailViewModel
+
         initClickListeners()
         initRecyclerView()
-        populateWithIntentData()
 
         getContributors(repoData.owner.login, repoData.name)
     }
@@ -74,27 +74,6 @@ class DetailActivity : AppCompatActivity(),
         recyclerview.adapter = adapter
     }
 
-    private fun populateWithIntentData() {
-        repoData = intent.getParcelableExtra(KEY_REPO)!!
-
-        binding.apply {
-            tvTitle.text = repoData.name
-            tvAuthor.text = repoData.owner.login
-            tvLang.text = repoData.language
-            tvDateCreated.text = Helper.dateFormatter(repoData.createdAt)
-            tvDateUpdated.text = Helper.dateFormatter(repoData.updatedAt)
-            tvWatch.text = Helper.numberFormatter(repoData.watchersCount)
-            tvFork.text = Helper.numberFormatter(repoData.forksCount)
-            tvIssue.text = Helper.numberFormatter(repoData.openIssues)
-            tvDescription.text = repoData.description?.orEmpty() ?: getString(R.string.no_description_provided)
-        }
-
-        val imageURL = repoData.owner.avatarUrl
-        Glide.with(binding.ivProfile.context)
-            .load(imageURL)
-            .into(binding.ivProfile)
-    }
-
     private fun getContributors(ownerName: String, repoName: String) {
         binding.progressBar.visible(true)
 
@@ -110,14 +89,9 @@ class DetailActivity : AppCompatActivity(),
         })
     }
 
-    override fun onItemClick(owner: Owner) {
-        launchOwnerActivity(owner)
-    }
+    override fun onItemClick(owner: Owner) = launchOwnerActivity(owner)
 
-    private fun launchOwnerActivity(owner: Owner) {
-        val intent = OwnerActivity.intent(this, owner)
-        startActivity(intent)
-    }
+    private fun launchOwnerActivity(owner: Owner) = startActivity(OwnerActivity.intent(this, owner))
 }
 
 
