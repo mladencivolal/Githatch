@@ -1,6 +1,7 @@
 package com.example.githatch.presentation.owner
 
 import androidx.databinding.BindingAdapter
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import com.bumptech.glide.Glide
@@ -21,12 +22,13 @@ class OwnerViewModel(
     }
 
     fun loadMoreReposFromAuthor() = liveData {
-        val reposList = loadMoreReposFromAuthor.execute(/*searchTerm, sortBy, orderBy*/)
+        val reposList = loadMoreReposFromAuthor.execute()
         emit(reposList)
     }
 
-    suspend fun getAuthor(ownerName: String): Owner {
-        return getAuthorUseCase.execute(ownerName)
+    fun getOwner(ownerName: String): LiveData<Owner> = liveData {
+        val author = getAuthorUseCase.execute(ownerName)
+        emit(author)
     }
 
     companion object {

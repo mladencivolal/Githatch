@@ -20,9 +20,6 @@ import com.example.githatch.helpers.visible
 import com.example.githatch.presentation.detail.DetailActivity
 import com.example.githatch.presentation.di.Injector
 import com.example.githatch.presentation.repo.RepoAdapter
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class OwnerActivity : AppCompatActivity(), RepoAdapter.OnItemClickListener,
@@ -95,12 +92,13 @@ class OwnerActivity : AppCompatActivity(), RepoAdapter.OnItemClickListener,
     }
 
     private fun populateWithIntentData() {
-        CoroutineScope(Dispatchers.Main).launch {
-            val authorName = intent.getParcelableExtra<Owner>(KEY_OWNER)!!.login
-            author = ownerViewModel.getAuthor(authorName)
+        val ownerName = intent.getParcelableExtra<Owner>(KEY_OWNER)!!.login
+        val responseLiveData = ownerViewModel.getOwner(ownerName)
+        responseLiveData.observe(this, {
+            author = it
             binding.owner = author
             getReposFromAuthor(author.login)
-        }
+        })
     }
 
     private fun getReposFromAuthor(ownerName: String) {
