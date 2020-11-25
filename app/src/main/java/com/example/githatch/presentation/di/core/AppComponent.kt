@@ -12,12 +12,10 @@ import javax.inject.Singleton
         AppModule::class,
         NetModule::class,
         UseCaseModule::class,
-        RepositoryModule::class,
-        RemoteDataModule::class
-    ]
+        RepositoryModule::class]
 )
 interface AppComponent {
-    fun repoSubComponent():RepoSubComponent.Factory
-    fun detailSubComponent():DetailSubComponent.Factory
-    fun ownerSubComponent():OwnerSubComponent.Factory
+    fun repoSubComponent(): RepoSubComponent.Factory
+    fun detailSubComponent(): DetailSubComponent.Factory
+    fun ownerSubComponent(): OwnerSubComponent.Factory
 }

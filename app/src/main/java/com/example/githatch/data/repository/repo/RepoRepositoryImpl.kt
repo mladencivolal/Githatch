@@ -1,12 +1,12 @@
-package com.example.githatch.data.repository.repo.dataSourceImpl
+package com.example.githatch.data.repository.repo
 
 import android.util.Log
+import com.example.githatch.data.api.GitHubService
 import com.example.githatch.data.model.repo.Repo
-import com.example.githatch.data.repository.repo.dataSource.RepoRemoteDataSource
 import com.example.githatch.domain.repository.RepoRepository
 
 class RepoRepositoryImpl(
-    private val repoRemoteDataSource: RepoRemoteDataSource
+    private val gitHubService: GitHubService
 ) : RepoRepository {
 
     private var searchPhrase: String = ""
@@ -51,7 +51,7 @@ class RepoRepositoryImpl(
 
         try {
             val response =
-                repoRemoteDataSource.getRepos(searchPhrase, sortBy, orderBy, pageLength, pageNum)
+                gitHubService.getRepositories(searchPhrase, sortBy, orderBy, pageLength, pageNum)
             val body = response.body()
 
             if (body != null) {

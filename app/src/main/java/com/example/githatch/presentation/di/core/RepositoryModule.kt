@@ -1,11 +1,9 @@
 package com.example.githatch.presentation.di.core
 
-import com.example.githatch.data.repository.detail.dataSource.DetailRemoteDataSource
+import com.example.githatch.data.api.GitHubService
 import com.example.githatch.data.repository.detail.dataSourceImpl.DetailRepositoryImpl
-import com.example.githatch.data.repository.owner.dataSource.OwnerRemoteDataSource
-import com.example.githatch.data.repository.owner.dataSourceImpl.OwnerRepositoryImpl
-import com.example.githatch.data.repository.repo.dataSource.RepoRemoteDataSource
-import com.example.githatch.data.repository.repo.dataSourceImpl.RepoRepositoryImpl
+import com.example.githatch.data.repository.owner.OwnerRepositoryImpl
+import com.example.githatch.data.repository.repo.RepoRepositoryImpl
 import com.example.githatch.domain.repository.DetailRepository
 import com.example.githatch.domain.repository.OwnerRepository
 import com.example.githatch.domain.repository.RepoRepository
@@ -17,16 +15,16 @@ import javax.inject.Singleton
 class RepositoryModule {
     @Singleton
     @Provides
-    fun provideRepoRepository(repoRemoteDataSource: RepoRemoteDataSource): RepoRepository =
-        RepoRepositoryImpl(repoRemoteDataSource)
+    fun provideRepoRepository(gitHubService: GitHubService): RepoRepository =
+        RepoRepositoryImpl(gitHubService)
 
     @Singleton
     @Provides
-    fun provideDetailRepository(detailRemoteDataSource: DetailRemoteDataSource): DetailRepository =
-        DetailRepositoryImpl(detailRemoteDataSource)
+    fun provideDetailRepository(gitHubService: GitHubService): DetailRepository =
+        DetailRepositoryImpl(gitHubService)
 
     @Singleton
     @Provides
-    fun provideOwnerRepository(ownerRemoteDataSource: OwnerRemoteDataSource): OwnerRepository =
-        OwnerRepositoryImpl(ownerRemoteDataSource)
+    fun provideOwnerRepository(gitHubService: GitHubService): OwnerRepository =
+        OwnerRepositoryImpl(gitHubService)
 }
