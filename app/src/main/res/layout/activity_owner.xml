@@ -60,7 +60,8 @@
                                 android:layout_margin="@dimen/four"
                                 android:src="@drawable/ic_home"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:ignore="ContentDescription" />
 
                             <TextView
                                 android:id="@+id/tvLocation"
@@ -118,14 +119,13 @@
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
-                        <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                            xmlns:app="http://schemas.android.com/apk/res-auto"
-                            xmlns:tools="http://schemas.android.com/tools"
+                        <androidx.constraintlayout.widget.ConstraintLayout
                             android:id="@+id/secondFrame"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@color/cardview_dark_background"
-                            android:visibility="gone">
+                            android:visibility="gone"
+                            tools:ignore="PrivateResource">
 
                             <androidx.constraintlayout.widget.ConstraintLayout
                                 android:id="@+id/secondFrameContent"
@@ -146,7 +146,8 @@
                                     app:layout_constraintEnd_toStartOf="@+id/lbFollowers"
                                     app:layout_constraintHorizontal_bias="0.5"
                                     app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent" />
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    tools:ignore="ContentDescription" />
 
                                 <TextView
                                     android:id="@+id/lbFollowers"
@@ -183,7 +184,8 @@
                                     app:layout_constraintEnd_toStartOf="@+id/lbFollowing"
                                     app:layout_constraintHorizontal_bias="0.5"
                                     app:layout_constraintStart_toEndOf="@+id/tvFollowers"
-                                    app:layout_constraintTop_toTopOf="parent" />
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    tools:ignore="ContentDescription" />
 
                                 <TextView
                                     android:id="@+id/lbFollowing"
@@ -220,7 +222,8 @@
                                     app:layout_constraintEnd_toStartOf="@+id/lbRepos"
                                     app:layout_constraintHorizontal_bias="0.5"
                                     app:layout_constraintStart_toEndOf="@+id/tvFollowing"
-                                    app:layout_constraintTop_toTopOf="parent" />
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    tools:ignore="ContentDescription" />
 
                                 <TextView
                                     android:id="@+id/lbRepos"
@@ -258,7 +261,8 @@
                                     app:layout_constraintEnd_toStartOf="@+id/lbGists"
                                     app:layout_constraintHorizontal_bias="0.5"
                                     app:layout_constraintStart_toEndOf="@+id/tvRepos"
-                                    app:layout_constraintTop_toTopOf="parent" />
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    tools:ignore="ContentDescription" />
 
                                 <TextView
                                     android:id="@+id/lbGists"
@@ -358,7 +362,8 @@
                                     app:layout_constraintBottom_toTopOf="@id/ivLink"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toBottomOf="@id/ivEmail" />
+                                    app:layout_constraintTop_toBottomOf="@id/ivEmail"
+                                    tools:ignore="ContentDescription" />
 
                                 <TextView
                                     android:id="@+id/tvTwitter"
@@ -544,7 +549,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/fastScroller"
-                app:srcCompat="@drawable/ic_arrow_up" />
+                app:srcCompat="@drawable/ic_arrow_up"
+                tools:ignore="ContentDescription" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
