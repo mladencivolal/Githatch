@@ -16,6 +16,7 @@ import com.example.githatch.custom.RevealAnimator
 import com.example.githatch.data.model.owner.Owner
 import com.example.githatch.data.model.repo.Repo
 import com.example.githatch.databinding.ActivityOwnerBinding
+import com.example.githatch.helpers.Helper
 import com.example.githatch.helpers.visible
 import com.example.githatch.presentation.detail.DetailActivity
 import com.example.githatch.presentation.di.Injector
@@ -97,6 +98,7 @@ class OwnerActivity : AppCompatActivity(), RepoAdapter.OnItemClickListener,
         responseLiveData.observe(this, {
             author = it
             binding.owner = author
+            binding.helper = Helper.Companion
             getReposFromAuthor(author.login)
         })
     }
@@ -128,6 +130,7 @@ class OwnerActivity : AppCompatActivity(), RepoAdapter.OnItemClickListener,
             }
         })
     }
+
 
     private fun launchBrowserActivity(htmlUrl: String) {
         if (htmlUrl.isNotEmpty()) {
