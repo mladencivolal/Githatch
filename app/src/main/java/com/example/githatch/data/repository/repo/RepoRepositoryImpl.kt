@@ -38,7 +38,6 @@ class RepoRepositoryImpl(
 
     override suspend fun loadMoreRepos(): List<Repo>? {
         if (itemsCount != 0 && totalCount != itemsCount) this.pageNum++
-        Log.i("MYTAG", "Impl: loadMoreRepos: searchPhrase: $searchPhrase, sortBy: $sortBy, orderBy: $orderBy")
 
         return getReposFromAPI(searchPhrase, sortBy, orderBy)
     }
@@ -47,7 +46,6 @@ class RepoRepositoryImpl(
         this.sortBy = sortBy
         this.orderBy = orderBy
         this.searchPhrase = searchPhrase
-        Log.i("MYTAG", "Impl: getReposFromAPI: searchPhrase: $searchPhrase, sortBy: $sortBy, orderBy: $orderBy")
 
         try {
             val response =
