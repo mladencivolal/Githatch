@@ -8,12 +8,12 @@ import com.bumptech.glide.Glide
 import com.example.githatch.data.model.owner.Owner
 import com.example.githatch.domain.usecase.GetAuthorUseCase
 import com.example.githatch.domain.usecase.GetReposFromAuthorUseCase
-import com.example.githatch.domain.usecase.LoadMoreReposFromAuthor
+import com.example.githatch.domain.usecase.LoadMoreReposFromAuthorUseCase
 import de.hdodenhof.circleimageview.CircleImageView
 
 class OwnerViewModel(
     private val getReposFromAuthorUseCase: GetReposFromAuthorUseCase,
-    private val loadMoreReposFromAuthor: LoadMoreReposFromAuthor,
+    private val loadMoreReposFromAuthorUseCase: LoadMoreReposFromAuthorUseCase,
     private val getAuthorUseCase: GetAuthorUseCase
 ) : ViewModel() {
     fun getReposFromAuthor(ownerName: String) = liveData {
@@ -22,7 +22,7 @@ class OwnerViewModel(
     }
 
     fun loadMoreReposFromAuthor() = liveData {
-        val reposList = loadMoreReposFromAuthor.execute()
+        val reposList = loadMoreReposFromAuthorUseCase.execute()
         emit(reposList)
     }
 

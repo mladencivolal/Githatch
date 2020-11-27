@@ -28,7 +28,7 @@ class UseCaseModule {
 
     @Singleton
     @Provides
-    fun provideLoadMoreReposFromAuthorUseCase(ownerRepository: OwnerRepository): LoadMoreReposFromAuthor = LoadMoreReposFromAuthor(ownerRepository)
+    fun provideLoadMoreReposFromAuthorUseCase(ownerRepository: OwnerRepository): LoadMoreReposFromAuthorUseCase = LoadMoreReposFromAuthorUseCase(ownerRepository)
 
     @Singleton
     @Provides
