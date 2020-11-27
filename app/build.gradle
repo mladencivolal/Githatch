@@ -12,6 +12,11 @@ android {
             keyPassword '123panorama'
         }
     }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+
     compileSdkVersion 30
     buildToolsVersion "30.0.1"
 
